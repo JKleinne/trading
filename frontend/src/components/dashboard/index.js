@@ -4,18 +4,20 @@ import Nasdaq from './Nasdaq';
 import PublicPreference from './PublicPreference';
 import UserBehavior from './UserBehavior';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import {
-    getPosts
+    getAllCoinPrices
 } from '../../actions/index';
 
 import Navigation from '../Navigation';
+import JSONTable from '../JSONtable';
+
 import '../../stylesheets/navigation.css';
 
 const mapStateToProps = state => {
   return {
-      posts: state.users.posts
+      posts: state.users.posts,
+      coins: state.coins.coins
   }
 };
 
@@ -28,12 +30,7 @@ class Charts extends React.Component {
 
 
   async componentWillMount() {
-    this.props.getPosts();
-    let posts = await axios.get('http://localhost:8080/posts');
-
-    this.setState({
-      posts
-    });
+    this.props.getAllCoinPrices();
   }
 
   render() {
@@ -41,7 +38,7 @@ class Charts extends React.Component {
       <div className="content">
           <Navigation />
         {
-          console.log(JSON.stringify(this.state.posts, null, 2))
+          console.log(JSON.stringify(this.props.coins, null, 2))
         }
         <div className="container-fluid">
           <div className="row">
@@ -67,7 +64,7 @@ class Charts extends React.Component {
 }
 
 const mapDispatchToProps = {
-    getPosts
+    getAllCoinPrices
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Charts);

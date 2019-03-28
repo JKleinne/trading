@@ -1,0 +1,9 @@
+{
+  "cryptoCompare_APIKEY": "ce0223baa621c382181e6027a5a2c5882dd3c0243c15b939377f26717550b662",
+  "cryptoCompare_CALL_URL": "https://min-api.cryptocompare.com/data",
+
+  "coins": [
+    "BTC",
+    "ETC"
+  ]
+}

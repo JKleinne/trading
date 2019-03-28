@@ -4,6 +4,7 @@ import {
     ADD_USER
 } from './constants';
 
+// User actions
 export const addUser = (user) => {
     return async dispatch => {
     //await axios.post('', user);
@@ -16,4 +17,9 @@ export const getPosts = () => {
         const posts = await axios.get('https://jsonplaceholder.typicode.com/posts');
         dispatch({ type: GET_USER, payload: posts.data});
     }
+};
+
+// Coin actions
+export const getMultipleCoinPrices = coins => {
+
 };

@@ -4,6 +4,7 @@ import Nasdaq from './Nasdaq';
 import PublicPreference from './PublicPreference';
 import UserBehavior from './UserBehavior';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import {
     getPosts
@@ -19,14 +20,29 @@ const mapStateToProps = state => {
 };
 
 class Charts extends React.Component {
-  componentWillMount() {
+  constructor(props) {
+    super(props);
+
+    this.state = {}
+  }
+
+
+  async componentWillMount() {
     this.props.getPosts();
+    let posts = await axios.get('http://localhost:8080/posts');
+
+    this.setState({
+      posts
+    });
   }
 
   render() {
     return (
       <div className="content">
           <Navigation />
+        {
+          console.log(JSON.stringify(this.state.posts, null, 2))
+        }
         <div className="container-fluid">
           <div className="row">
             <div className="col-md-6">

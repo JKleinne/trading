@@ -1,0 +1,51 @@
+{
+  "name": "frontend",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8000",
+  "dependencies": {
+    "ajv": "^6.5.5",
+    "axios": "^0.18.0",
+    "chart.js": "^2.7.3",
+    "chartist": "0.9.4",
+    "date-fns": "^1.29.0",
+    "lodash": "latest",
+    "moment": "latest",
+    "pe7-icon": "^1.0.4",
+    "prop-types": "latest",
+    "radium": "^0.25.0",
+    "react": "^16.4.2",
+    "react-bootstrap": "^0.31.2",
+    "react-bootstrap-sweetalert": "^4.0.0",
+    "react-bootstrap-table": "^4.1.0",
+    "react-chartist": "^0.13.3",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^16.4.2",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.0.3",
+    "reactstrap": "^7.1.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "sass-loader": "^7.1.0",
+    "sweetalert-react": "^0.4.11"
+  },
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^6.0.6"
+  },
+  "scripts": {
+    "start": "concurrently \"cd ../backend && php artisan serve\" \"cd ../frontend && react-scripts start\"",
+    "frontendStart": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

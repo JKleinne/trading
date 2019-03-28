@@ -1,15 +1,26 @@
 import {
     GET_COIN,
-    GET_ALL_MULTI_PRICE
+    GET_ALL_MULTI_PRICE,
+    GET_HISTORICAL_DAILY
 } from '../actions/constants';
 
-export default (state = {users: []}, action) => {
+export default (state = {coins: []}, action) => {
     switch(action.type) {
         case GET_COIN:
             return {...state, coins: action.payload};
 
         case GET_ALL_MULTI_PRICE:
-            return {...state, coins: action.payload.data};
+            return {
+                ...state,
+                coinCurrent: action.payload.data.DISPLAY
+            };
+
+        case GET_HISTORICAL_DAILY:
+            console.log(`Payload: ${JSON.stringify(action.payload, null, 2)}`)
+            return {
+                ...state,
+                coinHistorical: action.payload
+            };
 
         default:
             return state;

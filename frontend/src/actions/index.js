@@ -3,7 +3,8 @@ import _ from 'lodash';
 import {
     GET_USER,
     ADD_USER,
-    GET_ALL_MULTI_PRICE
+    GET_ALL_MULTI_PRICE,
+    GET_HISTORICAL_DAILY
 } from './constants';
 
 import config from '../config/config';
@@ -25,3 +26,13 @@ export const getAllCoinPrices = () => {
         dispatch({ type: GET_ALL_MULTI_PRICE, payload: data });
     }
 };
+
+export const getHistoricalDaily = (coin, dayLimit) => {
+    return async dispatch => {
+        let data = await axios.get(
+            `${config.cryptoCompare_CALL_URL}/histoday?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cryptoCompare_APIKEY}`
+        );
+
+        dispatch({ type: GET_HISTORICAL_DAILY, payload: data })
+    }
+}

@@ -6,18 +6,19 @@ import UserBehavior from './UserBehavior';
 import { connect } from 'react-redux';
 
 import {
-    getAllCoinPrices
+    getAllCoinPrices,
+    getHistoricalDaily
 } from '../../actions/index';
 
 import Navigation from '../Navigation';
-import JSONTable from '../JSONtable';
+import CoinTable from './CoinTable';
 
 import '../../stylesheets/navigation.css';
 
 const mapStateToProps = state => {
   return {
-      posts: state.users.posts,
-      coins: state.coins.coins
+      coins: state.coins.coinCurrent,
+      coinsHistorical: state.coins.coinHistorical
   }
 };
 
@@ -31,6 +32,7 @@ class Charts extends React.Component {
 
   async componentWillMount() {
     this.props.getAllCoinPrices();
+    this.props.getHistoricalDaily('BTC', 30);
   }
 
   render() {
@@ -38,7 +40,7 @@ class Charts extends React.Component {
       <div className="content">
           <Navigation />
         {
-          console.log(JSON.stringify(this.props.coins, null, 2))
+          console.log(JSON.stringify(this.props.coinHistorical, null, 2))
         }
         <div className="container-fluid">
           <div className="row">
@@ -54,7 +56,7 @@ class Charts extends React.Component {
               <PublicPreference />
             </div>
             <div className="col-md-6">
-              <UserBehavior />
+              <CoinTable/>
             </div>
           </div>
         </div>
@@ -64,7 +66,8 @@ class Charts extends React.Component {
 }
 
 const mapDispatchToProps = {
-    getAllCoinPrices
+    getAllCoinPrices,
+    getHistoricalDaily
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Charts);

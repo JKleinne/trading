@@ -5,3 +5,4 @@ export const GET_USER = 'GET_USER';
 // Coins Constants
 export const GET_COIN = 'GET_COIN';
 export const GET_ALL_MULTI_PRICE = 'GET_ALL_MULTI_PRICE';
+export const GET_HISTORICAL_DAILY = 'GET_HISTORICAL_DAILY';

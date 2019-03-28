@@ -4,6 +4,9 @@
 
   "coins": [
     "BTC",
-    "ETC"
+    "ETC",
+    "EOS",
+    "ADA",
+    "TRX"
   ]
 }

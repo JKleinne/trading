@@ -20,3 +20,16 @@ $app->get('/posts', function (Request $request, Response $response, array $args)
     return $response
         ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
 });
+
+$app->post('/users/signup', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+
+    $email = $data["email"];
+    $fullName = $data["fullName"];
+    $password = $data["password"];
+
+    /*
+     * Add to Database here
+     */
+
+});

@@ -64,7 +64,7 @@ class LoginRegister extends Component {
                 let response;
 
                 try {
-                    response = await axios.post("/users/login", {...this.state.login});
+                    response = await axios.post("/users/login", [...this.state.login]);
                 } catch(error) {
                     response = error.response;
                 }
@@ -78,7 +78,7 @@ class LoginRegister extends Component {
                 let response;
 
                 try {
-                    response = await axios.post("/users/signup", {...this.state.signup});
+                    response = await axios.post('/users/signup', {...this.state.signup});
                 } catch(error) {
                     response = error.response;
                 }

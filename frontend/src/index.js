@@ -4,6 +4,7 @@ import { Route, Link, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
+import axios from 'axios';
 
 import rootReducer from './reducers/index';
 
@@ -14,6 +15,9 @@ import LoginRegister from './components/authentication/LoginRegister';
 import Dashboard from './components/dashboard/index';
 import SignupSuccess from './components/authentication/SignupSuccess';
 import ForgorPassword from './components/authentication/ForgotPassword';
+
+// Proxy all HTTP requests to baseURL
+//axios.defaults.baseURL = 'http://localhost:8080';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 

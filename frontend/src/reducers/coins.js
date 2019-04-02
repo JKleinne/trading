@@ -16,10 +16,9 @@ export default (state = {coins: []}, action) => {
             };
 
         case GET_HISTORICAL_DAILY:
-            console.log(`Payload: ${JSON.stringify(action.payload, null, 2)}`)
             return {
                 ...state,
-                coinHistorical: action.payload
+                coinHistorical: action.payload.data.Data
             };
 
         default:

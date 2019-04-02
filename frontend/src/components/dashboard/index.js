@@ -12,6 +12,7 @@ import {
 
 import Navigation from '../Navigation';
 import CoinTable from './CoinTable';
+import HistoricCoinPrices from './HistoricCoinPrices';
 
 import '../../stylesheets/navigation.css';
 
@@ -39,26 +40,23 @@ class Charts extends React.Component {
     return (
       <div className="content">
           <Navigation />
-        {
-          console.log(JSON.stringify(this.props.coinHistorical, null, 2))
-        }
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-6">
-              <PerformanceChart />
+            <div className="col-md-8">
+                <HistoricCoinPrices />
             </div>
-            <div className="col-md-6">
-              <Nasdaq />
-            </div>
+              <div className="col-md-4">
+                  <CoinTable/>
+              </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <PublicPreference />
+            <div className="row">
+                <div className="col-md-6">
+                    <HistoricCoinPrices />
+                </div>
+                <div className="col-md-6">
+                    <CoinTable/>
+                </div>
             </div>
-            <div className="col-md-6">
-              <CoinTable/>
-            </div>
-          </div>
         </div>
       </div>
     )

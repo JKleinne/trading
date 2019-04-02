@@ -7,7 +7,7 @@ import {
 
 const mapStateToProps = state => {
   return {
-    coins: state.coins.coins
+    coins: state.coins.coinCurrent
   }
 };
 

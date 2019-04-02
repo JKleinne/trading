@@ -130,4 +130,9 @@ a:hover,a:focus {
 
 .row {
     margin-left: 25px;
+    width: 100%;
+}
+
+.Graph {
+
 }

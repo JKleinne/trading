@@ -22,17 +22,15 @@ export const getAllCoinPrices = () => {
         let coinsToFetch = _.join(config.coins, ',');
 
         let data = await axios.get(
-            `${config.cryptoCompare_CALL_URL}/pricemultifull?fsyms=${coinsToFetch}&tsyms=CAD&api_key=${config.cryptoCompare_APIKEY}`);
+            `${config.cc_call_url}/pricemultifull?fsyms=${coinsToFetch}&tsyms=CAD&api_key=${config.cc_apikey}`);
         dispatch({ type: GET_ALL_MULTI_PRICE, payload: data });
     }
 };
 
-export const getHistoricalDaily = (coin, dayLimit) => {
+export const getHistoricalDaily = async (coin, dayLimit) => {
     return async dispatch => {
         let data = await axios.get(
-            `${config.cryptoCompare_CALL_URL}/histoday?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cryptoCompare_APIKEY}`
-        );
-
-        dispatch({ type: GET_HISTORICAL_DAILY, payload: data })
+            `${config.cc_call_url}/histoday?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cc_apikey}`);
+        dispatch({ type: GET_HISTORICAL_DAILY, payload: data });
     }
-}
+};

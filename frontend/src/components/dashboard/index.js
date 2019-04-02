@@ -33,7 +33,6 @@ class Charts extends React.Component {
 
   async componentWillMount() {
     this.props.getAllCoinPrices();
-    this.props.getHistoricalDaily('BTC', 30);
   }
 
   render() {

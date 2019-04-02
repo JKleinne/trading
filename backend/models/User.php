@@ -1,7 +1,5 @@
 <?php
 
-require_once '/Users/jonniequezada/Desktop/trading/backend/models/Model.php';
-
 class User extends Model  //user is sub-class of database
 {
 	

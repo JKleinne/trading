@@ -4,6 +4,7 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 
 require './vendor/autoload.php';
+require_once './models/Model.php';
 
 $app = new \Slim\App;
 

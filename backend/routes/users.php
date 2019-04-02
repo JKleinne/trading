@@ -5,7 +5,7 @@ $app = $_SESSION["app"];
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
-require_once '/Users/jonniequezada/Desktop/trading/backend/models/User.php';
+require_once './models/User.php';
 
 $app->get('/posts', function (Request $request, Response $response, array $args) {
     $ch = curl_init();

@@ -27,7 +27,7 @@ export const getAllCoinPrices = () => {
     }
 };
 
-export const getHistoricalDaily = async (coin, dayLimit) => {
+export const getHistoricalDaily = (coin, dayLimit) => {
     return async dispatch => {
         let data = await axios.get(
             `${config.cc_call_url}/histoday?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cc_apikey}`);

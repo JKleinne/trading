@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Line } from 'react-chartjs-2';
 import _ from 'lodash';
 import moment from 'moment';
+import { format } from '../../utilities/CurrencyFormat';
 import {
     getHistoricalDaily
 } from '../../actions/index';
@@ -46,8 +47,6 @@ class HistoricCoinPrices extends Component {
          * speed-run this :( (April 1 2019)
          */
         const summarize = () => {
-            //console.log(`Props: ${JSON.stringify(this.props.coins, null, 2)}`);
-
             const desiredNumberOfDataPoints = 12;
             let counter = 0;
             const dataPoints = (this.props.coins ? this.props.coins.length: 0);
@@ -62,8 +61,6 @@ class HistoricCoinPrices extends Component {
                     }
                     counter++;
                 }), coin => !_.isUndefined(coin));
-
-            console.log(`Coins: ${JSON.stringify(this.props.coins, null, 2)}`);
 
             return [this.props.coins ? this.props.coins[0] : 0, ...arr];
         };
@@ -98,7 +95,10 @@ class HistoricCoinPrices extends Component {
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        min: 0
+                        min: 0,
+                        callback: (value) => {
+                            return format('CAD', value);
+                        }
                     }
                 }]
             },

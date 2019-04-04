@@ -1,8 +1,4 @@
 import React from 'react';
-import PerformanceChart from './PerformanceChart';
-import Nasdaq from './Nasdaq';
-import PublicPreference from './PublicPreference';
-import UserBehavior from './UserBehavior';
 import { connect } from 'react-redux';
 
 import {

@@ -8,8 +8,6 @@ import {
   setCoinToFetch
 } from '../../actions/index';
 
-import JSONCircular from '../../utilities/CircularJSONPrint';
-
 const mapStateToProps = state => {
   return {
     coins: state.coins.coinCurrent

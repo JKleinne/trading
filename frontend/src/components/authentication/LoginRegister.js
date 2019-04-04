@@ -78,7 +78,7 @@ class LoginRegister extends Component {
                 let response;
 
                 try {
-                    response = await axios.post('http://localhost:8080/users/signup', {...this.state.signup});
+                    response = await axios.post('http://localhost:8000/users/signup', {...this.state.signup});
                     console.log(JSON.stringify(response, null, 2));
                 } catch(error) {
                     response = error.response;

@@ -226,7 +226,7 @@ class LoginRegister extends Component {
                           <button className={""} onClick={async evt => {
                               await this.validateForm(evt)
                           }}>
-                              <span className="btn" style={this.state.registerClicked ? textWhite : {}}>Go</span>
+                              <span className="btttn" style={this.state.registerClicked ? textWhite : {}}>Go</span>
                               <i className="fa fa-check"></i>
                           </button>
                       </div>

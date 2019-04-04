@@ -10,9 +10,11 @@ import {
 const mapStateToProps = state => {
     return {
         coins: state.coins.coinHistorical,
-        coinToFetch: state.coins.coinToFetch
+        currentCoin: state.coins.coinToFetch
     }
 };
+
+let chartRef;
 
 class HistoricCoinPrices extends Component {
     constructor(props) {
@@ -21,11 +23,10 @@ class HistoricCoinPrices extends Component {
         this.state = {};
 
         this.generateLabels = this.generateLabels.bind(this);
-        this.changeHandler = this.changeHandler.bind(this);
     }
 
     componentWillMount() {
-        this.props.getHistoricalDaily(this.props.coinToFetch, 365);
+        this.props.getHistoricalDaily('BTC', 365);
     }
 
     generateLabels() {
@@ -38,38 +39,15 @@ class HistoricCoinPrices extends Component {
         return labels;
     }
 
-    changeHandler(value) {
-        console.log(JSON.stringify(value, null, 2))
-    }
-
     render() {
 
         /*
          * I apologize to whoever has to read this (probably my future self) had to
          * speed-run this :( (April 1 2019)
          */
-        const summarizeDailiesToMonthly = () => {
-            const desiredNumberOfDataPoints = 12;
-            let counter = 0;
-            const dataPoints = (this.props.coins ? this.props.coins.length: 0);
-
-            const jump = _.ceil(dataPoints / desiredNumberOfDataPoints);
-
-            //Missing the first data point
-            const arr =  _.filter(
-                _.map(this.props.coins, coin => {
-                    if(counter === jump) {
-                        counter = 0;
-                        return coin.high;
-                    }
-                    counter++;
-                }), coin => _.isNumber(coin));
-
-            //TODO I'm sure there's a better way than this speed-run version
-            return [this.props.coins ? this.props.coins[0] : 0, ...arr];
-        };
-
         const summarize = () => {
+            //console.log(`Props: ${JSON.stringify(this.props.coins, null, 2)}`);
+
             const desiredNumberOfDataPoints = 12;
             let counter = 0;
             const dataPoints = (this.props.coins ? this.props.coins.length: 0);
@@ -85,18 +63,16 @@ class HistoricCoinPrices extends Component {
                     counter++;
                 }), coin => !_.isUndefined(coin));
 
-            return [this.props.coins ? this.props.coins[0] : 0, ...arr];
-        };
+            console.log(`Coins: ${JSON.stringify(this.props.coins, null, 2)}`);
 
-        const generateData = () => {
-            return _.map(this.props.coins, coin => coin.high)
+            return [this.props.coins ? this.props.coins[0] : 0, ...arr];
         };
 
         const data = {
                 labels: _.map(summarize(), coin => moment.unix(coin.time).format('MMM YYYY')),
                 datasets: [
                     {
-                        label: 'Historic Coin Prices',
+                        label: this.props.currentCoin || 'BTC',
                         lineTension: 0.1,
                         backgroundColor: 'rgba(75,192,192,0.4)',
                         borderColor: 'rgba(75,192,192,1)',
@@ -132,8 +108,11 @@ class HistoricCoinPrices extends Component {
             <div className="card">
                 <div className="header">
                     <h4 className="title">Coins</h4>
+                    <div className="content buttons-with-margin">
+                        <button className="btn btn-info btn-xs btn-fill">Daily</button>
+                    </div>
                 </div>
-                <Line data={data} options={options} onChange={this.changeHandler}/>
+                <Line ref={ref => chartRef = ref} data={data} options={options} onChange={this.changeHandler} redraw />
             </div>
         )
     }

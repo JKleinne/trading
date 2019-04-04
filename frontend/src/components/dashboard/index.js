@@ -19,7 +19,6 @@ import '../../stylesheets/navigation.css';
 const mapStateToProps = state => {
   return {
       coins: state.coins.coinCurrent,
-      coinsHistorical: state.coins.coinHistorical
   }
 };
 

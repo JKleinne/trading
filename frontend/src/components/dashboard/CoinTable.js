@@ -4,6 +4,7 @@ import _ from 'lodash';
 import config from '../../config/config'
 import {
   getAllCoinPrices,
+  getHistoricalDaily,
   setCoinToFetch
 } from '../../actions/index';
 
@@ -22,6 +23,7 @@ class CoinTable extends Component {
     this.state = {};
 
     this.handleClick = this.handleClick.bind(this);
+    this.setClassName = this.setClassName.bind(this);
   }
 
   componentWillMount() {
@@ -29,7 +31,19 @@ class CoinTable extends Component {
   }
 
   handleClick(evt) {
+    this.props.getHistoricalDaily(evt._targetInst.return.key, 365);
     this.props.setCoinToFetch(evt._targetInst.return.key);
+  }
+
+  setClassName(value) {
+    value = _.trim(value, 'CAD');
+
+    if(value > 0)
+      return "btn btn-success btn-fill btn-sm";
+    else if(value < 0)
+      return "btn btn-danger btn-fill btn-sm";
+
+    return "btn btn-default btn-fill btn-sm";
   }
 
   render() {
@@ -53,8 +67,8 @@ class CoinTable extends Component {
                 <tr key={coin.CAD.FROMSYMBOL} onClick={this.handleClick}>
                   <td>{coin.CAD.FROMSYMBOL}</td>
                   <td>{coin.CAD.PRICE}</td>
-                  <td>{coin.CAD.CHANGEDAY}</td>
-                  <td>{coin.CAD.CHANGEPCTDAY}</td>
+                  <td >{coin.CAD.CHANGEDAY}</td>
+                  <td className={this.setClassName(coin.CAD.CHANGEPCTDAY)}>{coin.CAD.CHANGEPCTDAY}</td>
                 </tr>
               ))}
             </tbody>
@@ -68,6 +82,7 @@ class CoinTable extends Component {
 
 const mapDispatchToProps = {
   getAllCoinPrices,
+  getHistoricalDaily,
   setCoinToFetch
 };
 

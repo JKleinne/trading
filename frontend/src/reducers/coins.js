@@ -5,7 +5,7 @@ import {
     SET_COIN_TO_FETCH
 } from '../actions/constants';
 
-export default (state = {coins: [], coinToFetch: 'BTC'}, action) => {
+export default (state = {coins: []}, action) => {
     switch(action.type) {
         case GET_COIN:
             return {...state, coins: action.payload};

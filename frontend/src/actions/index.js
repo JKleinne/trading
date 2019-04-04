@@ -31,6 +31,9 @@ export const getAllCoinPrices = () => {
 
 export const getHistoricalDaily = (coin, dayLimit) => {
     return async dispatch => {
+        if(coin === 'Ƀ')
+            coin = 'BTC';
+
         let data = await axios.get(
             `${config.cc_call_url}/histoday?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cc_apikey}`);
         dispatch({ type: GET_HISTORICAL_DAILY, payload: data });
@@ -39,6 +42,9 @@ export const getHistoricalDaily = (coin, dayLimit) => {
 
 export const setCoinToFetch = coin => {
     return dispatch => {
-        dispatch({ type: SET_COIN_TO_FETCH, payload: coin === 'Ƀ' ? 'BTC' : coin })
+        if(coin === 'Ƀ')
+            coin = 'BTC';
+
+        dispatch({ type: SET_COIN_TO_FETCH, payload: coin });
     }
-};
+}

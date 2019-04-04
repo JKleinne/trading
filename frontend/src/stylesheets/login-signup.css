@@ -457,7 +457,7 @@ a {
         transform: translate(0rem, 0);
     }
 }
-.btn {
+.btttn {
     position: relative;
     letter-spacing: 0.15em;
     margin: 0 auto;
@@ -468,7 +468,7 @@ a {
     color: #111;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s;
 }
-.btn::after, .btn::before {
+.btttn::after, .btttn::before {
     content: "";
     position: absolute;
     height: 40%;
@@ -477,32 +477,32 @@ a {
     z-index: -2;
     border-radius: 50%;
 }
-.btn::before {
+.btttn::before {
     background-color: slategrey;
     top: -0.75rem;
     left: 0.5rem;
     animation: top 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.25s infinite alternate;
 }
-.btn::after {
+.btttn::after {
     background-color: #c92918;
     top: 3rem;
     left: 13rem;
     animation: bottom 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s infinite alternate;
 }
-.btn:hover {
+.btttn:hover {
     color: white;
 }
-.btn:hover::before, .btn:hover::after {
+.btttn:hover::before, .btn:hover::after {
     top: 0;
     height: 100%;
     width: 100%;
     border-radius: 0;
     animation: none;
 }
-.btn:hover::after {
+.btttn:hover::after {
     left: 0rem;
 }
-.btn:hover::before {
+.btttn:hover::before {
     top: 0.5rem;
     left: 0.35rem;
 }

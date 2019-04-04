@@ -9,6 +9,7 @@
     "axios": "^0.18.0",
     "chart.js": "^2.7.3",
     "chartist": "0.9.4",
+    "concurrently": "^4.1.0",
     "date-fns": "^1.29.0",
     "lodash": "latest",
     "moment": "latest",
@@ -37,7 +38,7 @@
     "sass-loader": "^6.0.6"
   },
   "scripts": {
-    "start": "concurrently \"cd ../backend && php -S localhost:8080\" \"cd ../frontend && react-scripts start\"",
+    "start": "concurrently \"cd ../backend && php -S localhost:8000\" \"cd ../frontend && react-scripts start\"",
     "frontendStart": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",

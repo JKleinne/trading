@@ -6,7 +6,7 @@ class Model
     protected $_connection;
     function __construct() //reserved name for constructor
     {
-        $host = '127.0.0.1:3307';
+        $host = '127.0.0.1:3306';
         $dbname = 'crypto_trading';
         $user = 'root';
         $pass = '';

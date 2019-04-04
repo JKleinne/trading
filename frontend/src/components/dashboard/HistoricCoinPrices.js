@@ -9,7 +9,8 @@ import {
 
 const mapStateToProps = state => {
     return {
-        coins: state.coins.coinHistorical
+        coins: state.coins.coinHistorical,
+        coinToFetch: state.coins.coinToFetch
     }
 };
 
@@ -20,10 +21,11 @@ class HistoricCoinPrices extends Component {
         this.state = {};
 
         this.generateLabels = this.generateLabels.bind(this);
+        this.changeHandler = this.changeHandler.bind(this);
     }
 
     componentWillMount() {
-        this.props.getHistoricalDaily('BTC', 365);
+        this.props.getHistoricalDaily(this.props.coinToFetch, 365);
     }
 
     generateLabels() {
@@ -36,7 +38,12 @@ class HistoricCoinPrices extends Component {
         return labels;
     }
 
+    changeHandler(value) {
+        console.log(JSON.stringify(value, null, 2))
+    }
+
     render() {
+
         /*
          * I apologize to whoever has to read this (probably my future self) had to
          * speed-run this :( (April 1 2019)
@@ -126,8 +133,7 @@ class HistoricCoinPrices extends Component {
                 <div className="header">
                     <h4 className="title">Coins</h4>
                 </div>
-                {console.log(_.map(summarize(), coin => moment.unix(coin.time).format('MMM YYYY')))}
-                <Line data={data} options={options}/>
+                <Line data={data} options={options} onChange={this.changeHandler}/>
             </div>
         )
     }

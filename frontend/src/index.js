@@ -20,6 +20,7 @@ import ForgorPassword from './components/authentication/ForgotPassword';
 //axios.defaults.baseURL = 'http://localhost:8080';
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
+window.store = store;
 
 const routing = (
     <Provider store={store}>

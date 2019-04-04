@@ -27,7 +27,6 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
     $data = $request->getParsedBody();
 
     $email = $data["email"];
-    $fullName = $data["fullName"];
     $password = $data["password"];
 
     $user = new User($email, $password);

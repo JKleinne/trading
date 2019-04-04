@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
+import config from '../../config/config'
 import {
-  getAllCoinPrices
+  getAllCoinPrices,
+  setCoinToFetch
 } from '../../actions/index';
+
+import JSONCircular from '../../utilities/CircularJSONPrint';
 
 const mapStateToProps = state => {
   return {
@@ -16,20 +20,19 @@ class CoinTable extends Component {
     super(props);
 
     this.state = {};
+
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentWillMount() {
     this.props.getAllCoinPrices();
   }
 
-  deleteItem = itemId => {
-    this.setState({
-      items: this.state.items.filter(item => item.id !== itemId)
-    });
+  handleClick(evt) {
+    this.props.setCoinToFetch(evt._targetInst.return.key);
   }
 
   render() {
-    let { items, isShowingAlert } = this.state;
     return (
       <div className="card">
         <div className="header">
@@ -47,7 +50,7 @@ class CoinTable extends Component {
             </thead>
             <tbody>
               {_.map(this.props.coins, coin => (
-                <tr key={coin.CAD.FROMSYMBOL}>
+                <tr key={coin.CAD.FROMSYMBOL} onClick={this.handleClick}>
                   <td>{coin.CAD.FROMSYMBOL}</td>
                   <td>{coin.CAD.PRICE}</td>
                   <td>{coin.CAD.CHANGEDAY}</td>
@@ -64,7 +67,8 @@ class CoinTable extends Component {
 }
 
 const mapDispatchToProps = {
-  getAllCoinPrices
+  getAllCoinPrices,
+  setCoinToFetch
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoinTable);

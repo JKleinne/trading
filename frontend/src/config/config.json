@@ -5,7 +5,12 @@
   "coins": [
     "BTC",
     "ETC",
+    "XRP",
+    "LTC",
+    "BCH",
     "EOS",
+    "BNB",
+    "XLM",
     "ADA",
     "TRX"
   ]

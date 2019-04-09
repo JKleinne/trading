@@ -6,6 +6,9 @@ import '../../stylesheets/login-signup.css';
 
 import { Style } from 'radium';
 import _ from 'lodash';
+import {getCountries, getFiatCurrencies} from "../../actions";
+
+import { connect } from 'react-redux';
 
 const containerStyle = {
     background: '#ED2553'
@@ -23,6 +26,13 @@ const hidden = {
     display: 'none'
 };
 
+const mapStateToProps = state => {
+    return {
+        countries: state.countries.countries,
+        fiat: state.coins.fiat
+    }
+};
+
 class LoginRegister extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +47,10 @@ class LoginRegister extends Component {
                 email: '',
                 password: '',
                 confirmPassword: '',
-                fullName: '',
+                firstName: '',
+                lastName: '',
+                country: 0,
+                currency: 'CAD',
                 confirmPasswordValid: true
             }
         };
@@ -46,6 +59,11 @@ class LoginRegister extends Component {
         this.pwRef = React.createRef();
 
         this.forgotPWClicked = () => this.setState({ redirectTo: '/forgotPassword' });
+    }
+
+    componentWillMount() {
+        this.props.getCountries();
+        this.props.getFiatCurrencies();
     }
 
     async validateForm(evt) {
@@ -131,13 +149,12 @@ class LoginRegister extends Component {
                           }}/>
                           : ""
                       }
-
                       <div className="title" style={this.state.registerClicked ? textWhite : {}}>
                           {this.state.registerClicked ? "REGISTER" : "LOGIN"}
                       </div>
 
                       <div className="input">
-                          <input type="text" maxLength="7" ref={this.idRef}
+                          <input type="text"  ref={this.idRef}
                                  style={this.state.registerClicked ? textWhite : {}}
                                  placeholder="Email" name="email" id="email" onChange={evt => {
                               if (this.state.registerClicked)
@@ -161,17 +178,84 @@ class LoginRegister extends Component {
 
                       <div className="input" style={this.state.registerClicked ? visible : hidden}>
                           <input type="text" style={this.state.registerClicked ? textWhite : {}}
-                                 placeholder="Full Name" name="fullName" id="fullName" onChange={evt => {
+                                 placeholder="First Name" name="firstName" id="firstName" onChange={evt => {
                               this.setState({
                                   ...this.state,
                                   signup: {
                                       ...this.state.signup,
-                                      fullName: evt.target.value
+                                      firstName: evt.target.value
                                   }
                               });
                           }}/>
                       </div>
 
+                      <div className="input" style={this.state.registerClicked ? visible : hidden}>
+                          <input type="text" style={this.state.registerClicked ? textWhite : {}}
+                                 placeholder="Last Name" name="lastName" id="lastName" onChange={evt => {
+                              this.setState({
+                                  ...this.state,
+                                  signup: {
+                                      ...this.state.signup,
+                                      lastName: evt.target.value
+                                  }
+                              });
+                          }}/>
+                      </div>
+
+                      <div className="input" style={this.state.registerClicked ? visible : hidden}>
+                          <label style={{color: 'white'}}>Country: </label>
+                          <select style={this.state.registerClicked ? {float: 'right'} : {}}
+                                  name="country" id="country" onLoad={evt => {
+                              this.setState({
+                                  ...this.state,
+                                  signup: {
+                                      ...this.state.signup,
+                                      country: "0"
+                                  }
+                              });
+                          }}
+                                  onChange={evt => {
+                                      this.setState({
+                                          ...this.state,
+                                          signup: {
+                                              ...this.state.signup,
+                                              country: evt.target.value
+                                          }
+                                      });
+                                  }}>
+
+                              {this.props.countries ? _.map(this.props.countries, country => {
+                                  return <option value = { country.country_id }>{ country.country_name }</option>
+                              }) : ''}
+                          </select>
+                      </div>
+
+                      <div className="input" style={this.state.registerClicked ? visible : hidden}>
+                          <label style={{color: 'white'}}>Currency: </label>
+                          <select style={this.state.registerClicked ? {float: 'right'} : {}}
+                                  name="currency" id="currency" onLoad={evt => {
+                              this.setState({
+                                  ...this.state,
+                                  signup: {
+                                      ...this.state.signup,
+                                      currency: "0"
+                                  }
+                              });
+                          }}
+                                  onChange={evt => {
+                                      this.setState({
+                                          ...this.state,
+                                          signup: {
+                                              ...this.state.signup,
+                                              currency: evt.target.value
+                                          }
+                                      });
+                                  }}>
+                              {this.props.fiat ? _.map(this.props.fiat, fiat => {
+                                  return <option value={fiat.currency_code}>{fiat.currency_code}</option>
+                              }) : ''}
+                          </select>
+                      </div>
 
                       <div className="input">
                           <input type="password" style={this.state.registerClicked ? textWhite : {}}
@@ -245,4 +329,9 @@ class LoginRegister extends Component {
   }
 }
 
-export default LoginRegister;
+const mapDispatchToProps = {
+    getCountries,
+    getFiatCurrencies
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister);

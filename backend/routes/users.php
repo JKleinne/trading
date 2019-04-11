@@ -47,3 +47,22 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
 
     return $response;
 });
+
+$app->post('/users/login', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+
+    $email = $data["email"];
+    $password = $data["password"];
+
+    $user = new User();
+
+    $user_email = $user->getUser($email)["email"];
+    $user_password = $user->getUser($email)["password"];
+
+    if(password_verify($password, $user_password))
+        $response->getBody()->write(200);
+    else
+        $response->getBody()->write(400);
+
+    return $response;
+});

@@ -22,7 +22,6 @@ export default (state = {coins: [], coinToFetch: 'BTC', ohclvMode: 'monthly'}, a
             };
 
         case GET_HISTORICAL_DAILY:
-            console.log(`Coin: ${JSON.stringify(action.payload, null, 2)}`);
             return {
                 ...state,
                 coinHistorical: action.payload.data.Data

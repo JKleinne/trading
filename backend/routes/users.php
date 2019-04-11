@@ -6,21 +6,18 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require_once './models/User.php';
+require_once './models/Profile.php';
 
 $app->get('/posts', function (Request $request, Response $response, array $args) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, 'https://jsonplaceholder.typicode.com/posts');
+    $user = new User("stuff", "stuff", "", "", "");
 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    $stuff = $user->getUser("qwe")["user_id"];
 
-    $data = curl_exec($ch);
+    $jsonobj = json_encode($stuff);
 
-    curl_close($ch);
-    $response->getBody()->write($data);
+    $response->getBody()->write($jsonobj);
 
-    return $response
-        ->withHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    return $response;
 });
 
 $app->post('/users/signup', function (Request $request, Response $response, array $args) {
@@ -29,10 +26,21 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
     $email = $data["email"];
     $password = $data["password"];
 
-    $user = new User($email, $password);
-    $user->addUser($email, $password);
+    $user = new User();
+    $user->addUser($email, $password, '0', '0', '0');
 
-    $response->getBody()->write($email);
+
+    $user_id = $user->getUser($email)["user_id"];
+    $firstName = $data["firstName"];
+    $lastName = $data["lastName"];
+    $country = $data["country"];
+    $currency = $data["currency"];
+
+    $profile = new Profile();
+    $profile->addProfile($user_id, $firstName, $lastName, $country, $currency);
+
+
+    $response->getBody()->write('Email: ' . $email . 'Country: ' . $country);
     /*
      * Add to Database here
      */

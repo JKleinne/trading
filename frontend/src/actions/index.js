@@ -6,10 +6,24 @@ import {
     GET_HISTORICAL_DAILY,
     SET_COIN_TO_FETCH,
     GET_HISTORICAL_HOURLY,
-    SET_OHCLV_MODE
+    SET_OHCLV_MODE,
+    GET_COIN_TO_FETCH,
+    GET_COUNTRIES,
+    GET_FIAT_CURRENCIES,
+    GET_CRYPTO_CURRENCIES
 } from './constants';
 
 import config from '../config/config';
+
+/*
+ * Countries Actions
+ */
+export const getCountries = () => {
+    return async dispatch => {
+        let countries = await axios.get('http://localhost:8000/countries/getCountries');
+        dispatch({type: GET_COUNTRIES, payload: countries});
+    }
+};
 
 // User actions
 export const addUser = (user) => {
@@ -68,4 +82,20 @@ export const setCoinToFetch = coin => {
 
 export const setOHCLVMode = (mode) => {
     return dispatch => dispatch({type: SET_OHCLV_MODE, payload: mode});
+};
+
+export const getFiatCurrencies = () => {
+    return async dispatch => {
+        let fiat = await axios.get('http://localhost:8000/currencies/getFiatCurrencies');
+
+        dispatch({type:GET_FIAT_CURRENCIES, payload: fiat })
+    }
+}
+
+export const getCryptoCurrencies = () => {
+    return async dispatch => {
+        let crypto = await axios.get('http://localhost:8000/currencies/getCryptoCurrencies');
+
+        dispatch({type:GET_CRYPTO_CURRENCIES, payload: crypto })
+    }
 };

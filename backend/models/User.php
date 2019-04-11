@@ -1,45 +1,30 @@
 <?php
 
-class User extends Model  //user is sub-class of database
+class User extends Model
 {
-	
-	
 	public $email;
 	public $password;
+    public $two_fa;
+    public $role;
+    public $status;
 
-	function __construct($email, $password) {
+
+	function __construct() {
         parent::__construct();
-
-        $this->email = $email;
-        $this->password = $password;
     }
 
-	public function getUser($username)
+	public function getUser($email)
 	{
-		$stmt = $this->_connection->prepare("SELECT * FROM User WHERE username LIKE :username");
-		$stmt->execute(['username'=>$username]);
-		$stmt->setFetchMode(PDO::FETCH_CLASS, "User"); //datatype user
-		return $stmt->fetch(); //it should return a user
-	}
-//	function getUser($username){
-//		$stmt = $this->_connection->prepare("SELECT * FROM User WHERE username LIKE ?");
-//		$stmt->execute([$username]);
-//		$stmt->setFetchMode(PDO::FETCH_CLASS, "User");
-//
-//		return $stmt->fetch();
-//	}
-public function addUser($email, $password)
-	{
-
-		$stmt = $this->_connection->prepare("INSERT INTO User(email, password) VALUES(:email, :password)");
-		$stmt->execute(['email'=>$email, 'password'=>$password]);
-		return $this->email;
-
-
+        $stmt = $this->_connection->prepare("SELECT * FROM User WHERE email = :email");
+        $stmt->execute(['email'=>$email]);
+        return $stmt->fetch();
 	}
 
+    public function addUser($email, $password, $two_fa, $role, $status)
+	{
+	    $hash = password_hash($password, PASSWORD_DEFAULT);
 
-
-
-
+		$stmt = $this->_connection->prepare("INSERT INTO User(email, password, two_fa, role, status) VALUES(:email, :password, :two_fa, :role, :status)");
+		$stmt->execute(['email'=>$email, 'password'=>$hash, 'two_fa'=>$two_fa, 'role'=>$role, 'status'=>$status]);
+    }
 }

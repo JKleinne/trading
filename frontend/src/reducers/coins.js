@@ -4,8 +4,11 @@ import {
     GET_HISTORICAL_DAILY,
     SET_COIN_TO_FETCH,
     GET_HISTORICAL_HOURLY,
-    SET_OHCLV_MODE
+    SET_OHCLV_MODE,
+    GET_FIAT_CURRENCIES,
+    GET_CRYPTO_CURRENCIES
 } from '../actions/constants';
+import {State} from "react-bootstrap/es/utils/StyleConfig";
 
 export default (state = {coins: [], coinToFetch: 'BTC', ohclvMode: 'monthly'}, action) => {
     switch(action.type) {
@@ -19,6 +22,7 @@ export default (state = {coins: [], coinToFetch: 'BTC', ohclvMode: 'monthly'}, a
             };
 
         case GET_HISTORICAL_DAILY:
+            console.log(`Coin: ${JSON.stringify(action.payload, null, 2)}`);
             return {
                 ...state,
                 coinHistorical: action.payload.data.Data
@@ -40,6 +44,18 @@ export default (state = {coins: [], coinToFetch: 'BTC', ohclvMode: 'monthly'}, a
             return {
                 ...state,
                 ohclvMode: action.payload
+            };
+
+        case GET_FIAT_CURRENCIES:
+            return  {
+                ...state,
+                fiat: action.payload.data
+            };
+
+        case GET_CRYPTO_CURRENCIES:
+            return {
+                ...state,
+                crypto: action.payload.data
             };
 
         default:

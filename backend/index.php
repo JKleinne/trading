@@ -12,5 +12,7 @@ $_SESSION['app'] = $app;
 
 // Require all route handlers here
 require_once "./routes/users.php";
+require_once "./routes/countries.php";
+require_once "./routes/currencies.php";
 
 $app->run();

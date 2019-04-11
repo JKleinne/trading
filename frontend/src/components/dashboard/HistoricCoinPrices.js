@@ -4,14 +4,18 @@ import { Line } from 'react-chartjs-2';
 import _ from 'lodash';
 import moment from 'moment';
 import { format } from '../../utilities/CurrencyFormat';
+import config from '../../config/config';
 import {
-    getHistoricalDaily
+    getHistoricalDaily,
+    getHistoricalHourly,
+    setOHCLVMode
 } from '../../actions/index';
 
 const mapStateToProps = state => {
     return {
         coins: state.coins.coinHistorical,
-        currentCoin: state.coins.coinToFetch
+        currentCoin: state.coins.coinToFetch,
+        mode: state.coins.ohclvMode
     }
 };
 
@@ -23,22 +27,38 @@ class HistoricCoinPrices extends Component {
 
         this.state = {};
 
-        this.generateLabels = this.generateLabels.bind(this);
+        this.handleDailyClick = this.handleDailyClick.bind(this);
+        this.handleWeeklyClick = this.handleWeeklyClick.bind(this);
+        this.handleMonthlyClick = this.handleMonthlyClick.bind(this);
     }
 
     componentWillMount() {
         this.props.getHistoricalDaily('BTC', 365);
     }
 
-    generateLabels() {
-        let labels = [];
+    handleDailyClick = () => {
+        this.setState({ dailyWeeklyClicked: true });
+        this.props.getHistoricalHourly(this.props.currentCoin, 24);
+        this.props.setOHCLVMode(config.OHCLV_modes.daily);
+    };
 
-        for(let i = 7; i >= 0; i--) {
-            labels.push(moment().subtract(i, 'd').format('L'))
-        }
+    handleWeeklyClick = () => {
+        this.setState({ dailyWeeklyClicked: true });
+        this.props.getHistoricalDaily(this.props.currentCoin, 7);
+        this.props.setOHCLVMode(config.OHCLV_modes.weekly);
+    };
 
-        return labels;
-    }
+    handleMonthlyClick = () => {
+      this.setState({ dailyWeeklyClicked: false })  ;
+      this.props.getHistoricalDaily(this.props.currentCoin, 365);
+      this.props.setOHCLVMode(config.OHCLV_modes.monthly);
+    };
+
+    handleYearlyClick = () => {
+        this.setState({ dailyWeeklyClicked: false })  ;
+        this.props.getHistoricalDaily(this.props.currentCoin, 365);
+        this.props.setOHCLVMode(config.OHCLV_modes.yearly);
+    };
 
     render() {
 
@@ -66,7 +86,13 @@ class HistoricCoinPrices extends Component {
         };
 
         const data = {
-                labels: _.map(summarize(), coin => moment.unix(coin.time).format('MMM YYYY')),
+                labels: this.state.dailyWeeklyClicked ? _.map(this.props.coins, coin =>
+                        moment.unix(coin.time).format(`${this.props.mode === config.OHCLV_modes.daily ? 'LT' 
+                        : (this.props.mode === config.OHCLV_modes.weekly ? 'dddd' : '')}`))
+
+                    : ( this.props.mode === config.OHCLV_modes.monthly ?
+                        _.map(summarize(), coin => moment.unix(coin.time).format('MMM YYYY'))
+                    : ''),
                 datasets: [
                     {
                         label: this.props.currentCoin || 'BTC',
@@ -85,7 +111,8 @@ class HistoricCoinPrices extends Component {
                         pointHoverBorderColor: 'rgba(220,220,220,1)',
                         pointHoverBorderWidth: 2,
                         pointHitRadius: 10,
-                        data: _.map(summarize(), coin => coin.high)
+                        data: this.state.dailyWeeklyClicked ? _.map(this.props.coins, coin => coin.high)
+                            : _.map(summarize(), coin => coin.high)
                     }
                 ]
         };
@@ -109,17 +136,22 @@ class HistoricCoinPrices extends Component {
                 <div className="header">
                     <h4 className="title">Coins</h4>
                     <div className="content buttons-with-margin">
-                        <button className="btn btn-info btn-xs btn-fill">Daily</button>
+                        <button onClick={this.handleDailyClick} className="btn btn-info btn-xs btn-fill">Daily</button>
+                        <button onClick={this.handleWeeklyClick} className="btn btn-info btn-xs btn-fill">Weekly</button>
+                        <button onClick={this.handleMonthlyClick} className="btn btn-info btn-xs btn-fill">Monthly</button>
+                        <button onClick={this.handleYearlyClick} className="btn btn-info btn-xs btn-fill">Year</button>
                     </div>
                 </div>
-                <Line ref={ref => chartRef = ref} data={data} options={options} onChange={this.changeHandler} redraw />
+                <Line ref={ref => chartRef = ref} data={data} options={options} redraw />
             </div>
         )
     }
 }
 
 const mapDispatchToProps = {
-    getHistoricalDaily
+    getHistoricalDaily,
+    getHistoricalHourly,
+    setOHCLVMode
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(HistoricCoinPrices);

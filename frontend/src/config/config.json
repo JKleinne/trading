@@ -13,5 +13,12 @@
     "XLM",
     "ADA",
     "TRX"
-  ]
+  ],
+  "OHCLV_modes": {
+    "hourly": "hourly",
+    "daily":  "daily",
+    "weekly":  "weekly",
+    "monthly": "monthly",
+    "yearly": "yearly"
+  }
 }

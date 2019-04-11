@@ -40,7 +40,7 @@ class Charts extends React.Component {
                 <HistoricCoinPrices />
             </div>
               <div className="col-md-4">
-                  <CoinTable/>
+                  <CoinTable />
               </div>
           </div>
             <div className="row">
@@ -48,7 +48,7 @@ class Charts extends React.Component {
                     <HistoricCoinPrices />
                 </div>
                 <div className="col-md-6">
-                    <CoinTable/>
+                    <CoinTable />
                 </div>
             </div>
         </div>

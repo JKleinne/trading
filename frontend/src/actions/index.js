@@ -1,12 +1,12 @@
 import axios from 'axios';
 import _ from 'lodash';
 import {
-    GET_USER,
     ADD_USER,
     GET_ALL_MULTI_PRICE,
     GET_HISTORICAL_DAILY,
     SET_COIN_TO_FETCH,
-    GET_COIN_TO_FETCH
+    GET_HISTORICAL_HOURLY,
+    SET_OHCLV_MODE
 } from './constants';
 
 import config from '../config/config';
@@ -42,6 +42,19 @@ export const getHistoricalDaily = (coin, dayLimit) => {
     }
 };
 
+export const getHistoricalHourly = (coin, dayLimit) => {
+    return async dispatch => {
+        if(coin === 'Ƀ')
+            coin = 'BTC';
+        else if(coin === 'Ł')
+            coin = 'LTC';
+
+        let data = await axios.get(
+            `${config.cc_call_url}/histohour?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cc_apikey}`);
+        dispatch({ type: GET_HISTORICAL_HOURLY, payload: data })
+    }
+};
+
 export const setCoinToFetch = coin => {
     return dispatch => {
         if(coin === 'Ƀ')
@@ -51,4 +64,8 @@ export const setCoinToFetch = coin => {
 
         dispatch({ type: SET_COIN_TO_FETCH, payload: coin });
     }
-}
+};
+
+export const setOHCLVMode = (mode) => {
+    return dispatch => dispatch({type: SET_OHCLV_MODE, payload: mode});
+};

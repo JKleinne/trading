@@ -5,12 +5,14 @@ import config from '../../config/config'
 import {
   getAllCoinPrices,
   getHistoricalDaily,
-  setCoinToFetch
+  setCoinToFetch,
+  getHistoricalHourly
 } from '../../actions/index';
 
 const mapStateToProps = state => {
   return {
-    coins: state.coins.coinCurrent
+    coins: state.coins.coinCurrent,
+    mode: state.coins.ohclvMode
   }
 };
 
@@ -29,7 +31,12 @@ class CoinTable extends Component {
   }
 
   handleClick(evt) {
-    this.props.getHistoricalDaily(evt._targetInst.return.key, 365);
+    if(this.props.mode === config.OHCLV_modes.daily)
+      this.props.getHistoricalHourly(evt._targetInst.return.key, 24);
+    else if(this.props.mode === config.OHCLV_modes.weekly)
+      this.props.getHistoricalDaily(evt._targetInst.return.key, 7);
+    else
+      this.props.getHistoricalDaily(evt._targetInst.return.key, 365);
     this.props.setCoinToFetch(evt._targetInst.return.key);
   }
 
@@ -51,7 +58,7 @@ class CoinTable extends Component {
           <h4 className="title">Coins</h4>
         </div>
         <div className="content table-responsive table-full-width">
-          <table className="table table-hover table-striped">
+          <table className="table table-hover table-striped coinTable">
             <thead>
               <tr>
                 <th>Coin</th>
@@ -81,7 +88,8 @@ class CoinTable extends Component {
 const mapDispatchToProps = {
   getAllCoinPrices,
   getHistoricalDaily,
-  setCoinToFetch
+  setCoinToFetch,
+  getHistoricalHourly
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CoinTable);

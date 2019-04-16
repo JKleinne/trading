@@ -87,7 +87,7 @@ class LoginRegister extends Component {
 
                 try {
                     response = await axios.post("http://localhost:8000/users/login", {...this.state.login});
-                    console.log(`Response: ${JSON.stringify(response, null, 2)}`)
+                    this.props.setUserId(response.data);
                 } catch(error) {
                     response = error.response;
                 }
@@ -95,14 +95,13 @@ class LoginRegister extends Component {
                 if(response && response.status === 200)
                     this.setState({redirectTo: '/dashboard'});
                 else
-                    this.setState({ ...this.state, errorLogin: response.data.error })
+                    this.setState({ ...this.state, errorLogin: 'login error' })
             }
             else {
                 let response;
 
                 try {
                     response = await axios.post('http://localhost:8000/users/signup', {...this.state.signup});
-                    console.log(JSON.stringify(response, null, 2));
                 } catch(error) {
                     response = error.response;
                 }
@@ -336,7 +335,8 @@ class LoginRegister extends Component {
 
 const mapDispatchToProps = {
     getCountries,
-    getFiatCurrencies
+    getFiatCurrencies,
+    setUserId
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister);

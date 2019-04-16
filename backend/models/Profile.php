@@ -32,9 +32,9 @@ class Profile extends Model
         return $stmt->fetch();
     }
 
-    function modifyProfile($fname, $lname, $country_id, $currency_code)
+    function modifyProfile($user_id, $fname, $lname, $country_id)
     {
-        $stmt = $this->_connection->prepare("UPDATE profile SET fname = :fname, lname = :lname, age = :age, country_id = :country_id, currency_code = :currency_code WHERE user_id = :user_id");
-        $stmt->execute(['fname'=>$fname, 'lname'=>$lname, 'country_id'=>$country_id, 'currency_code'=>$currency_code]);
+        $stmt = $this->_connection->prepare("UPDATE Profile SET fname =:fname, lname =:lname, country_id =:country_id WHERE user_id =:user_id");
+        $stmt->execute(['fname'=>$fname, 'lname'=>$lname, 'country_id'=>$country_id, 'user_id'=>$user_id]);
     }
 }

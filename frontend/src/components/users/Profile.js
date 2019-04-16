@@ -5,12 +5,13 @@ import '../../stylesheets/profile-buttons.css';
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import mapStateToProps from "react-redux/es/connect/mapStateToProps";
-import mapDispatchToProps from "react-redux/es/connect/mapDispatchToProps";
+import _ from "lodash";
+import {getCountries, getFiatCurrencies} from "../../actions";
 
 const mapStateToProps = state => {
     return {
-        countries: state.countries.countries
+        countries: state.countries.countries,
+        userId: state.users.userId
     }
 };
 
@@ -25,12 +26,12 @@ class Profile extends Component {
     }
 
     async componentWillMount() {
-        //TODO fix this
-        const user = await axios.get('http://localhost:8000/users/getUser/59');
-        console.log(user.data);
+        const user = await axios.get(`http://localhost:8000/users/getUser/${this.props.userId}`);
         this.setState( {
             user: {...user.data}
         });
+
+        this.props.getCountries();
     };
 
     render() {
@@ -54,7 +55,7 @@ class Profile extends Component {
                                            this.setState({
                                                user: {
                                                    ...this.state.user,
-                                                   firstName: evt.target.value
+                                                   fname: evt.target.value
                                                }
                                            })
                                        }}/>
@@ -69,70 +70,39 @@ class Profile extends Component {
                                            this.setState({
                                                user: {
                                                    ...this.state.user,
-                                                   lastName: evt.target.value
+                                                   lname: evt.target.value
                                                }
                                            })
                                        }}/>
                             </div>
 
                             <div className="input">
-                                <label className="label">Country</label>
-                                <select className="profile" onLoad={evt => {
-                                    this.setState({
-                                        user: {
-                                            ...this.state.user,
-                                            country: `${this.state.user.country}`
-                                        }
-                                    });
-                                }}
+                                <label className="label">Country: </label>
+                                <select className="profile"
+                                        name="country" id="country"
                                         onChange={evt => {
                                             this.setState({
+                                                ...this.state,
                                                 user: {
                                                     ...this.state.user,
-                                                    country: evt.target.value
+                                                    country_id: evt.target.value
                                                 }
                                             });
                                         }}>
-                                    {/*<option value="0" selected={this.state. user && this.state.user.courseId == "0" ? 'selected' : ''}>*/}
-                                    {/*    Computer Science Technology*/}
-                                    {/*</option>*/}
-                                    {/*<option value="1" selected={this.state. user && this.state.user.courseId == "1" ? 'selected' : ''}>*/}
-                                    {/*    Computer Science And Mathematics*/}
-                                    {/*</option>*/}
-                                    {/*<option value="2" selected={this.state. user && this.state.user.courseId == "2" ? 'selected' : ''}>*/}
-                                    {/*    Social Science*/}
-                                    {/*</option>*/}
-                                    {/*<option value="3" selected={this.state. user && this.state.user.courseId == "3" ? 'selected' : ''}>*/}
-                                    {/*    Pure and Applied Science*/}
-                                    {/*</option>*/}
-                                    {/*<option value="4" selected={this.state. user && this.state.user.courseId == "4" ? 'selected' : ''}>*/}
-                                    {/*    Commerce*/}
-                                    {/*</option>*/}
-                                    {/*<option value="5" selected={this.state. user && this.state.user.courseId == "5" ? 'selected' : ''}>*/}
-                                    {/*    Communications*/}
-                                    {/*</option>*/}
-                                    {/*<option value="6" selected={this.state. user && this.state.user.courseId == "6" ? 'selected' : ''}>*/}
-                                    {/*    Business Administration*/}
-                                    {/*</option>*/}
-                                    {/*<option value="7" selected={this.state. user && this.state.user.courseId == "7" ? 'selected' : ''}>*/}
-                                    {/*    Early Childhood education*/}
-                                    {/*</option>*/}
-                                    {/*<option value="8" selected={this.state. user && this.state.user.courseId == "8" ? 'selected' : ''}>*/}
-                                    {/*    Nursing*/}
-                                    {/*</option>*/}
-                                    {/*<option value="9" selected={this.state. user && this.state.user.courseId == "9" ? 'selected' : ''}>*/}
-                                    {/*    Music*/}
-                                    {/*</option>*/}
-                                    {/*<option value="10" selected={this.state. user && this.state.user.courseId == "10" ? 'selected' : ''}>*/}
-                                    {/*    Science*/}
-                                    {/*</option>*/}
+
+                                    {this.props.countries && this.state.user ? _.map(this.props.countries, country => {
+                                        return <option
+                                                    value = { country.country_id }
+                                                    selected={this.state.user.country_id === country.country_id ? "selected" : ""}>
+                                                         { country.country_name }
+                                              </option>
+                                    }) : ''}
                                 </select>
                             </div>
 
                             <div>
                                 <a className="bttn" onClick={async () => {
-                                    this.setState({...this.state, redirectTo: '/users'});
-                                    await axios.post(`/users/updateStudent/${this.state.user.studentId}`, {user: this.state.user});
+                                    await axios.post(`http://localhost:8000/users/updateProfile/${this.props.userId}`, {...this.state.user});
                                 }}>Save Changes</a>
                             </div>
 
@@ -143,5 +113,9 @@ class Profile extends Component {
         }
     }
 }
+
+const mapDispatchToProps = {
+    getCountries
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

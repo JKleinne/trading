@@ -62,7 +62,7 @@ $app->post('/users/login', function (Request $request, Response $response, array
     if(password_verify($password, $user_password))
         $response->getBody()->write($user->getUser($email)["user_id"]);
     else
-        $response->getBody()->write(400);
+        $response->withStatus(400);
 
     return $response;
 });
@@ -74,6 +74,19 @@ $app->get('/users/getUser/{user_id}', function (Request $request, Response $resp
     $stuff = $profile->getProfile($args['user_id']);
 
     $jsonobj = json_encode($stuff);
+
+    $response->getBody()->write($jsonobj);
+
+    return $response;
+});
+
+$app->post('/users/updateProfile/{user_id}', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+    $profile = new Profile();
+
+   $profile->modifyProfile($args['user_id'], $data["fname"], $data["lname"], $data["country_id"]);
+
+    $jsonobj = json_encode($data);
 
     $response->getBody()->write($jsonobj);
 

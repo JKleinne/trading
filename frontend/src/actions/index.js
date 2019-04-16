@@ -101,10 +101,8 @@ export const getCryptoCurrencies =() => {
     }
 };
 
-export const setUserId = user_id => {
-  return async dispatch => {
-      let userId = await axios.get(`http://localhost:8000/users/getUser/${user_id}`);
-
+export const setUserId = userId => {
+  return dispatch => {
       dispatch({type:SET_USER_ID, payload: userId })
   }
 };

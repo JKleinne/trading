@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 11, 2019 at 04:49 PM
+-- Generation Time: Apr 16, 2019 at 09:05 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -21,19 +21,6 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `crypto_trading` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE `crypto_trading`;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `balance`
---
-
-CREATE TABLE `balance` (
-  `balance_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `currency_code` char(3) NOT NULL,
-  `balance` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -115,7 +102,8 @@ INSERT INTO `profile` (`user_id`, `fname`, `lname`, `country_id`, `currency_code
 (59, 'uyt', 'uyt', 0, 'CAD'),
 (60, 'do', 'david', 6, 'USD'),
 (61, 'asdf', 'asdf', 0, 'CAD'),
-(62, 'gg', 'gg', 0, 'CAD');
+(62, 'gg', 'gg', 0, 'CAD'),
+(1, 'TEST', 'TEST', 0, 'CAD');
 
 -- --------------------------------------------------------
 
@@ -126,8 +114,8 @@ INSERT INTO `profile` (`user_id`, `fname`, `lname`, `country_id`, `currency_code
 CREATE TABLE `transaction` (
   `transaction_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `pay_curr_id` int(11) NOT NULL,
-  `buy_curr_id` int(11) NOT NULL,
+  `pay_wallet_id` int(11) NOT NULL,
+  `buy_wallet_id` int(11) NOT NULL,
   `pay_amount` int(11) NOT NULL,
   `buy_amount` int(11) NOT NULL,
   `date` date NOT NULL
@@ -153,7 +141,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `email`, `password`, `two_fa`, `role`, `status`) VALUES
-(1, 'qwe', 'qwe', 0, '', ''),
+(1, 'TEST', 'TEST', 0, 'user', 'active'),
 (2, 'asd', 'asd', 0, '', ''),
 (3, 'wqe', 'wqe', 0, '', ''),
 (4, 'rty', 'rty', 0, '', ''),
@@ -171,17 +159,37 @@ INSERT INTO `user` (`user_id`, `email`, `password`, `two_fa`, `role`, `status`) 
 (61, 'asdf', 'asdf', 0, '', ''),
 (62, 'gg', '$2y$10$Z78hvlDD7PpdBWUMok8paOBv3IqvnJY135xe/szI3K/hhLtLkSnLm', 0, '', '');
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `wallet`
+--
+
+CREATE TABLE `wallet` (
+  `wallet_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `currency_code` char(3) NOT NULL,
+  `balance` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `wallet`
+--
+
+INSERT INTO `wallet` (`wallet_id`, `user_id`, `currency_code`, `balance`) VALUES
+(1, 1, 'ADA', 500),
+(2, 1, 'BCH', 500),
+(3, 1, 'BNB', 500),
+(4, 1, 'BTC', 500),
+(5, 1, 'CAD', 1243),
+(6, 1, 'EOS', 1243),
+(7, 1, 'ETC', 564),
+(8, 1, 'LTC', 43),
+(9, 1, 'TRX', 3245);
+
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `balance`
---
-ALTER TABLE `balance`
-  ADD PRIMARY KEY (`balance_id`),
-  ADD KEY `balance_user_id_fk` (`user_id`),
-  ADD KEY `balance_currency_code_fk` (`currency_code`);
 
 --
 -- Indexes for table `country`
@@ -209,8 +217,8 @@ ALTER TABLE `profile`
 ALTER TABLE `transaction`
   ADD PRIMARY KEY (`transaction_id`),
   ADD KEY `user_id` (`user_id`),
-  ADD KEY `balance_id` (`pay_curr_id`),
-  ADD KEY `transaction_buy_curr_id_fk` (`buy_curr_id`);
+  ADD KEY `balance_id` (`pay_wallet_id`),
+  ADD KEY `transaction_buy_curr_id_fk` (`buy_wallet_id`);
 
 --
 -- Indexes for table `user`
@@ -218,6 +226,14 @@ ALTER TABLE `transaction`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
   ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indexes for table `wallet`
+--
+ALTER TABLE `wallet`
+  ADD PRIMARY KEY (`wallet_id`),
+  ADD KEY `balance_user_id_fk` (`user_id`),
+  ADD KEY `balance_currency_code_fk` (`currency_code`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -234,16 +250,13 @@ ALTER TABLE `transaction`
 ALTER TABLE `user`
   MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 --
+-- AUTO_INCREMENT for table `wallet`
+--
+ALTER TABLE `wallet`
+  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `balance`
---
-ALTER TABLE `balance`
-  ADD CONSTRAINT `balance_currency_code_fk` FOREIGN KEY (`currency_code`) REFERENCES `currency` (`currency_code`),
-  ADD CONSTRAINT `balance_ibfk_1` FOREIGN KEY (`balance_id`) REFERENCES `user` (`user_id`),
-  ADD CONSTRAINT `balance_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `profile`
@@ -257,9 +270,16 @@ ALTER TABLE `profile`
 -- Constraints for table `transaction`
 --
 ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_buy_curr_id_fk` FOREIGN KEY (`buy_curr_id`) REFERENCES `balance` (`balance_id`),
-  ADD CONSTRAINT `transaction_pay_curr_id_fk` FOREIGN KEY (`pay_curr_id`) REFERENCES `balance` (`balance_id`),
+  ADD CONSTRAINT `transaction_buy_wallet_id_fk` FOREIGN KEY (`buy_wallet_id`) REFERENCES `wallet` (`wallet_id`),
+  ADD CONSTRAINT `transaction_pay_wallet_id_fk` FOREIGN KEY (`pay_wallet_id`) REFERENCES `wallet` (`wallet_id`),
   ADD CONSTRAINT `transaction_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+
+--
+-- Constraints for table `wallet`
+--
+ALTER TABLE `wallet`
+  ADD CONSTRAINT `wallet_currency_code_fk` FOREIGN KEY (`currency_code`) REFERENCES `currency` (`currency_code`),
+  ADD CONSTRAINT `wallet_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

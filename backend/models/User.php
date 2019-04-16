@@ -20,6 +20,13 @@ class User extends Model
         return $stmt->fetch();
 	}
 
+    public function getUserWithId($user_id)
+    {
+        $stmt = $this->_connection->prepare("SELECT * FROM User WHERE user_id = :user_id");
+        $stmt->execute(['user_id'=>$user_id]);
+        return $stmt->fetch();
+    }
+
     public function addUser($email, $password, $two_fa, $role, $status)
 	{
 	    $hash = password_hash($password, PASSWORD_DEFAULT);

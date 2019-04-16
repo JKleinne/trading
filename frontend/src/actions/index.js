@@ -10,7 +10,8 @@ import {
     GET_COIN_TO_FETCH,
     GET_COUNTRIES,
     GET_FIAT_CURRENCIES,
-    GET_CRYPTO_CURRENCIES
+    GET_CRYPTO_CURRENCIES,
+    SET_USER_ID
 } from './constants';
 
 import config from '../config/config';
@@ -92,10 +93,18 @@ export const getFiatCurrencies = () => {
     }
 }
 
-export const getCryptoCurrencies = () => {
+export const getCryptoCurrencies =() => {
     return async dispatch => {
         let crypto = await axios.get('http://localhost:8000/currencies/getCryptoCurrencies');
 
         dispatch({type:GET_CRYPTO_CURRENCIES, payload: crypto })
     }
+};
+
+export const setUserId = user_id => {
+  return async dispatch => {
+      let userId = await axios.get(`http://localhost:8000/users/getUser/${user_id}`);
+
+      dispatch({type:SET_USER_ID, payload: userId })
+  }
 };

@@ -1,6 +1,7 @@
 import {
     GET_USER,
-    ADD_USER
+    ADD_USER,
+    SET_USER_ID
 } from '../actions/constants';
 
 export default (state = {}, action) => {
@@ -16,6 +17,12 @@ export default (state = {}, action) => {
                 ...state,
                 payload: action.payload
             };
+
+        case SET_USER_ID:
+            return {
+                ...state,
+                userId: action.payload
+        };
 
         default:
             return state;

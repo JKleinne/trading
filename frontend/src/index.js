@@ -15,6 +15,8 @@ import LoginRegister from './components/authentication/LoginRegister';
 import Dashboard from './components/dashboard/index';
 import SignupSuccess from './components/authentication/SignupSuccess';
 import ForgorPassword from './components/authentication/ForgotPassword';
+import BuyAndSell from './components/BuyAndSell';
+import Profile from './components/users/Profile';
 
 // Proxy all HTTP requests to baseURL
 //axios.defaults.baseURL = 'http://localhost:8080';
@@ -29,6 +31,8 @@ const routing = (
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/signupSuccess" component={SignupSuccess} />
                 <Route path="/forgotPassword" component={ForgorPassword} />
+                <Route path="/buy-and-sell" component={BuyAndSell}/>
+                <Route path="/profile" component={Profile}/>
             </Switch>
         </Router>
     </Provider>

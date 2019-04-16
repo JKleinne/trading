@@ -6,7 +6,11 @@ import '../../stylesheets/login-signup.css';
 
 import { Style } from 'radium';
 import _ from 'lodash';
-import {getCountries, getFiatCurrencies} from "../../actions";
+import {
+    getCountries,
+    getFiatCurrencies,
+    setUserId
+} from "../../actions";
 
 import { connect } from 'react-redux';
 
@@ -82,7 +86,8 @@ class LoginRegister extends Component {
                 let response;
 
                 try {
-                    response = await axios.post("/users/login", [...this.state.login]);
+                    response = await axios.post("http://localhost:8000/users/login", {...this.state.login});
+                    this.props.setUserId(response.data);
                 } catch(error) {
                     response = error.response;
                 }
@@ -90,14 +95,13 @@ class LoginRegister extends Component {
                 if(response && response.status === 200)
                     this.setState({redirectTo: '/dashboard'});
                 else
-                    this.setState({ ...this.state, errorLogin: response.data.error })
+                    this.setState({ ...this.state, errorLogin: 'login error' })
             }
             else {
                 let response;
 
                 try {
                     response = await axios.post('http://localhost:8000/users/signup', {...this.state.signup});
-                    console.log(JSON.stringify(response, null, 2));
                 } catch(error) {
                     response = error.response;
                 }
@@ -331,7 +335,8 @@ class LoginRegister extends Component {
 
 const mapDispatchToProps = {
     getCountries,
-    getFiatCurrencies
+    getFiatCurrencies,
+    setUserId
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister);

@@ -2,6 +2,7 @@
     "require": {
         "slim/slim": "^3.12",
       "ext-curl": "*",
-      "ext-pdo": "*"
+      "ext-pdo": "*",
+      "ext-json": "*"
     }
 }

@@ -60,9 +60,22 @@ $app->post('/users/login', function (Request $request, Response $response, array
     $user_password = $user->getUser($email)["password"];
 
     if(password_verify($password, $user_password))
-        $response->getBody()->write(200);
+        $response->getBody()->write($user->getUser($email)["user_id"]);
     else
         $response->getBody()->write(400);
+
+    return $response;
+});
+
+$app->get('/users/getUser/{user_id}', function (Request $request, Response $response, array $args) {
+    $user = new User();
+    $profile = new Profile();
+
+    $stuff = $profile->getProfile($args['user_id']);
+
+    $jsonobj = json_encode($stuff);
+
+    $response->getBody()->write($jsonobj);
 
     return $response;
 });

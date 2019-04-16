@@ -24,12 +24,17 @@ class Profile extends Model
         $stmt = $this->_connection->prepare("INSERT INTO User(email, password, two_fa, role, status) VALUES(:email, :password, :two_fa, :role, :status)");
         $stmt->execute(['email'=>$email, 'password'=>$password, 'two_fa'=>$two_fa, 'role'=>$role, 'status'=>$status]);
     }
-	
-//	function modifyProfile($f, $l, $a, $ci, $cc)
-//	{
-//		$profile = new Profile($data["fname"], $data["lname"], $data["age"], $data["country_id"], $data["currency_code"]);
-//
-//		$stmt = $DBH->prepare("UPDATE profile SET fname = :fname, lname = :lname, age = :age, country_id = :country_id, currency_code = :currency_code WHERE user_id = :user_id");
-//		$stmt = execute((array)$profile, $_SESSION["user_id"]);
-//	}
+
+    public function getProfile($user_id)
+    {
+        $stmt = $this->_connection->prepare("SELECT * FROM Profile WHERE user_id = :user_id");
+        $stmt->execute(['user_id'=>$user_id]);
+        return $stmt->fetch();
+    }
+
+    function modifyProfile($fname, $lname, $country_id, $currency_code)
+    {
+        $stmt = $this->_connection->prepare("UPDATE profile SET fname = :fname, lname = :lname, age = :age, country_id = :country_id, currency_code = :currency_code WHERE user_id = :user_id");
+        $stmt->execute(['fname'=>$fname, 'lname'=>$lname, 'country_id'=>$country_id, 'currency_code'=>$currency_code]);
+    }
 }

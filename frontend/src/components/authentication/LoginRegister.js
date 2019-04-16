@@ -6,7 +6,11 @@ import '../../stylesheets/login-signup.css';
 
 import { Style } from 'radium';
 import _ from 'lodash';
-import {getCountries, getFiatCurrencies} from "../../actions";
+import {
+    getCountries,
+    getFiatCurrencies,
+    setUserId
+} from "../../actions";
 
 import { connect } from 'react-redux';
 

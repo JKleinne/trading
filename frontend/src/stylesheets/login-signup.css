@@ -514,7 +514,9 @@ a {
 select {
     cursor: pointer;
     display: inline-block;
-    position: relative;
+    position: absolute;
+    right: 20%;
+    top: 20%;
     font-size: 16px;
     color: #ED2553;
     width: 220px;
@@ -532,7 +534,7 @@ select.profile {
     background: #ED2553;
     color: white;
     width: 220px;
-    height: 60px;
+    height: 55px;
     padding: 5px 10px;
     float: right;
 }

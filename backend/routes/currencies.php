@@ -17,3 +17,13 @@ $app->get('/currencies/getFiatCurrencies', function (Request $request, Response 
     $response->getBody()->write($jsonobj);
     return $response;
 });
+
+$app->get('/currencies/getCryptoCurrencies', function (Request $request, Response $response, array $args) {
+    $cryptoCurrencies = new Currency();
+    $cryptoCurrencies = $cryptoCurrencies->getCryptoCurrencies();
+
+    $jsonobj = json_encode($cryptoCurrencies);
+
+    $response->getBody()->write($jsonobj);
+    return $response;
+});

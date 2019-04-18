@@ -133,6 +133,8 @@ a:hover,a:focus {
     width: 100%;
 }
 
-.Graph {
-
+.buy-sell {
+    height: 100%;
+    position: absolute;
+    left: 25%
 }

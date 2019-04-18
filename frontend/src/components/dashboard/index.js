@@ -36,10 +36,10 @@ class Charts extends React.Component {
           <Navigation />
         <div className="container-fluid">
           <div className="row">
-            <div className="col-md-8">
+            <div className="col-md-7">
                 <HistoricCoinPrices />
             </div>
-              <div className="col-md-4">
+              <div className="col-md-5">
                   <CoinTable />
               </div>
           </div>

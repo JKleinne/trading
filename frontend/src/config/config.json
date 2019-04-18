@@ -3,6 +3,7 @@
   "cc_call_url": "https://min-api.cryptocompare.com/data",
 
   "coins": [
+    "ADA",
     "BTC",
     "ETC",
     "XRP",

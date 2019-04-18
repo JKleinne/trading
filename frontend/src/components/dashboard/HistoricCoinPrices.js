@@ -54,12 +54,6 @@ class HistoricCoinPrices extends Component {
       this.props.setOHCLVMode(config.OHCLV_modes.monthly);
     };
 
-    handleYearlyClick = () => {
-        this.setState({ dailyWeeklyClicked: false })  ;
-        this.props.getHistoricalDaily(this.props.currentCoin, 365);
-        this.props.setOHCLVMode(config.OHCLV_modes.yearly);
-    };
-
     render() {
 
         /*
@@ -139,7 +133,6 @@ class HistoricCoinPrices extends Component {
                         <button onClick={this.handleDailyClick} className="btn btn-info btn-xs btn-fill">Daily</button>
                         <button onClick={this.handleWeeklyClick} className="btn btn-info btn-xs btn-fill">Weekly</button>
                         <button onClick={this.handleMonthlyClick} className="btn btn-info btn-xs btn-fill">Monthly</button>
-                        <button onClick={this.handleYearlyClick} className="btn btn-info btn-xs btn-fill">Year</button>
                     </div>
                 </div>
                 <Line ref={ref => chartRef = ref} data={data} options={options} redraw />

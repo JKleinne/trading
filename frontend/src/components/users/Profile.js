@@ -59,7 +59,6 @@ class Profile extends Component {
                                            })
                                        }}/>
                             </div>
-
                             <div className="input">
                                 <label className="label">Last Name</label>
                                 <input type="text"

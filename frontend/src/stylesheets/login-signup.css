@@ -539,6 +539,19 @@ select.profile {
     float: right;
 }
 
+select.modal {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    font-size: 12px;
+    background: #ED2553;
+    color: white;
+    width: 200px;
+    height: 45px;
+    padding: 5px 10px;
+    float: right;
+}
+
 .analyticsContainer {
     background-color: white;
 }
@@ -572,4 +585,28 @@ select.profile {
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+}
+
+.buyContainer {
+    width: 100%;
+    max-width: 460px;
+    max-height: 750px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-50%, 50%);
+    -ms-transform: translate(-50%, 50%);
+}
+
+.summaryContainer {
+    width: 100%;
+    max-width: 460px;
+    max-height: 750px;
+    position: absolute;
+    top: 8500%;
+    left: 20%;
+    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-50%, 50%);
+    -ms-transform: translate(-50%, 50%);
 }

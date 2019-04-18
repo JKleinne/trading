@@ -8,7 +8,10 @@ class Navigation extends Component {
 
         this.state = {};
 
-        this.logoutClicked = () => this.setState({ redirectTo: '/' });
+        this.logoutClicked = () =>  {
+            sessionStorage.removeItem('userId');
+            this.setState({ redirectTo: '/' });
+        };
         this.dashboardClicked = () => this.setState({ redirectTo: '/dashboard' });
         this.profileClicked = () => this.setState({ redirectTo: '/profile' });
         this.settingsClicked = () => this.setState({ redirectTo: '/settings'});

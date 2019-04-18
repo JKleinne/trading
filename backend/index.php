@@ -14,5 +14,6 @@ $_SESSION['app'] = $app;
 require_once "./routes/users.php";
 require_once "./routes/countries.php";
 require_once "./routes/currencies.php";
+require_once './routes/transactions.php';
 
 $app->run();

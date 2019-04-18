@@ -18,12 +18,6 @@ export default (state = {}, action) => {
                 payload: action.payload
             };
 
-        case SET_USER_ID:
-            return {
-                ...state,
-                userId: action.payload
-        };
-
         default:
             return state;
     }

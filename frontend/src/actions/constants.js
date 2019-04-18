@@ -1,7 +1,6 @@
 // Users Constants
 export const ADD_USER = 'ADD_USER';
 export const GET_USER = 'GET_USER';
-export const SET_USER_ID = 'SET_USER_ID';
 
 // Coins Constants
 export const GET_COIN = 'GET_COIN';

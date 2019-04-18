@@ -91,7 +91,7 @@ export const getFiatCurrencies = () => {
 
         dispatch({type:GET_FIAT_CURRENCIES, payload: fiat })
     }
-}
+};
 
 export const getCryptoCurrencies =() => {
     return async dispatch => {
@@ -99,10 +99,4 @@ export const getCryptoCurrencies =() => {
 
         dispatch({type:GET_CRYPTO_CURRENCIES, payload: crypto })
     }
-};
-
-export const setUserId = userId => {
-  return dispatch => {
-      dispatch({type:SET_USER_ID, payload: userId })
-  }
 };

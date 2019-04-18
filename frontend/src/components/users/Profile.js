@@ -10,8 +10,7 @@ import {getCountries, getFiatCurrencies} from "../../actions";
 
 const mapStateToProps = state => {
     return {
-        countries: state.countries.countries,
-        userId: state.users.userId
+        countries: state.countries.countries
     }
 };
 
@@ -26,7 +25,7 @@ class Profile extends Component {
     }
 
     async componentWillMount() {
-        const user = await axios.get(`http://localhost:8000/users/getUser/${this.props.userId}`);
+        const user = await axios.get(`http://localhost:8000/users/getUser/${sessionStorage.getItem('userId')}`);
         this.setState( {
             user: {...user.data}
         });
@@ -102,7 +101,7 @@ class Profile extends Component {
 
                             <div>
                                 <a className="bttn" onClick={async () => {
-                                    await axios.post(`http://localhost:8000/users/updateProfile/${this.props.userId}`, {...this.state.user});
+                                    await axios.post(`http://localhost:8000/users/updateProfile/${sessionStorage.getItem('userId')}`, {...this.state.user});
                                 }}>Save Changes</a>
                             </div>
 

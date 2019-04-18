@@ -8,8 +8,7 @@ import { Style } from 'radium';
 import _ from 'lodash';
 import {
     getCountries,
-    getFiatCurrencies,
-    setUserId
+    getFiatCurrencies
 } from "../../actions";
 
 import { connect } from 'react-redux';
@@ -87,7 +86,7 @@ class LoginRegister extends Component {
 
                 try {
                     response = await axios.post("http://localhost:8000/users/login", {...this.state.login});
-                    this.props.setUserId(response.data);
+                    sessionStorage.setItem('userId', response.data);
                 } catch(error) {
                     response = error.response;
                 }
@@ -335,8 +334,7 @@ class LoginRegister extends Component {
 
 const mapDispatchToProps = {
     getCountries,
-    getFiatCurrencies,
-    setUserId
+    getFiatCurrencies
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister);

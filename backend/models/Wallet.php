@@ -4,11 +4,18 @@ class Wallet extends Model {
         parent::__construct();
     }
 
-    public function getWallet($user_id, $ticker)
+    public function getWalletByUserIdAndTicker($user_id, $ticker)
     {
         $stmt = $this->_connection->prepare("SELECT * FROM Wallet WHERE user_id = :user_id AND ticker = :ticker");
         $stmt->execute(['user_id'=>$user_id, 'ticker'=>$ticker]);
         return $stmt->fetch();
+    }
+
+    public function getAllUserWallets($user_id)
+    {
+        $stmt = $this->_connection->prepare("SELECT * FROM Wallet WHERE user_id = :user_id");
+        $stmt->execute(['user_id'=>$user_id]);
+        return $stmt->fetchAll();
     }
 
     public function updateBalance($wallet_id, $newBalance) {

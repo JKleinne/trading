@@ -1,7 +1,7 @@
 import {
     GET_USER,
     ADD_USER,
-    SET_USER_ID
+    GET_USER_WALLETS
 } from '../actions/constants';
 
 export default (state = {}, action) => {
@@ -15,7 +15,13 @@ export default (state = {}, action) => {
         case ADD_USER:
             return {
                 ...state,
-                payload: action.payload
+                users: action.payload
+            };
+
+        case GET_USER_WALLETS:
+            return {
+                ...state,
+                wallets: action.payload.data
             };
 
         default:

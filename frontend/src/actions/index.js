@@ -7,11 +7,10 @@ import {
     SET_COIN_TO_FETCH,
     GET_HISTORICAL_HOURLY,
     SET_OHCLV_MODE,
-    GET_COIN_TO_FETCH,
     GET_COUNTRIES,
     GET_FIAT_CURRENCIES,
     GET_CRYPTO_CURRENCIES,
-    SET_USER_ID
+    GET_USER_WALLETS
 } from './constants';
 
 import config from '../config/config';
@@ -89,14 +88,22 @@ export const getFiatCurrencies = () => {
     return async dispatch => {
         let fiat = await axios.get('http://localhost:8000/currencies/getFiatCurrencies');
 
-        dispatch({type:GET_FIAT_CURRENCIES, payload: fiat })
+        dispatch({ type: GET_FIAT_CURRENCIES, payload: fiat })
     }
 };
 
-export const getCryptoCurrencies =() => {
+export const getCryptoCurrencies = () => {
     return async dispatch => {
         let crypto = await axios.get('http://localhost:8000/currencies/getCryptoCurrencies');
 
-        dispatch({type:GET_CRYPTO_CURRENCIES, payload: crypto })
+        dispatch({ type: GET_CRYPTO_CURRENCIES, payload: crypto })
+    }
+};
+
+export const getUserWallets = () => {
+    return async dispatch => {
+        let wallets = await axios.get(`http://localhost:8000/transactions/getUserWallets/${sessionStorage.getItem('userId')}`);
+
+        dispatch({ type: GET_USER_WALLETS, payload: wallets })
     }
 };

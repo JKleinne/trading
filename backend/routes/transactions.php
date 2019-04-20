@@ -10,36 +10,6 @@ require_once './models/Currency.php';
 require_once './models/Transaction.php';
 require_once './models/Wallet.php';
 
-$app->post('/transactions/buy', function (Request $request, Response $response, array $args) {
-    $data = $request->getParsedBody();
-
-    $transaction = new Transaction();
-    $wallet = new Wallet();
-
-    // Get wallet matching the payload ticker
-    $pay_wallet_id = $wallet->getWallet($data["userId"], "CAD")["wallet_id"];
-    $buy_wallet_id = $wallet->getWallet($data["userId"], $data["ticker"])["wallet_id"];
-
-    $transaction->createTransaction(
-        $data["userId"],
-        $pay_wallet_id,
-        $buy_wallet_id,
-        $data["pay_amount"],
-        $data["buy_amount"],
-        $data["fee"],
-        $data["total"]
-    );
-
-    //Update balances
-    $wallet->updateBalance($pay_wallet_id, -$data["total"]);
-    $wallet->updateBalance($buy_wallet_id, $data["buy_amount"]);
-
-    $stuff = json_encode($pay_wallet_id);
-
-    $response->getBody()->write($stuff);
-    return $response;
-});
-
 /* Payload example to be passed to /transactions/buy or /transactions/sell
  * {
   "ticker": "BTC",
@@ -50,3 +20,89 @@ $app->post('/transactions/buy', function (Request $request, Response $response, 
   "userId": "62"
 }
  */
+
+$app->get('/transactions/getUserWallets/{user_id}', function (Request $request, Response $response, array $args) {
+    $wallet = new Wallet();
+    $wallets = $wallet->getAllUserWallets($args['user_id']);
+
+    $jsonobj = json_encode($wallets);
+
+    $response->getBody()->write($jsonobj);
+    return $response;
+});
+
+$app->post('/transactions/buy', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+
+    $transaction = new Transaction();
+    $wallet = new Wallet();
+
+    // Get wallet matching the payload ticker
+    $pay_wallet_id = $wallet->getWalletByUserIdAndTicker($data["userId"], "CAD")["wallet_id"];
+    $buy_wallet_id = $wallet->getWalletByUserIdAndTicker($data["userId"], $data["ticker"])["wallet_id"];
+
+    $transaction->createTransaction(
+        $data["userId"],
+        $pay_wallet_id,
+        $buy_wallet_id,
+        $data["pay_amount"],
+        $data["buy_amount"],
+        $data["fee"],
+        $data["total"],
+        "buy"
+    );
+
+    $pay_updated_balance = $wallet->getWalletBalance($pay_wallet_id)["balance"];
+
+
+    //Update balances
+    $wallet->updateBalance($pay_wallet_id, (float)$wallet->getWalletBalance($pay_wallet_id)["balance"] - (float)$data["total"]);
+    $wallet->updateBalance($buy_wallet_id, (float)$wallet->getWalletBalance($buy_wallet_id)["balance"] + (float)$data["buy_amount"]);
+
+    $stuff = json_encode($pay_updated_balance);
+
+    $response->getBody()->write($stuff);
+    return $response;
+});
+
+$app->post('/transactions/sell', function (Request $request, Response $response, array $args) {
+    /*
+     * {
+  "ticker": "BTC",
+  "pay_amount": "0.001",
+  "buy_amount": 7.211,
+  "fee": 0.36,
+  "total": 6.851
+}
+     */
+
+    $data = $request->getParsedBody();
+
+    $transaction = new Transaction();
+    $wallet = new Wallet();
+
+    // Get wallet matching the payload ticker
+    $pay_wallet_id = $wallet->getWalletByUserIdAndTicker($data["userId"], "CAD")["wallet_id"];
+    $buy_wallet_id = $wallet->getWalletByUserIdAndTicker($data["userId"], $data["ticker"])["wallet_id"];
+
+    $transaction->createTransaction(
+        $data["userId"],
+        $pay_wallet_id,
+        $buy_wallet_id,
+        $data["buy_amount"],
+        $data["pay_amount"],
+        $data["fee"],
+        $data["total"],
+        "sell"
+    );
+
+    //Update balances
+    $wallet->updateBalance($pay_wallet_id, (float)$wallet->getWalletBalance($pay_wallet_id)["balance"] + (float)$data["total"]);
+    $wallet->updateBalance($buy_wallet_id, (float)$wallet->getWalletBalance($buy_wallet_id)["balance"] - (float)$data["pay_amount"]);
+
+
+    $stuff = json_encode($pay_wallet_id);
+
+    $response->getBody()->write($stuff);
+    return $response;
+});

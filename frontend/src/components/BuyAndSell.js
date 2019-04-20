@@ -5,16 +5,19 @@ import { Field, reduxForm } from 'redux-form';
 import '../stylesheets/navigation.css';
 import axios from "axios";
 import Switch from 'react-ios-switch';
+import { format } from '../utilities/CurrencyFormat';
 import { connect } from 'react-redux';
 import {
     getCryptoCurrencies,
-    getAllCoinPrices
+    getAllCoinPrices,
+    getUserWallets
 } from "../actions";
 
 const mapStateToProps = state => {
     return {
         crypto: state.coins.crypto,
-        prices: state.coins.coinCurrent
+        prices: state.coins.coinCurrent,
+        wallet: state.users.wallets
     }
 };
 
@@ -34,6 +37,7 @@ class BuyAndSell extends Component {
     componentDidMount() {
         this.props.getCryptoCurrencies();
         this.props.getAllCoinPrices();
+        this.props.getUserWallets();
     }
 
     render() {
@@ -58,13 +62,27 @@ class BuyAndSell extends Component {
                                     <label>{this.state.checked ? 'Sell: ' : 'Buy: '}</label>
 
                                     <select className="modal" name="buy" id="buy"
-                                            onChange={evt => {
-                                                this.setState({
+                                            onChange={ async evt => {
+                                                this.state.checked ?
+                                                    await this.setState({
+                                                        ...this.state,
+                                                        transaction: {
+                                                            ...this.state.transaction,
+                                                            ticker: evt.target.value,
+                                                            buy_amount:
+                                                                this.state.checked ?
+                                                                    _.round(parseFloat(this.state.transaction.pay_amount) * parseFloat(_.replace(_.replace(this.props.prices[evt.target.value].CAD.PRICE, 'CAD', ''), ',', '')), 6)
+                                                                    :
+                                                                    _.round(parseFloat(evt.target.value) / parseFloat(_.replace(_.split(this.props.prices[evt.target.value], 'CAD'), ',', '')), 6)
+                                                        }
+                                                    })
+                                                    :
+                                                await this.setState({
                                                     ...this.state,
                                                     transaction: {
                                                         ...this.state.transaction,
                                                         ticker: evt.target.value,
-                                                        buy_amount: this.state.transaction.pay_amount ? _.round(parseFloat(this.state.transaction.pay_amount) / parseFloat(_.replace(_.split(this.props.prices[evt.target.value].CAD.PRICE, 'CAD')[1], ',', '')), 6) : 0
+                                                        buy_amount: this.state.transaction.pay_amount ? _.round(parseFloat(this.state.transaction.pay_amount) / parseFloat(_.replace(_.split(this.props.prices[evt.target.value].CAD.PRICE, 'CAD')[1], ',', '')), 6) : 0,
                                                     }
                                                 });
                                             }}>
@@ -77,14 +95,18 @@ class BuyAndSell extends Component {
                             </div>
                                 <div className="input" >
                                     <input type="number"
-                                           placeholder={this.state.checked ? 'Amount to receive($)' : "Amount to invest($)"}
+                                           placeholder={this.state.checked ? `Amount to sell(${this.state.transaction.ticker})` : "Amount to invest($)"}
                                            name="amountInvest" id="amountInvest" onChange={evt => {
                                         this.setState({
                                             ...this.state,
                                             transaction: {
                                                 ...this.state.transaction,
                                                 pay_amount: evt.target.value,
-                                                buy_amount: _.round(parseFloat(evt.target.value) / parseFloat(_.replace(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1], ',', '')), 6)
+                                                buy_amount:
+                                                this.state.checked ?
+                                                    _.round(parseFloat(evt.target.value) * parseFloat(_.replace(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1], ',', '')), 6)
+                                                    :
+                                                    _.round(parseFloat(evt.target.value) / parseFloat(_.replace(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1], ',', '')), 6)
                                             }
                                         });
                                     }}/>
@@ -96,12 +118,17 @@ class BuyAndSell extends Component {
                                             ...this.state,
                                             transaction: {
                                                 ...this.state.transaction,
-                                                fee: _.round(this.state.transaction.pay_amount * 0.05, 2),
-                                                total: parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
+                                                fee: this.state.checked ? _.round(this.state.transaction.buy_amount * 0.05, 2) :_.round(this.state.transaction.pay_amount * 0.05, 2),
+                                                total: this.state.checked ?
+                                                    parseFloat(this.state.transaction.buy_amount) - _.round(this.state.transaction.buy_amount * 0.05, 2)
+                                                    :parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
+
                                             }
                                         });
-                                        const response = await axios.post(`http://localhost:8000/transactions/buy`, {...this.state.transaction, userId: sessionStorage.getItem('userId')});
-                                        console.log(`Repsonse: ${JSON.stringify(response, null, 2)}`);
+                                        await axios.post(
+                                            `http://localhost:8000/transactions/${this.state.checked ? 'sell' : 'buy'}`,
+                                            {...this.state.transaction, userId: sessionStorage.getItem('userId')}
+                                            );
                                     }}>{this.state.checked ? 'Sell' : 'Buy'} {this.state.transaction.ticker}</a>
                                 </div>
                             </div>
@@ -112,32 +139,50 @@ class BuyAndSell extends Component {
                                 <div className="box">
                                     <div className="input" >
                                         <p className="text-muted">
-                                            You are buying
+                                            You are {this.state.checked ? 'selling' : 'buying'}
                                         </p>
                                         <div className="typo-line">
-                                            <h6>{this.state.transaction.buy_amount} {this.state.transaction.ticker}</h6>
+                                            <h6>{this.state.checked ? this.state.transaction.pay_amount : this.state.transaction.buy_amount} {this.state.transaction.ticker}</h6>
                                         </div>
 
-                                        {
-                                            this.props.prices ?
-                                                <div className="text-muted">
-                                                    <h4>@ {this.props.prices[this.state.transaction.ticker].CAD.PRICE} / {this.state.transaction.ticker}</h4>
-                                                </div>
-                                                : ''
-                                        }
+                                        <div className="text-muted">
+                                            {
+                                                this.props.prices ?
+                                                    <div className="text-muted">
+                                                        <h4>@ {this.props.prices[this.state.transaction.ticker].CAD.PRICE} / {this.state.transaction.ticker}</h4>
+                                                    </div>
+                                                    : ''
+                                            }
+                                        </div>
+
+                                        <div className="text-info">
+                                           <h6>You have {this.props.wallet ? _.find(this.props.wallet, wallet => wallet.ticker === this.state.transaction.ticker).balance : ''} {this.state.transaction.ticker}</h6>
+                                        </div>
                                     </div>
 
                                     <div className="input" >
                                     </div>
 
+                                    {
+                                        this.state.checked ?
+                                            <p className="text-muted">
+                                                {this.state.transaction.pay_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.checked ? this.state.transaction.buy_amount : this.state.transaction.pay_amount)}
+                                            </p>
+                                            :
+                                            <p className="text-muted">
+                                                {this.state.transaction.buy_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.checked ? this.state.transaction.buy_amount : this.state.transaction.pay_amount)}
+                                            </p>
+                                    }
                                     <p className="text-muted">
-                                        {this.state.transaction.buy_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD ${_.round(this.state.transaction.pay_amount, 2)}
+                                        Trading Fee........................................... CAD {format('CAD', this.state.checked ? this.state.transaction.buy_amount * 0.05 : this.state.transaction.pay_amount * 0.05)}
                                     </p>
                                     <p className="text-muted">
-                                        Trading Fee........................................... CAD ${_.round(this.state.transaction.pay_amount * 0.05, 2)}
-                                    </p>
-                                    <p className="text-muted">
-                                        Total.................................................... CAD ${parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)}
+                                        Total.................................................... CAD {
+                                        format('CAD',
+                                            this.state.checked ?
+                                         parseFloat(this.state.transaction.buy_amount) - _.round(this.state.transaction.buy_amount * 0.05, 2)
+                                            : parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2))
+                                    }
                                     </p>
 
 
@@ -155,7 +200,8 @@ class BuyAndSell extends Component {
 
 const mapDispatchToProps = {
     getCryptoCurrencies,
-    getAllCoinPrices
+    getAllCoinPrices,
+    getUserWallets
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuyAndSell);

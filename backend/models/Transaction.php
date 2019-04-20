@@ -12,11 +12,11 @@ class Transaction extends Model
         parent::__construct();
     }
 
-    public function createTransaction($user_id, $pay_curr_id, $buy_curr_id, $pay_amount, $buy_amount, $fee, $total)
+    public function createTransaction($user_id, $pay_curr_id, $buy_curr_id, $pay_amount, $buy_amount, $fee, $total, $type)
     {
         //be careful with date in the $currentdate
-        $stmt = $this->_connection->prepare("INSERT INTO Transaction (user_id, pay_wallet_id, buy_wallet_id, pay_amount, buy_amount, fee, total, date) VALUES (:user_id, :pay_wallet_id, :buy_wallet_id, :pay_amount, :buy_amount, :fee, :total, NOW())");
-        $stmt->execute(['user_id'=>$user_id, 'pay_wallet_id'=>$pay_curr_id, 'buy_wallet_id'=>$buy_curr_id, 'pay_amount'=>$pay_amount, 'buy_amount'=>$buy_amount, 'fee'=>$fee, 'total'=>$total]);
+        $stmt = $this->_connection->prepare("INSERT INTO Transaction (user_id, pay_wallet_id, buy_wallet_id, pay_amount, buy_amount, fee, total, date, type) VALUES (:user_id, :pay_wallet_id, :buy_wallet_id, :pay_amount, :buy_amount, :fee, :total, NOW(), :type)");
+        $stmt->execute(['user_id'=>$user_id, 'pay_wallet_id'=>$pay_curr_id, 'buy_wallet_id'=>$buy_curr_id, 'pay_amount'=>$pay_amount, 'buy_amount'=>$buy_amount, 'fee'=>$fee, 'total'=>$total, 'type'=>$type]);
     }
 
     public function getTransactions($date)

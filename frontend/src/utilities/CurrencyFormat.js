@@ -6,4 +6,4 @@ export const format = (currency, value) => {
     });
 
     return formatter.format(value)
-}
+};

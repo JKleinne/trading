@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2019 at 09:05 PM
+-- Generation Time: Apr 17, 2019 at 09:17 PM
 -- Server version: 10.1.21-MariaDB
 -- PHP Version: 5.6.30
 
@@ -116,10 +116,18 @@ CREATE TABLE `transaction` (
   `user_id` int(11) NOT NULL,
   `pay_wallet_id` int(11) NOT NULL,
   `buy_wallet_id` int(11) NOT NULL,
-  `pay_amount` int(11) NOT NULL,
-  `buy_amount` int(11) NOT NULL,
-  `date` date NOT NULL
+  `pay_amount` decimal(8,2) NOT NULL,
+  `buy_amount` decimal(8,2) NOT NULL,
+  `fee` decimal(8,2) NOT NULL,
+  `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
+
+--
+-- Dumping data for table `transaction`
+--
+
+INSERT INTO `transaction` (`transaction_id`, `user_id`, `pay_wallet_id`, `buy_wallet_id`, `pay_amount`, `buy_amount`, `fee`, `date`) VALUES
+(1, 1, 5, 4, '999999.99', '1000.00', '50.00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -169,7 +177,7 @@ CREATE TABLE `wallet` (
   `wallet_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `currency_code` char(3) NOT NULL,
-  `balance` int(11) NOT NULL
+  `balance` decimal(14,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -177,15 +185,15 @@ CREATE TABLE `wallet` (
 --
 
 INSERT INTO `wallet` (`wallet_id`, `user_id`, `currency_code`, `balance`) VALUES
-(1, 1, 'ADA', 500),
-(2, 1, 'BCH', 500),
-(3, 1, 'BNB', 500),
-(4, 1, 'BTC', 500),
-(5, 1, 'CAD', 1243),
-(6, 1, 'EOS', 1243),
-(7, 1, 'ETC', 564),
-(8, 1, 'LTC', 43),
-(9, 1, 'TRX', 3245);
+(1, 1, 'ADA', '500.00'),
+(2, 1, 'BCH', '500.00'),
+(3, 1, 'BNB', '500.00'),
+(4, 1, 'BTC', '500.00'),
+(5, 1, 'CAD', '1243.00'),
+(6, 1, 'EOS', '1243.00'),
+(7, 1, 'ETC', '564.00'),
+(8, 1, 'LTC', '43.00'),
+(9, 1, 'TRX', '3245.00');
 
 --
 -- Indexes for dumped tables
@@ -243,7 +251,7 @@ ALTER TABLE `wallet`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `user`
 --

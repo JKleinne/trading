@@ -27,7 +27,7 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
     $password = $data["password"];
 
     $user = new User();
-    $user->addUser($email, $password, '0', '0', '0');
+    $stuff = $user->addUser($email, $password, '0', '0', '0');
 
 
     $user_id = $user->getUser($email)["user_id"];
@@ -40,7 +40,7 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
     $profile->addProfile($user_id, $firstName, $lastName, $country, $currency);
 
 
-    $response->getBody()->write('Email: ' . $email . 'Country: ' . $country);
+    $response->getBody()->write($stuff);
     /*
      * Add to Database here
      */

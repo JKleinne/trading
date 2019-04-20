@@ -592,7 +592,7 @@ select.modal {
     max-width: 460px;
     max-height: 750px;
     position: absolute;
-    top: 50%;
+    top: -10000%;
     left: 50%;
     transform: translate(-50%, 50%);
     -webkit-transform: translate(-50%, 50%);
@@ -604,9 +604,14 @@ select.modal {
     max-width: 460px;
     max-height: 750px;
     position: absolute;
-    top: 8500%;
+    top: -20000%;
     left: 20%;
     transform: translate(-50%, 50%);
     -webkit-transform: translate(-50%, 50%);
     -ms-transform: translate(-50%, 50%);
+}
+
+.coinTable {
+    overflow-y: scroll;
+    height: 465px;
 }

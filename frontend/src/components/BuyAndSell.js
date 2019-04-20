@@ -4,9 +4,7 @@ import Navigation from './Navigation';
 import { Field, reduxForm } from 'redux-form';
 import '../stylesheets/navigation.css';
 import axios from "axios";
-import Switch from 'react-switch';
-import HistoricCoinPrices from "./dashboard/HistoricCoinPrices";
-import CoinTable from "./dashboard/CoinTable";
+import Switch from 'react-ios-switch';
 import { connect } from 'react-redux';
 import {
     getCryptoCurrencies,
@@ -27,8 +25,9 @@ class BuyAndSell extends Component {
         this.state = {
             transaction: {
                 ticker: 'ADA',
-                amount: "0.00000"
-            }
+                pay_amount: "0.00000"
+            },
+            checked: false
         }
     }
 
@@ -46,33 +45,46 @@ class BuyAndSell extends Component {
                         <div className="col-md-7">
                             <div className="buyContainer">
                             <div className="box">
+                                <label> Buy </label>
+                                <Switch
+                                    checked={this.state.checked}
+                                    onChange={checked => this.setState({ checked })}
+                                    offColor="grey"
+                                    onColor="grey"
+                                />
+                                    <label>Sell</label>
                                 <div className="input" >
-                                    <label>Buy: </label>
+
+                                    <label>{this.state.checked ? 'Sell: ' : 'Buy: '}</label>
+
                                     <select className="modal" name="buy" id="buy"
                                             onChange={evt => {
                                                 this.setState({
                                                     ...this.state,
                                                     transaction: {
                                                         ...this.state.transaction,
-                                                        ticker: evt.target.value
+                                                        ticker: evt.target.value,
+                                                        buy_amount: this.state.transaction.pay_amount ? _.round(parseFloat(this.state.transaction.pay_amount) / parseFloat(_.replace(_.split(this.props.prices[evt.target.value].CAD.PRICE, 'CAD')[1], ',', '')), 6) : 0
                                                     }
                                                 });
                                             }}>
 
                                         {this.props.crypto ? _.map(this.props.crypto, coin => {
-                                            return <option value = { coin.currency_code }>{ coin.currency_name }</option>
+                                            return <option value = { coin.ticker }>{ coin.currency_name }</option>
                                         }) : ''}
                                     </select>
+
                             </div>
                                 <div className="input" >
                                     <input type="number"
-                                           placeholder="Amount to invest($)" name="amountInvest" id="amountInvest" onChange={evt => {
+                                           placeholder={this.state.checked ? 'Amount to receive($)' : "Amount to invest($)"}
+                                           name="amountInvest" id="amountInvest" onChange={evt => {
                                         this.setState({
                                             ...this.state,
                                             transaction: {
                                                 ...this.state.transaction,
-                                                amount: evt.target.value,
-                                                cryptoValue: parseFloat(evt.target.value) / parseFloat(_.replace(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1], ',', ''))
+                                                pay_amount: evt.target.value,
+                                                buy_amount: _.round(parseFloat(evt.target.value) / parseFloat(_.replace(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1], ',', '')), 6)
                                             }
                                         });
                                     }}/>
@@ -80,8 +92,17 @@ class BuyAndSell extends Component {
 
                                 <div>
                                     <a className="bttn" onClick={async () => {
-                                        await axios.post(`http://localhost:8000/users/updateProfile/${sessionStorage.getItem('userId')}`, {...this.state.user});
-                                    }}>Buy {this.state.transaction.ticker}</a>
+                                        await this.setState({
+                                            ...this.state,
+                                            transaction: {
+                                                ...this.state.transaction,
+                                                fee: _.round(this.state.transaction.pay_amount * 0.05, 2),
+                                                total: parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
+                                            }
+                                        });
+                                        const response = await axios.post(`http://localhost:8000/transactions/buy`, {...this.state.transaction, userId: sessionStorage.getItem('userId')});
+                                        console.log(`Repsonse: ${JSON.stringify(response, null, 2)}`);
+                                    }}>{this.state.checked ? 'Sell' : 'Buy'} {this.state.transaction.ticker}</a>
                                 </div>
                             </div>
                             </div>
@@ -94,31 +115,33 @@ class BuyAndSell extends Component {
                                             You are buying
                                         </p>
                                         <div className="typo-line">
-                                            <h6>{this.state.transaction.cryptoValue} {this.state.transaction.ticker}</h6>
+                                            <h6>{this.state.transaction.buy_amount} {this.state.transaction.ticker}</h6>
                                         </div>
 
                                         {
                                             this.props.prices ?
-                                                <div className="typo-line">
-                                                    <small>@ {this.props.prices[this.state.transaction.ticker].CAD.PRICE} / {this.state.transaction.ticker}</small>
+                                                <div className="text-muted">
+                                                    <h4>@ {this.props.prices[this.state.transaction.ticker].CAD.PRICE} / {this.state.transaction.ticker}</h4>
                                                 </div>
                                                 : ''
                                         }
                                     </div>
 
-                                    {console.log(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1])}
+                                    <div className="input" >
+                                    </div>
+
+                                    <p className="text-muted">
+                                        {this.state.transaction.buy_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD ${_.round(this.state.transaction.pay_amount, 2)}
+                                    </p>
+                                    <p className="text-muted">
+                                        Trading Fee........................................... CAD ${_.round(this.state.transaction.pay_amount * 0.05, 2)}
+                                    </p>
+                                    <p className="text-muted">
+                                        Total.................................................... CAD ${parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)}
+                                    </p>
+
 
                                     <div className="input" >
-                                        <input type="number" disabled
-                                               placeholder="Amount to invest" name="amountInvest" id="amountInvest" onChange={evt => {
-                                            this.setState({
-                                                ...this.state,
-                                                transaction: {
-                                                    ...this.state.transaction,
-                                                    amount: evt.target.value
-                                                }
-                                            });
-                                        }}/>
                                     </div>
                                 </div>
                             </div>

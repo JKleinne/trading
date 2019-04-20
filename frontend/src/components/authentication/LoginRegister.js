@@ -255,7 +255,7 @@ class LoginRegister extends Component {
                                       });
                                   }}>
                               {this.props.fiat ? _.map(this.props.fiat, fiat => {
-                                  return <option value={fiat.currency_code}>{fiat.currency_code}</option>
+                                  return <option value={fiat.ticker}>{fiat.ticker}</option>
                               }) : ''}
                           </select>
                       </div>

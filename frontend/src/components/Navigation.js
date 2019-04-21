@@ -16,7 +16,9 @@ class Navigation extends Component {
         this.profileClicked = () => this.setState({ redirectTo: '/profile' });
         this.settingsClicked = () => this.setState({ redirectTo: '/settings'});
         this.buyClicked = () => this.setState({ redirectTo: '/buy-and-sell' });
+        this.withdrawDepositClicked = () => this.setState({ redirectTo: '/withdraw-deposit' });
     }
+
 
     render() {
         if (this.state.redirectTo)
@@ -44,6 +46,16 @@ class Navigation extends Component {
                                     <i className="fa fa-btc fa-2x"></i>
                                     <span className="nav-text" onClick={this.buyClicked}>
                             Buy and Sell Coins
+                        </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <a>
+                                    <i className="fa fa-money fa-2x"></i>
+                                    <span className="nav-text" onClick={this.withdrawDepositClicked}>
+                            Deposit/Withdraw
                         </span>
                                 </a>
                             </li>

@@ -106,3 +106,81 @@ $app->post('/transactions/sell', function (Request $request, Response $response,
     $response->getBody()->write($stuff);
     return $response;
 });
+
+$app->post('/transactions/deposit', function (Request $request, Response $response, array $args) {
+    /*
+     * {
+  "checked": false,
+  "amount": "200"
+}
+     */
+
+    $data = $request->getParsedBody();
+
+    $transaction = new Transaction();
+    $wallet = new Wallet();
+
+    // Get wallet matching the payload ticker
+    $pay_wallet_id = $wallet->getWalletByUserIdAndTicker($data["userId"], "CAD")["wallet_id"];
+    $buy_wallet_id = $pay_wallet_id;
+
+    $transaction->createTransaction(
+        $data["userId"],
+        $pay_wallet_id,
+        null,
+        $data["amount"],
+        null,
+        null,
+        null,
+        "deposit"
+    );
+
+    //Update balances
+    $wallet->updateBalance($pay_wallet_id, (float)$wallet->getWalletBalance($pay_wallet_id)["balance"] + (float)$data["amount"]);
+
+
+
+    $stuff = json_encode($pay_wallet_id);
+
+    $response->getBody()->write($stuff);
+    return $response;
+});
+
+$app->post('/transactions/withdraw', function (Request $request, Response $response, array $args) {
+    /*
+     * {
+  "checked": false,
+  "amount": "200"
+}
+     */
+
+    $data = $request->getParsedBody();
+
+    $transaction = new Transaction();
+    $wallet = new Wallet();
+
+    // Get wallet matching the payload ticker
+    $pay_wallet_id = $wallet->getWalletByUserIdAndTicker($data["userId"], "CAD")["wallet_id"];
+    $buy_wallet_id = $pay_wallet_id;
+
+    $transaction->createTransaction(
+        $data["userId"],
+        $pay_wallet_id,
+        null,
+        $data["amount"],
+        null,
+        null,
+        null,
+        "deposit"
+    );
+
+    //Update balances
+    $wallet->updateBalance($pay_wallet_id, (float)$wallet->getWalletBalance($pay_wallet_id)["balance"] - (float)$data["amount"]);
+
+
+
+    $stuff = json_encode($pay_wallet_id);
+
+    $response->getBody()->write($stuff);
+    return $response;
+});

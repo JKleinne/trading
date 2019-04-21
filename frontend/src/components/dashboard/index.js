@@ -7,6 +7,8 @@ import {
     getUserWallets
 } from '../../actions/index';
 
+import { format } from '../../utilities/CurrencyFormat';
+
 import Navigation from '../Navigation';
 import CoinTable from './CoinTable';
 import HistoricCoinPrices from './HistoricCoinPrices';
@@ -84,6 +86,17 @@ class Charts extends React.Component {
 
                                 <p className="text-muted">
                                     CAD ${_.round(getPortfolioValue(), 2)}
+                                </p>
+                            </div>
+                            <div className="input" >
+                                <h6 className="text-muted">
+                                    Balance
+                                </h6>
+
+                                <p className="text-muted">
+                                    {format('CAD', this.props.wallets ?
+                                        _.find(this.props.wallets, wallet => wallet.ticker === 'CAD').balance
+                                    : '')}
                                 </p>
                             </div>
                         </div>

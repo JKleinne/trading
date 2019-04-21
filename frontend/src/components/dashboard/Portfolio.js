@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import config from '../../config/config';
-
+import { format } from '../../utilities/CurrencyFormat';
 import {
     getUserWallets
 } from '../../actions/index';
@@ -22,6 +22,25 @@ class Portfolio extends Component {
     }
 
     render() {
+        const getWalletValue = (ticker, balance) => {
+            if(this.props.prices) {
+                if (ticker !== 'CAD') {
+                    if (ticker === 'Ƀ')
+                        ticker = 'BTC';
+                    if (ticker === 'Ł')
+                        ticker = 'LTC';
+
+                    let value = parseFloat(
+                        _.replace(_.replace((ticker !== 'CAD' ? this.props.prices[`${ticker}`].CAD.PRICE : balance), 'CAD', ''), ',', '')
+                    );
+
+                    console.log(value);
+
+                    return value * balance;
+                }
+            }
+        };
+
         return (
             <div className="card coinTable">
                 <div className="header">
@@ -42,7 +61,7 @@ class Portfolio extends Component {
                                 return <tr key={wallet.ticker}>
                                     <td>{wallet.ticker}</td>
                                     <td>{wallet.balance} {wallet.ticker}</td>
-                                    <td></td>
+                                    <td>{format('CAD', getWalletValue(wallet.ticker, wallet.balance))}</td>
                                 </tr>
                             }
                         })}

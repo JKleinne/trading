@@ -156,8 +156,12 @@ class BuyAndSell extends Component {
                                         </div>
 
                                         <div className="text-info">
-                                           <h6>You have {this.props.wallet ? _.find(this.props.wallet, wallet => wallet.ticker === this.state.transaction.ticker).balance : ''} {this.state.transaction.ticker}</h6>
+                                           <h6>You have {this.props.wallet ? _.find(this.props.wallet, wallet => wallet.ticker === this.state.transaction.ticker).balance : ''} {this.state.transaction.ticker}
+                                              <br /> Balance: {format('CAD', this.props.wallet ?
+                                                _.find(this.props.wallet, wallet => wallet.ticker === 'CAD').balance
+                                                : '')}</h6>
                                         </div>
+
                                     </div>
 
                                     <div className="input" >

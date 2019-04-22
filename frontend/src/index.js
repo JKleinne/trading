@@ -5,6 +5,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import axios from 'axios';
+import { PrivateRoute } from './utilities/PrivateRoute';
 
 import rootReducer from './reducers/index';
 
@@ -31,14 +32,14 @@ const routing = (
         <Router>
             <Switch>
                 <Route exact path="/" component={LoginRegister} />
-                <Route path="/dashboard" component={Dashboard} />
-                <Route path="/signupSuccess" component={SignupSuccess} />
                 <Route path="/forgotPassword" component={ForgorPassword} />
-                <Route path="/buy-and-sell" component={BuyAndSell} />
-                <Route path="/profile" component={Profile} />
-                <Route path="/withdraw-deposit" component={WithdrawDeposit} />
-                <Route path="/settings" component={Settings} />
-                <Route path="/two-fa-setup-success" component={TwoFASuccess} />
+                <PrivateRoute path="/dashboard" component={Dashboard} />
+                <PrivateRoute path="/signupSuccess" component={SignupSuccess} />
+                <PrivateRoute path="/buy-and-sell" component={BuyAndSell} />
+                <PrivateRoute path="/profile" component={Profile} />
+                <PrivateRoute path="/withdraw-deposit" component={WithdrawDeposit} />
+                <PrivateRoute path="/settings" component={Settings} />
+                <PrivateRoute path="/two-fa-setup-success" component={TwoFASuccess} />
             </Switch>
         </Router>
     </Provider>

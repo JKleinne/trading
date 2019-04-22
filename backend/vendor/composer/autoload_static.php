@@ -13,6 +13,7 @@ class ComposerStaticInit7470e0bc30523a21a752941f457954a3
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
+            'Sonata\\GoogleAuthenticator\\' => 27,
             'Slim\\' => 5,
         ),
         'P' => 
@@ -24,6 +25,10 @@ class ComposerStaticInit7470e0bc30523a21a752941f457954a3
         array (
             'Interop\\Container\\' => 18,
         ),
+        'G' => 
+        array (
+            'Google\\Authenticator\\' => 21,
+        ),
         'F' => 
         array (
             'FastRoute\\' => 10,
@@ -31,6 +36,10 @@ class ComposerStaticInit7470e0bc30523a21a752941f457954a3
     );
 
     public static $prefixDirsPsr4 = array (
+        'Sonata\\GoogleAuthenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
+        ),
         'Slim\\' => 
         array (
             0 => __DIR__ . '/..' . '/slim/slim/Slim',
@@ -46,6 +55,10 @@ class ComposerStaticInit7470e0bc30523a21a752941f457954a3
         'Interop\\Container\\' => 
         array (
             0 => __DIR__ . '/..' . '/container-interop/container-interop/src/Interop/Container',
+        ),
+        'Google\\Authenticator\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sonata-project/google-authenticator/src',
         ),
         'FastRoute\\' => 
         array (

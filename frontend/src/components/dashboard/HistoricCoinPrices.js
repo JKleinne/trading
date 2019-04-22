@@ -55,7 +55,6 @@ class HistoricCoinPrices extends Component {
     };
 
     render() {
-
         /*
          * I apologize to whoever has to read this (probably my future self) had to
          * speed-run this :( (April 1 2019)

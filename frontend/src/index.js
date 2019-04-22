@@ -18,6 +18,8 @@ import ForgorPassword from './components/authentication/ForgotPassword';
 import BuyAndSell from './components/BuyAndSell';
 import Profile from './components/users/Profile';
 import WithdrawDeposit from './components/WithdrawDeposit';
+import Settings from './components/users/Settings';
+import TwoFASuccess from './components/users/TwoFASuccess';
 
 // Proxy all HTTP requests to baseURL
 //axios.defaults.baseURL = 'http://localhost:8080';
@@ -32,9 +34,11 @@ const routing = (
                 <Route path="/dashboard" component={Dashboard} />
                 <Route path="/signupSuccess" component={SignupSuccess} />
                 <Route path="/forgotPassword" component={ForgorPassword} />
-                <Route path="/buy-and-sell" component={BuyAndSell}/>
-                <Route path="/profile" component={Profile}/>
-                <Route path="/withdraw-deposit" component={WithdrawDeposit}/>
+                <Route path="/buy-and-sell" component={BuyAndSell} />
+                <Route path="/profile" component={Profile} />
+                <Route path="/withdraw-deposit" component={WithdrawDeposit} />
+                <Route path="/settings" component={Settings} />
+                <Route path="/two-fa-setup-success" component={TwoFASuccess} />
             </Switch>
         </Router>
     </Provider>

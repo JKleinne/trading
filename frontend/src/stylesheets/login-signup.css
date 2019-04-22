@@ -615,3 +615,15 @@ select.modal {
     overflow-y: scroll;
     height: 465px;
 }
+
+.twoFAContainer {
+    width: 100%;
+    max-width: 460px;
+    max-height: 750px;
+    position: absolute;
+    top: -20000%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-50%, 50%);
+    -ms-transform: translate(-50%, 50%);
+}

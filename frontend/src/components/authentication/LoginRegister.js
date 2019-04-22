@@ -91,8 +91,21 @@ class LoginRegister extends Component {
                     response = error.response;
                 }
 
-                if(response && response.status === 200)
-                    this.setState({redirectTo: '/dashboard'});
+                if(response && response.status === 200) {
+                    const has2FA = await axios.get(`http://localhost:8000/users/has2FA/${sessionStorage.getItem('userId')}`);
+                    const secret = await axios.get(`http://localhost:8000/users/get2FA/${sessionStorage.getItem('userId')}`);
+
+                    if(has2FA.data === true) {
+                        const code = prompt('Enter your 2FA code: ');
+                        const verify2FA = await axios.post("http://localhost:8000/users/verify2FA", { code, secret: secret.data });
+
+                        if(verify2FA.data === 'Success')
+                            this.setState({redirectTo: '/dashboard'});
+
+                    }
+                    else
+                        this.setState({redirectTo: '/dashboard'});
+                }
                 else
                     this.setState({ ...this.state, errorLogin: 'login error' })
             }

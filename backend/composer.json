@@ -3,6 +3,7 @@
         "slim/slim": "^3.12",
       "ext-curl": "*",
       "ext-pdo": "*",
-      "ext-json": "*"
+      "ext-json": "*",
+        "sonata-project/google-authenticator": "^2.2"
     }
 }

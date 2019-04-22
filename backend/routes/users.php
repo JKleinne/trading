@@ -92,3 +92,79 @@ $app->post('/users/updateProfile/{user_id}', function (Request $request, Respons
 
     return $response;
 });
+
+$app->get('/users/2fa/{user_id}', function (Request $request, Response $response, array $args) {
+    $user = $args['user_id'];
+    $g    = new \Google\Authenticator\GoogleAuthenticator();
+    $userModel = new User();
+
+    //Check if user has 2fa already set up
+    if($userModel->get2FA($user)['two_fa'] == 0) {
+
+        // invent a secret for this user
+        $secret = $g->generateSecret();
+
+        $data = sprintf("otpauth://totp/%s%%3A%s%%3Fsecret%%3D%s", $_SERVER['HTTP_HOST'], $user, $secret);
+        $qrCodeUrl = "https://chart.googleapis.com/chart?chs=200x200&chld=M|0&cht=qr&chl=" . $data;
+
+        $response->getBody()->write($secret . '***' . $qrCodeUrl);
+    }
+    else
+        $response->withStatus(400);
+
+    return $response;
+});
+
+$app->post('/users/2fa', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+    $secret = $data['secret'];
+    $code   = $data['code'];
+    $user = new User();
+    $g = new \Google\Authenticator\GoogleAuthenticator();
+    if ($g->checkCode($secret, $code) == true) {
+        // code is valid - store into user record
+        $user->setup2FA($data['userId'], $secret);
+
+        $response->getBody()->write('Success');
+    }
+    else
+        $response->getBody()->write('Fail');
+
+    return $response;
+});
+
+$app->get('/users/has2FA/{user_id}', function (Request $request, Response $response, array $args) {
+    $userId = $args['user_id'];
+    $user = new User();
+
+    if($user->get2FA($userId)['two_fa'] == "")
+        $response->getBody()->write('false');
+    else
+        $response->getBody()->write('true');
+
+    return $response;
+});
+
+$app->get('/users/get2FA/{user_id}', function (Request $request, Response $response, array $args) {
+    $userId = $args['user_id'];
+    $user = new User();
+
+    $response->getBody()->write($user->get2FA($userId)['two_fa']);
+
+    return $response;
+});
+
+$app->post('/users/verify2FA', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+    $secret = $data['secret'];
+    $code   = $data['code'];
+
+    $g = new \Google\Authenticator\GoogleAuthenticator();
+    if ($g->checkCode($secret, $code) == true) {
+        $response->getBody()->write('Success');
+    }
+    else
+        $response->getBody()->write('Fail');
+
+    return $response;
+});

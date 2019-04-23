@@ -184,3 +184,13 @@ $app->post('/transactions/withdraw', function (Request $request, Response $respo
     $response->getBody()->write($stuff);
     return $response;
 });
+
+$app->get('/transactions/getUserTransactions/{user_id}', function (Request $request, Response $response, array $args) {
+    $transaction = new Transaction();
+    $transactions = $transaction->getTransactionsByUserId($args['user_id']);
+
+    $jsonobj = json_encode($transactions);
+
+    $response->getBody()->write($jsonobj);
+    return $response;
+});

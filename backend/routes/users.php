@@ -27,7 +27,7 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
     $password = $data["password"];
 
     $user = new User();
-    $stuff = $user->addUser($email, $password, '0', '0', '0');
+    $stuff = $user->addUser($email, $password, '', '0', '0');
 
 
     $user_id = $user->getUser($email)["user_id"];
@@ -165,6 +165,45 @@ $app->post('/users/verify2FA', function (Request $request, Response $response, a
     }
     else
         $response->getBody()->write('Fail');
+
+    return $response;
+});
+
+$app->get('/users/getRole/{user_id}', function (Request $request, Response $response, array $args) {
+    $userId = $args['user_id'];
+    $user = new User();
+
+    $response->getBody()->write($user->getRole($userId)["role"]);
+
+    return $response;
+});
+
+$app->get('/users/getUserList', function (Request $request, Response $response, array $args) {
+    $user = new User();
+    $users = $user->getAllUsers();
+
+    $jsonobj = json_encode($users);
+
+    $response->getBody()->write($jsonobj);
+    return $response;
+});
+
+$app->get('/users/getStatus/{user_id}', function (Request $request, Response $response, array $args) {
+    $userId = $args['user_id'];
+    $user = new User();
+
+    $response->getBody()->write($user->getStatus($userId)["status"]);
+
+    return $response;
+});
+
+$app->post('/users/setStatus', function (Request $request, Response $response, array $args) {
+    $data = $request->getParsedBody();
+    $userId = $data['userId'];
+    $status = $data['status'];
+    $user = new User();
+
+    $user->setStatus($userId, $status);
 
     return $response;
 });

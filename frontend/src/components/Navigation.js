@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import '../stylesheets/navigation.css';
-class Navigation extends Component {
+import { connect } from 'react-redux';
 
+const mapStateToProps = state => {
+    return {
+        role: state.users.role
+    }
+};
+
+class Navigation extends Component {
     constructor(props) {
         super(props);
 
@@ -17,6 +24,7 @@ class Navigation extends Component {
         this.settingsClicked = () => this.setState({ redirectTo: '/settings'});
         this.buyClicked = () => this.setState({ redirectTo: '/buy-and-sell' });
         this.withdrawDepositClicked = () => this.setState({ redirectTo: '/withdraw-deposit' });
+        this.userListClicked = () => this.setState({ redirectTo: '/users-list' });
     }
 
 
@@ -69,6 +77,7 @@ class Navigation extends Component {
                         </span>
                                 </a>
                             </li>
+                        </ul>
                         <ul>
                             <li>
                                 <a>
@@ -80,7 +89,22 @@ class Navigation extends Component {
                             </li>
                         </ul>
 
-                        </ul>
+                        {
+                            this.props.role === 'admin' ?
+                                <ul>
+                                    <li>
+                                        <a>
+                                            <i className="fa fa fa-users fa-2x"></i>
+                                            <span className="nav-text" onClick={this.userListClicked}>
+                            List of Users
+                        </span>
+                                        </a>
+                                    </li>
+                                </ul>
+
+                                : ''
+                        }
+
 
                         <ul className="logout">
                             <li>
@@ -99,4 +123,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default connect(mapStateToProps, null)(Navigation);

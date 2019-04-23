@@ -25,4 +25,10 @@ class Transaction extends Model
         $stmt->execute(['date'=>$date]);
         return $stmt;
     }
+
+    public function getTransactionsByUserId($userId) {
+        $stmt = $this->_connection->prepare("SELECT * FROM Transaction WHERE u = :tr_date");
+        $stmt->execute(['userId'=>$userId]);
+        return $stmt;
+    }
 }

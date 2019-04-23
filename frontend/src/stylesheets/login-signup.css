@@ -616,6 +616,11 @@ select.modal {
     height: 465px;
 }
 
+.userTable {
+    overflow-y: scroll;
+    height: 100%;
+}
+
 .twoFAContainer {
     width: 100%;
     max-width: 460px;

@@ -1,6 +1,8 @@
 // Users Constants
 export const ADD_USER = 'ADD_USER';
 export const GET_USER = 'GET_USER';
+export const GET_USER_LIST = 'GET_USER_LIST';
+export const SET_ROLE = 'SET_ROLE';
 
 // Wallets Constants
 export const GET_USER_WALLETS = 'GET_USER_WALLETS';

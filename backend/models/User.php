@@ -73,4 +73,29 @@ class User extends Model
         $stmt = $this->_connection->prepare("UPDATE User SET two_fa = :secret WHERE user_id =:user_id");
         $stmt->execute(['user_id' => $userId, 'secret' => $secret]);
     }
+
+    public function getRole($userId) {
+        $stmt = $this->_connection->prepare("SELECT role FROM User WHERE user_id = :userId");
+        $stmt->execute(['userId' => $userId]);
+
+        return $stmt->fetch();
+    }
+
+    public function getAllUsers() {
+        $stmt = $this->_connection->query("SELECT * FROM User")->fetchAll();
+        return $stmt;
+    }
+
+    public function getStatus($userId) {
+        $stmt = $this->_connection->prepare("SELECT status FROM User WHERE user_id = :userId");
+        $stmt->execute(['userId' => $userId]);
+
+        return $stmt->fetch();
+    }
+
+    public function setStatus($userId, $status)
+    {
+        $stmt = $this->_connection->prepare("UPDATE User SET status = :status WHERE user_id =:user_id");
+        $stmt->execute(['user_id' => $userId, 'status' => $status]);
+    }
 }

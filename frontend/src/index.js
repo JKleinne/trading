@@ -15,12 +15,14 @@ import './stylesheets/navigation.css';
 import LoginRegister from './components/authentication/LoginRegister';
 import Dashboard from './components/dashboard/index';
 import SignupSuccess from './components/authentication/SignupSuccess';
-import ForgorPassword from './components/authentication/ForgotPassword';
+import ForgotPassword from './components/authentication/ForgotPassword';
 import BuyAndSell from './components/BuyAndSell';
 import Profile from './components/users/Profile';
 import WithdrawDeposit from './components/WithdrawDeposit';
 import Settings from './components/users/Settings';
 import TwoFASuccess from './components/users/TwoFASuccess';
+import UsersTable from './components/admins/UsersTable';
+import AdminProfile from './components/admins/Profile';
 
 // Proxy all HTTP requests to baseURL
 //axios.defaults.baseURL = 'http://localhost:8080';
@@ -32,7 +34,7 @@ const routing = (
         <Router>
             <Switch>
                 <Route exact path="/" component={LoginRegister} />
-                <Route path="/forgotPassword" component={ForgorPassword} />
+                <Route path="/forgotPassword" component={ForgotPassword} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/signupSuccess" component={SignupSuccess} />
                 <PrivateRoute path="/buy-and-sell" component={BuyAndSell} />
@@ -40,6 +42,8 @@ const routing = (
                 <PrivateRoute path="/withdraw-deposit" component={WithdrawDeposit} />
                 <PrivateRoute path="/settings" component={Settings} />
                 <PrivateRoute path="/two-fa-setup-success" component={TwoFASuccess} />
+                <PrivateRoute path="/users-list" component={UsersTable} />
+                <PrivateRoute path="/admin/profile" component={AdminProfile} />
             </Switch>
         </Router>
     </Provider>

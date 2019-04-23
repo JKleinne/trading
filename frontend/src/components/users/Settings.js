@@ -78,7 +78,6 @@ class Settings extends Component {
                                             </div>
 
                                             <a className="bttn" onClick={async () => {
-                                                console.log(JSON.stringify(this.state, null, 2));
                                                 const response = await axios.post(
                                                     `http://localhost:8000/users/2fa`,
                                                     {...this.state, userId: sessionStorage.getItem('userId')}

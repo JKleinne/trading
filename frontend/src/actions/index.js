@@ -10,7 +10,9 @@ import {
     GET_COUNTRIES,
     GET_FIAT_CURRENCIES,
     GET_CRYPTO_CURRENCIES,
-    GET_USER_WALLETS
+    GET_USER_WALLETS,
+    GET_USER_LIST,
+    SET_ROLE
 } from './constants';
 
 import config from '../config/config';
@@ -106,4 +108,16 @@ export const getUserWallets = () => {
 
         dispatch({ type: GET_USER_WALLETS, payload: wallets })
     }
+};
+
+export const getUserList = () => {
+    return async dispatch => {
+        let users = await axios.get('http://localhost:8000/users/getUserList');
+
+        dispatch({ type: GET_USER_LIST, payload: users })
+    }
+};
+
+export const setCurrentUserRole = role => {
+    return dispatch => dispatch({type: SET_ROLE, payload: role});
 };

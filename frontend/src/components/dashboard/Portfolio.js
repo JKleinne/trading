@@ -34,8 +34,6 @@ class Portfolio extends Component {
                         _.replace(_.replace((ticker !== 'CAD' ? this.props.prices[`${ticker}`].CAD.PRICE : balance), 'CAD', ''), ',', '')
                     );
 
-                    console.log(value);
-
                     return value * balance;
                 }
             }

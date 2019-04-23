@@ -1,7 +1,9 @@
 import {
     GET_USER,
     ADD_USER,
-    GET_USER_WALLETS
+    GET_USER_WALLETS,
+    GET_USER_LIST,
+    SET_ROLE
 } from '../actions/constants';
 
 export default (state = {}, action) => {
@@ -22,6 +24,18 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 wallets: action.payload.data
+            };
+
+        case GET_USER_LIST:
+            return {
+                ...state,
+                userList: action.payload.data
+            };
+
+        case SET_ROLE:
+            return {
+                ...state,
+                role: action.payload
             };
 
         default:

@@ -8,7 +8,9 @@ import { Style } from 'radium';
 import _ from 'lodash';
 import {
     getCountries,
-    getFiatCurrencies
+    getFiatCurrencies,
+    getUserList,
+    setCurrentUserRole
 } from "../../actions";
 
 import { connect } from 'react-redux';
@@ -95,13 +97,21 @@ class LoginRegister extends Component {
                     const has2FA = await axios.get(`http://localhost:8000/users/has2FA/${sessionStorage.getItem('userId')}`);
                     const secret = await axios.get(`http://localhost:8000/users/get2FA/${sessionStorage.getItem('userId')}`);
 
+                    console.log(JSON.stringify(has2FA.data))
+
                     if(has2FA.data === true) {
                         const code = prompt('Enter your 2FA code: ');
                         const verify2FA = await axios.post("http://localhost:8000/users/verify2FA", { code, secret: secret.data });
 
-                        if(verify2FA.data === 'Success')
+                        if(verify2FA.data === 'Success') {
                             this.setState({redirectTo: '/dashboard'});
 
+                            const role = await axios.get(`http://localhost:8000/users/getRole/${sessionStorage.getItem('userId')}`);
+                            if(role.data === 'admin') {
+                                this.props.setCurrentUserRole('admin');
+                                this.props.getUserList();
+                            }
+                        }
                     }
                     else
                         this.setState({redirectTo: '/dashboard'});
@@ -347,7 +357,9 @@ class LoginRegister extends Component {
 
 const mapDispatchToProps = {
     getCountries,
-    getFiatCurrencies
+    getFiatCurrencies,
+    getUserList,
+    setCurrentUserRole
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginRegister);

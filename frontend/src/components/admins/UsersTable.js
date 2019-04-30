@@ -5,6 +5,7 @@ import _ from 'lodash';
 import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import '../../stylesheets/table.css';
+import Transactions from '../users/Transactions';
 import {
     getUserList
 } from '../../actions/index';
@@ -69,8 +70,6 @@ class UsersTable extends Component {
                                                         )
                                                     })
                                                     : ''}
-
-                                                {console.log(`${JSON.stringify(this.props.users, null, 2)}`)}
                                             </tbody>
                                         </table>
                                     </div>

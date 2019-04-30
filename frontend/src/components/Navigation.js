@@ -25,8 +25,8 @@ class Navigation extends Component {
         this.buyClicked = () => this.setState({ redirectTo: '/buy-and-sell' });
         this.withdrawDepositClicked = () => this.setState({ redirectTo: '/withdraw-deposit' });
         this.userListClicked = () => this.setState({ redirectTo: '/users-list' });
+        this.transactionsClicked = () => this.setState({ redirectTo: '/trades-list' });
     }
-
 
     render() {
         if (this.state.redirectTo)
@@ -64,6 +64,16 @@ class Navigation extends Component {
                                     <i className="fa fa-money fa-2x"></i>
                                     <span className="nav-text" onClick={this.withdrawDepositClicked}>
                             Deposit/Withdraw
+                        </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li>
+                                <a>
+                                    <i className="fa fa-refresh fa-2x"></i>
+                                    <span className="nav-text" onClick={this.transactionsClicked}>
+                            My Trades
                         </span>
                                 </a>
                             </li>

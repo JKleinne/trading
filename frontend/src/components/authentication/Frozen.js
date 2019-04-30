@@ -5,35 +5,32 @@ import Navigation from '../Navigation';
 import {Redirect} from "react-router-dom";
 import Style from "radium/es/components/style";
 
-let _this;
-class TwoFASuccess extends Component {
+class Frozen extends Component {
     constructor(props) {
         super(props);
 
-        _this = this;
-
         this.state = {};
 
-        this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick() {
-        _this.setState({ redirect: true });
+        this.setState({ redirect: true });
     }
 
     render() {
         if(this.state.redirect)
-            return <Redirect to="/dashboard"/>;
+            return <Redirect to="/"/>;
 
         else {
             return (
                 <div className="materialContainer">
                     <div className="box">
                         <div className="title">
-                            { this.props.location.state.message }
+                            Your account had been frozen. Contact support for more info.
                         </div>
 
-                        <a className="bttn" onClick={this.handleClick}>Go back to dashboard</a>
+                        <a className="bttn" onClick={this.handleClick}>Go back</a>
                     </div>
                 </div>
             );
@@ -41,4 +38,4 @@ class TwoFASuccess extends Component {
     }
 }
 
-export default TwoFASuccess;
+export default Frozen;

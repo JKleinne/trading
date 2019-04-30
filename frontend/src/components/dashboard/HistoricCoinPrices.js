@@ -72,6 +72,7 @@ class HistoricCoinPrices extends Component {
                         counter = 0;
                         return coin;
                     }
+
                     counter++;
                 }), coin => !_.isUndefined(coin));
 
@@ -131,7 +132,7 @@ class HistoricCoinPrices extends Component {
                     <div className="content buttons-with-margin">
                         <button onClick={this.handleDailyClick} className="btn btn-info btn-xs btn-fill">Daily</button>
                         <button onClick={this.handleWeeklyClick} className="btn btn-info btn-xs btn-fill">Weekly</button>
-                        <button onClick={this.handleMonthlyClick} className="btn btn-info btn-xs btn-fill">Monthly</button>
+                        <button onClick={this.handleMonthlyClick} className="btn btn-info btn-xs btn-fill">Yearly</button>
                     </div>
                 </div>
                 <Line ref={ref => chartRef = ref} data={data} options={options} redraw />

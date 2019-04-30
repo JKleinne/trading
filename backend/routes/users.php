@@ -27,7 +27,7 @@ $app->post('/users/signup', function (Request $request, Response $response, arra
     $password = $data["password"];
 
     $user = new User();
-    $stuff = $user->addUser($email, $password, '', '0', '0');
+    $stuff = $user->addUser($email, $password, '', 'user', 'active');
 
 
     $user_id = $user->getUser($email)["user_id"];
@@ -204,6 +204,15 @@ $app->post('/users/setStatus', function (Request $request, Response $response, a
     $user = new User();
 
     $user->setStatus($userId, $status);
+
+    return $response;
+});
+
+$app->post('/users/disable2fa/{userId}', function (Request $request, Response $response, array $args) {
+    $userId = $args['userId'];
+    $user = new User();
+
+    $user->disable2FA($userId);
 
     return $response;
 });

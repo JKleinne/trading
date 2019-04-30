@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 22, 2019 at 05:55 AM
+-- Generation Time: Apr 25, 2019 at 09:45 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 5.6.40
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `crypto_trading`
 --
+CREATE DATABASE IF NOT EXISTS `crypto_trading` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `crypto_trading`;
 
 -- --------------------------------------------------------
 
@@ -108,7 +110,10 @@ INSERT INTO `profile` (`user_id`, `fname`, `lname`, `country_id`, `currency_code
 (64, 'pep', 'pep', 0, 'CAD'),
 (65, 'gg', 'gg', 0, 'CAD'),
 (66, 'gg', 'gg', 0, 'CAD'),
-(67, 'rakan', 'rookan', 1, 'CAD');
+(67, 'rakan', 'rookan', 1, 'CAD'),
+(68, 'dododo', 'dododo', 0, 'CAD'),
+(69, 'stuff', 'stuff', 0, 'CAD'),
+(70, 'momo', 'momo', 0, 'CAD');
 
 -- --------------------------------------------------------
 
@@ -164,7 +169,10 @@ INSERT INTO `transaction` (`transaction_id`, `user_id`, `pay_wallet_id`, `buy_wa
 (29, 67, 24, 23, '36.03', '0.005000', '1.80', '34.23', '2019-04-20 19:09:58', 'sell'),
 (30, 67, 24, 20, '200.00', '1906.577693', '10.00', '210.00', '2019-04-20 21:38:25', 'buy'),
 (31, 67, 24, 20, '52.45', '500.000000', '2.62', '49.83', '2019-04-20 21:40:37', 'sell'),
-(32, 67, 24, 28, '300.00', '8544.574195', '15.00', '315.00', '2019-04-20 22:15:26', 'buy');
+(32, 67, 24, 28, '300.00', '8544.574195', '15.00', '315.00', '2019-04-20 22:15:26', 'buy'),
+(33, 67, 24, 22, '300.00', '9.407338', '15.00', '315.00', '2019-04-23 08:44:09', 'buy'),
+(35, 70, 51, 50, '100.00', '0.013349', '5.00', '105.00', '2019-04-25 13:53:29', 'buy'),
+(36, 70, 51, 50, '99.99', '0.013349', '5.00', '94.99', '2019-04-25 13:54:24', 'sell');
 
 -- --------------------------------------------------------
 
@@ -207,7 +215,10 @@ INSERT INTO `user` (`user_id`, `email`, `password`, `two_fa`, `role`, `status`) 
 (64, 'pep', '$2y$10$R/CLN3m1gDqbbyCKkVU8U.BcxpRmTIpZEnXhQi.zGvWBjzvN3cxce', '0', '', ''),
 (65, 'ijeoawlkln', '$2y$10$A/B2k.bMjvzbEL7sF/bT9OcYTZZmgwFcdits/gNmBC9DLv/k3odBS', '0', '', ''),
 (66, 'eifjoqur', '$2y$10$3GW3qLwxJD2RH8NxqZKAzOeB6HinVS2kN/ZPL5/SZA5vH3ojCOg9a', '0', '', ''),
-(67, 'rakan', '$2y$10$czFg1jF3kMnIj.F.DzV8Q.L7HPjJPrasPmHPTA9xJT5Qm7unD2Q3a', 'HRIYVDHZGRJNEVJP', '', '');
+(67, 'rakan', '$2y$10$czFg1jF3kMnIj.F.DzV8Q.L7HPjJPrasPmHPTA9xJT5Qm7unD2Q3a', '4FUFFD5BB7MHPXQG', 'admin', 'active'),
+(68, 'dododo', '$2y$10$m.Ml5VtplCD/Y.x3fulQB.k12o6.RfBy6aBCwITUR6veCOCnLFTSO', '', '', ''),
+(69, 'stuffystuff', '$2y$10$NQnp9OqaFEgA2wy0utb5e.E04W/jgVqSbvaWxVELaX70/7BGnR4aG', '0', '', ''),
+(70, 'momo', '$2y$10$uByrVlKQdE0rPBeff.54muTr1MmaSPoMe1ucqWZGGpsH3YnnJF216', '3E4R6PP53WF23D22', 'user', 'frozen');
 
 -- --------------------------------------------------------
 
@@ -247,13 +258,41 @@ INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
 (19, 66, 'TRX', '0.000000'),
 (20, 67, 'ADA', '1406.577693'),
 (21, 67, 'BCH', '0.000000'),
-(22, 67, 'BNB', '0.000000'),
+(22, 67, 'BNB', '9.407338'),
 (23, 67, 'BTC', '0.007809'),
-(24, 67, 'CAD', '335.164200'),
+(24, 67, 'CAD', '100.004200'),
 (25, 67, 'EOS', '0.000000'),
 (26, 67, 'ETC', '0.000000'),
 (27, 67, 'LTC', '0.000000'),
-(28, 67, 'TRX', '8544.574195');
+(28, 67, 'TRX', '8544.574195'),
+(29, 68, 'ADA', '0.000000'),
+(30, 68, 'BCH', '0.000000'),
+(31, 68, 'BNB', '0.000000'),
+(32, 68, 'BTC', '0.000000'),
+(33, 68, 'CAD', '0.000000'),
+(34, 68, 'EOS', '0.000000'),
+(35, 68, 'ETC', '0.000000'),
+(36, 68, 'LTC', '0.000000'),
+(37, 68, 'TRX', '0.000000'),
+(38, 69, 'ADA', '0.000000'),
+(39, 69, 'BCH', '0.000000'),
+(40, 69, 'BNB', '0.000000'),
+(41, 69, 'BTC', '0.000000'),
+(42, 69, 'CAD', '0.000000'),
+(43, 69, 'EOS', '0.000000'),
+(44, 69, 'ETC', '0.000000'),
+(45, 69, 'LTC', '0.000000'),
+(46, 69, 'TRX', '0.000000'),
+(47, 70, 'ADA', '0.000000'),
+(48, 70, 'BCH', '0.000000'),
+(49, 70, 'BNB', '0.000000'),
+(50, 70, 'BTC', '0.000000'),
+(51, 70, 'CAD', '89.985345'),
+(52, 70, 'EOS', '0.000000'),
+(53, 70, 'ETC', '0.000000'),
+(54, 70, 'LTC', '0.000000'),
+(55, 70, 'TRX', '0.000000'),
+(56, 70, 'XLM', '0.000000');
 
 --
 -- Indexes for dumped tables
@@ -311,19 +350,19 @@ ALTER TABLE `wallet`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `wallet`
 --
 ALTER TABLE `wallet`
-  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Constraints for dumped tables

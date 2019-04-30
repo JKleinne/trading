@@ -1,7 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
 import {
-    ADD_USER,
     GET_ALL_MULTI_PRICE,
     GET_HISTORICAL_DAILY,
     SET_COIN_TO_FETCH,
@@ -12,7 +11,8 @@ import {
     GET_CRYPTO_CURRENCIES,
     GET_USER_WALLETS,
     GET_USER_LIST,
-    SET_ROLE
+    SET_ROLE,
+    GET_USER_TRANSACTIONS
 } from './constants';
 
 import config from '../config/config';
@@ -26,13 +26,6 @@ export const getCountries = () => {
         dispatch({type: GET_COUNTRIES, payload: countries});
     }
 };
-
-// User actions
-export const addUser = (user) => {
-    return async dispatch => {
-    //await axios.post('', user);
-    dispatch({ type: ADD_USER, payload: user });
-}};
 
 // Coin actions
 export const getAllCoinPrices = () => {
@@ -120,4 +113,12 @@ export const getUserList = () => {
 
 export const setCurrentUserRole = role => {
     return dispatch => dispatch({type: SET_ROLE, payload: role});
+};
+
+export const getUserTransactions = userId => {
+    return async dispatch => {
+        let transactions = await axios.get(`http://localhost:8000/transactions/getUserTransactions/${userId}`);
+
+        dispatch({ type: GET_USER_TRANSACTIONS, payload: transactions })
+    }
 };

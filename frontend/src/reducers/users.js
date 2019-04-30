@@ -3,7 +3,8 @@ import {
     ADD_USER,
     GET_USER_WALLETS,
     GET_USER_LIST,
-    SET_ROLE
+    SET_ROLE,
+    GET_USER_TRANSACTIONS
 } from '../actions/constants';
 
 export default (state = {}, action) => {
@@ -36,6 +37,12 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 role: action.payload
+            };
+
+        case GET_USER_TRANSACTIONS:
+            return {
+                ...state,
+                transactions: action.payload.data
             };
 
         default:

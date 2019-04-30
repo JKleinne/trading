@@ -23,6 +23,8 @@ import Settings from './components/users/Settings';
 import TwoFASuccess from './components/users/TwoFASuccess';
 import UsersTable from './components/admins/UsersTable';
 import AdminProfile from './components/admins/Profile';
+import Transactions from './components/users/Transactions';
+import Frozen from './components/authentication/Frozen';
 
 // Proxy all HTTP requests to baseURL
 //axios.defaults.baseURL = 'http://localhost:8080';
@@ -35,6 +37,7 @@ const routing = (
             <Switch>
                 <Route exact path="/" component={LoginRegister} />
                 <Route path="/forgotPassword" component={ForgotPassword} />
+                <Route path="/frozen" component={Frozen} />
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/signupSuccess" component={SignupSuccess} />
                 <PrivateRoute path="/buy-and-sell" component={BuyAndSell} />
@@ -44,6 +47,7 @@ const routing = (
                 <PrivateRoute path="/two-fa-setup-success" component={TwoFASuccess} />
                 <PrivateRoute path="/users-list" component={UsersTable} />
                 <PrivateRoute path="/admin/profile" component={AdminProfile} />
+                <PrivateRoute path="/trades-list" component={Transactions} />
             </Switch>
         </Router>
     </Provider>

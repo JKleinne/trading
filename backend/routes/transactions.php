@@ -87,10 +87,10 @@ $app->post('/transactions/sell', function (Request $request, Response $response,
 
     $transaction->createTransaction(
         $data["userId"],
-        $pay_wallet_id,
         $buy_wallet_id,
-        $data["buy_amount"],
+        $pay_wallet_id,
         $data["pay_amount"],
+        $data["buy_amount"],
         $data["fee"],
         $data["total"],
         "sell"
@@ -127,11 +127,11 @@ $app->post('/transactions/deposit', function (Request $request, Response $respon
     $transaction->createTransaction(
         $data["userId"],
         $pay_wallet_id,
-        null,
+        '',
         $data["amount"],
-        null,
-        null,
-        null,
+        '',
+        '',
+        '',
         "deposit"
     );
 
@@ -166,11 +166,11 @@ $app->post('/transactions/withdraw', function (Request $request, Response $respo
     $transaction->createTransaction(
         $data["userId"],
         $pay_wallet_id,
-        null,
+        '',
         $data["amount"],
-        null,
-        null,
-        null,
+        '',
+        '',
+        '',
         "deposit"
     );
 

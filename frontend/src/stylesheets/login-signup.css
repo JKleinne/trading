@@ -632,3 +632,15 @@ select.modal {
     -webkit-transform: translate(-50%, 50%);
     -ms-transform: translate(-50%, 50%);
 }
+
+.adminProfileContainer {
+    width: 100%;
+    max-width: 460px;
+    max-height: 750px;
+    position: absolute;
+    top: -25000%;
+    left: 50%;
+    transform: translate(-50%, 50%);
+    -webkit-transform: translate(-50%, 50%);
+    -ms-transform: translate(-50%, 50%);
+}

@@ -35,7 +35,7 @@ class Settings extends Component {
 
     render() {
         if(this.state.redirectTo)
-            return <Redirect to={{ pathname: this.state.redirectTo }} />;
+            return <Redirect to={{ pathname: this.state.redirectTo, state: { message: this.state.message} }} />;
 
         else
             return (
@@ -54,6 +54,30 @@ class Settings extends Component {
                                                     <h6>You already have Two-Factor Authentication set up</h6>
                                                 </div>
                                             </div>
+
+                                            <a className="bttn" onClick={async () => {
+                                                const code = prompt('Enter your 2FA code: ');
+
+                                                const secret = await axios.get(
+                                                    `http://localhost:8000/users/get2FA/${sessionStorage.getItem('userId')}`
+                                                );
+
+                                                const response = await axios.post(
+                                                    `http://localhost:8000/users/verify2FA`,
+                                                    {...this.state, userId: sessionStorage.getItem('userId'), secret: secret.data, code}
+                                                );
+
+                                                if(response.data === 'Success') {
+                                                    await axios.get(
+                                                        `http://localhost:8000/users/disable2FA/${sessionStorage.getItem('userId')}`
+                                                    );
+
+                                                    this.setState({
+                                                        redirectTo: 'two-fa-setup-success',
+                                                        message: 'Two-Factor Authentication was successfully disabled.'
+                                                    })
+                                                }
+                                            }}>Disable 2FA</a>
                                         </div>
 
                                     :
@@ -83,8 +107,12 @@ class Settings extends Component {
                                                     {...this.state, userId: sessionStorage.getItem('userId')}
                                                 );
 
-                                                if(response.data === 'Success')
-                                                    this.setState({ redirectTo: 'two-fa-setup-success' })
+                                                if(response.data === 'Success') {
+                                                    this.setState({
+                                                        redirectTo: 'two-fa-setup-success',
+                                                        message: 'Two-Factor Authentication setup was a success!'
+                                                    })
+                                                }
                                             }}>Set up 2FA</a>
                                         </div>
                                     }

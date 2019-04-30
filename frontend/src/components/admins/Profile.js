@@ -5,14 +5,18 @@ import '../../stylesheets/profile-buttons.css';
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 import _ from "lodash";
-import HistoricCoinPrices from "../dashboard";
 import {format} from "../../utilities/CurrencyFormat";
 import { connect } from'react-redux';
 import Switch from 'react-ios-switch';
 
+import {
+    getUserTransactions
+} from '../../actions';
+
 const mapStateToProps = state => {
     return {
-        prices: state.coins.coinCurrent
+        prices: state.coins.coinCurrent,
+        trades: state.users.transactions
     }
 };
 
@@ -25,6 +29,8 @@ class Profile extends Component {
     }
 
     async componentWillMount() {
+        this.props.getUserTransactions(this.props.location.state.userId);
+
         const wallets = await axios.get(`http://localhost:8000/transactions/getUserWallets/${this.props.location.state.userId}`);
         const status = await axios.get(`http://localhost:8000/users/getStatus/${this.props.location.state.userId}`);
 
@@ -35,6 +41,10 @@ class Profile extends Component {
     };
 
     render() {
+        const getScrapedValue = () => {
+            return _.reduce(this.props.trades, (sum, trade) => sum + parseFloat(trade.fee), 0);
+        };
+
         const getPortfolioValue = () => {
             return _.reduce(this.state.wallets, (sum, wallet) => {
                 if(this.props.prices) {
@@ -85,7 +95,7 @@ class Profile extends Component {
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-md-6">
-                                <div className="buyContainer">
+                                <div className="adminProfileContainer">
                                     <div className="box">
                                         <Switch
                                             checked={this.state.checked}
@@ -123,6 +133,15 @@ class Profile extends Component {
                                         </div>
                                         <div className="input" >
                                             <h6 className="text-muted">
+                                                Total Scraped through fees
+                                            </h6>
+
+                                            <p className="text-muted">
+                                                CAD {format('CAD', getScrapedValue())}
+                                            </p>
+                                        </div>
+                                        <div className="input" >
+                                            <h6 className="text-muted">
                                                 Balance
                                             </h6>
 
@@ -132,9 +151,6 @@ class Profile extends Component {
                                                     : '')}
                                             </p>
                                         </div>
-
-                                        //TODO Display Total earnings scraped from user
-
                                     </div>
                                 </div>
                             </div>
@@ -175,4 +191,8 @@ class Profile extends Component {
     }
 }
 
-export default connect(mapStateToProps, null)(Profile);
+const mapDispatchToProps = {
+    getUserTransactions
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

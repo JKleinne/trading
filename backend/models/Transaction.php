@@ -19,16 +19,13 @@ class Transaction extends Model
         $stmt->execute(['user_id'=>$user_id, 'pay_wallet_id'=>$pay_curr_id, 'buy_wallet_id'=>$buy_curr_id, 'pay_amount'=>$pay_amount, 'buy_amount'=>$buy_amount, 'fee'=>$fee, 'total'=>$total, 'type'=>$type]);
     }
 
-    public function getTransactions($date)
-    {
-        $stmt = $this->_connection->prepare("SELECT * FROM Transaction WHERE tr_date = :tr_date");
-        $stmt->execute(['date'=>$date]);
-        return $stmt;
-    }
-
     public function getTransactionsByUserId($userId) {
-        $stmt = $this->_connection->prepare("SELECT * FROM Transaction WHERE u = :tr_date");
-        $stmt->execute(['userId'=>$userId]);
-        return $stmt;
+        $stmt = $this->_connection->prepare("Select t.transaction_id, a.ticker, b.ticker, t.pay_amount, t.buy_amount, t.fee, t.total, t.date, t.type
+                                                        FROM transaction t
+                                                        INNER JOIN wallet a ON t.pay_wallet_id = a.wallet_id
+                                                        INNER JOIN wallet b ON t.buy_wallet_id = b.wallet_id
+                                                        WHERE t.user_id = :user_id;");
+        $stmt->execute(['user_id'=>$userId]);
+        return $stmt->fetchAll();
     }
 }

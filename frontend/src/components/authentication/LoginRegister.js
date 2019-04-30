@@ -97,14 +97,19 @@ class LoginRegister extends Component {
                     const has2FA = await axios.get(`http://localhost:8000/users/has2FA/${sessionStorage.getItem('userId')}`);
                     const secret = await axios.get(`http://localhost:8000/users/get2FA/${sessionStorage.getItem('userId')}`);
 
-                    console.log(JSON.stringify(has2FA.data))
-
                     if(has2FA.data === true) {
                         const code = prompt('Enter your 2FA code: ');
                         const verify2FA = await axios.post("http://localhost:8000/users/verify2FA", { code, secret: secret.data });
 
                         if(verify2FA.data === 'Success') {
-                            this.setState({redirectTo: '/dashboard'});
+                            const status = await axios.get(`http://localhost:8000/users/getStatus/${sessionStorage.getItem('userId')}`);
+
+                            if(status.data === 'active')
+                                this.setState({redirectTo: '/dashboard'});
+                            else {
+                                sessionStorage.removeItem('userId');
+                                this.setState({ redirectTo: '/frozen' })
+                            }
 
                             const role = await axios.get(`http://localhost:8000/users/getRole/${sessionStorage.getItem('userId')}`);
                             if(role.data === 'admin') {
@@ -113,8 +118,16 @@ class LoginRegister extends Component {
                             }
                         }
                     }
-                    else
-                        this.setState({redirectTo: '/dashboard'});
+                    else {
+                        const status = await axios.get(`http://localhost:8000/users/getStatus/${sessionStorage.getItem('userId')}`);
+
+                        if (status.data === 'active')
+                            this.setState({redirectTo: '/dashboard'});
+                        else {
+                            sessionStorage.removeItem('userId');
+                            this.setState({redirectTo: '/frozen'})
+                        }
+                    }                     
                 }
                 else
                     this.setState({ ...this.state, errorLogin: 'login error' })

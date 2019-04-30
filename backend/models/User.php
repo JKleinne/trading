@@ -56,9 +56,20 @@ class User extends Model
             ->execute(['user_id' => $user_id]);
         $this->_connection->prepare("INSERT INTO wallet(user_id, ticker, balance) VALUES(:user_id, 'TRX', 0)")
             ->execute(['user_id' => $user_id]);
+        $this->_connection->prepare("INSERT INTO wallet(user_id, ticker, balance) VALUES(:user_id, 'XLM', 0)")
+            ->execute(['user_id' => $user_id]);
 
         return $this->getUser($email)["user_id"];
     }
+
+    /*
+     *
+     * Select t.transaction_id, a.ticker, b.ticker, t.pay_amount, t.buy_amount, t.fee, t.total, t.date, t.type
+FROM transaction t
+INNER JOIN wallet a ON t.pay_wallet_id = a.wallet_id
+INNER JOIN wallet b ON t.buy_wallet_id = b.wallet_id
+WHERE t.user_id = :user_id;
+     */
 
     public function get2FA($userId)
     {
@@ -97,5 +108,11 @@ class User extends Model
     {
         $stmt = $this->_connection->prepare("UPDATE User SET status = :status WHERE user_id =:user_id");
         $stmt->execute(['user_id' => $userId, 'status' => $status]);
+    }
+
+    public function disable2FA($userId)
+    {
+        $stmt = $this->_connection->prepare("UPDATE User SET two_fa = '' WHERE user_id =:user_id");
+        $stmt->execute(['user_id' => $userId]);
     }
 }

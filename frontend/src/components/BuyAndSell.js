@@ -114,21 +114,33 @@ class BuyAndSell extends Component {
 
                                 <div>
                                     <a className="bttn" onClick={async () => {
-                                        await this.setState({
-                                            ...this.state,
-                                            transaction: {
-                                                ...this.state.transaction,
-                                                fee: this.state.checked ? _.round(this.state.transaction.buy_amount * 0.05, 2) :_.round(this.state.transaction.pay_amount * 0.05, 2),
-                                                total: this.state.checked ?
-                                                    parseFloat(this.state.transaction.buy_amount) - _.round(this.state.transaction.buy_amount * 0.05, 2)
-                                                    :parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
+                                        const balance = this.props.wallet ?
+                                            _.find(this.props.wallet, wallet => wallet.ticker === 'CAD').balance : 0;
 
-                                            }
-                                        });
-                                        await axios.post(
-                                            `http://localhost:8000/transactions/${this.state.checked ? 'sell' : 'buy'}`,
-                                            {...this.state.transaction, userId: sessionStorage.getItem('userId')}
+                                        const total = !this.state.checked ?
+                                            parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
+                                            : 0;
+
+                                        if(balance < total)
+                                            alert('You do not have enough balance');
+                                        else {
+                                            await this.setState({
+                                                ...this.state,
+                                                transaction: {
+                                                    ...this.state.transaction,
+                                                    fee: this.state.checked ? _.round(this.state.transaction.buy_amount * 0.05, 2) : _.round(this.state.transaction.pay_amount * 0.05, 2),
+                                                    total: this.state.checked ?
+                                                        parseFloat(this.state.transaction.buy_amount) - _.round(this.state.transaction.buy_amount * 0.05, 2)
+                                                        : parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
+
+                                                }
+                                            });
+                                            await axios.post(
+                                                `http://localhost:8000/transactions/${this.state.checked ? 'sell' : 'buy'}`,
+                                                {...this.state.transaction, userId: sessionStorage.getItem('userId')}
                                             );
+                                            this.props.getUserWallets();
+                                        }
                                     }}>{this.state.checked ? 'Sell' : 'Buy'} {this.state.transaction.ticker}</a>
                                 </div>
                             </div>

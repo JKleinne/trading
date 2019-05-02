@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
+
 import '../../stylesheets/login-signup.css';
 
 import { Style } from 'radium';
@@ -98,7 +99,7 @@ class LoginRegister extends Component {
                     const secret = await axios.get(`http://localhost:8000/users/get2FA/${sessionStorage.getItem('userId')}`);
 
                     if(has2FA.data === true) {
-                        const code = prompt('Enter your 2FA code: ');
+                        const code = window.prompt('Enter your 2FA code: ');
                         const verify2FA = await axios.post("http://localhost:8000/users/verify2FA", { code, secret: secret.data });
 
                         if(verify2FA.data === 'Success') {
@@ -127,7 +128,7 @@ class LoginRegister extends Component {
                             sessionStorage.removeItem('userId');
                             this.setState({redirectTo: '/frozen'})
                         }
-                    }                     
+                    }
                 }
                 else
                     this.setState({ ...this.state, errorLogin: 'login error' })
@@ -142,7 +143,6 @@ class LoginRegister extends Component {
                 }
 
                 if(response && response.status === 200)
-                    //TODO Send email confirmation link from the backend
                     this.setState({redirectTo: '/signupSuccess'});
                 else
                     this.setState({ ...this.state, errorLogin: response.data.error });
@@ -179,6 +179,7 @@ class LoginRegister extends Component {
           return (
               <div className="container">
                   <div className="box" style={this.state.registerClicked ? containerStyle : {}}>
+
 
                       {this.state.registerClicked ?
                           <Style scopeSelector=".input" rules={{

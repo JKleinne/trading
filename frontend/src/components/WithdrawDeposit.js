@@ -29,7 +29,6 @@ class BuyAndSell extends Component {
     }
 
     componentDidMount() {
-
         this.props.getUserWallets();
     }
 
@@ -61,11 +60,18 @@ class BuyAndSell extends Component {
                                     </div>
 
                                     <div>
-                                        <a className="bttn" onClick={() => {
-                                            axios.post(
-                                                `http://localhost:8000/transactions/${this.state.checked ? 'deposit' : 'withdraw'}`,
-                                                {...this.state, userId: sessionStorage.getItem('userId')}
-                                            );
+                                        <a className="bttn" onClick={async () => {
+                                            const balance = this.props.wallet ?
+                                                _.find(this.props.wallet, wallet => wallet.ticker === 'CAD').balance : 0;
+
+                                            if(!this.state.checked && balance > this.state.amount)
+                                                alert('You are trying to withdraw more funds than you have.');
+                                            else {
+                                                await axios.post(
+                                                    `http://localhost:8000/transactions/${this.state.checked ? 'deposit' : 'withdraw'}`,
+                                                    {...this.state, userId: sessionStorage.getItem('userId')}
+                                                );
+                                            }
                                         }}>{this.state.checked ? 'Deposit' : 'Withdraw'}</a>
                                     </div>
                                 </div>

@@ -511,20 +511,6 @@ a {
  * SELECT STYLES
  */
 
-select {
-    cursor: pointer;
-    display: inline-block;
-    position: absolute;
-    right: 20%;
-    top: 20%;
-    font-size: 16px;
-    color: #ED2553;
-    width: 220px;
-    height: 60px;
-    padding: 5px 10px;
-    float: right;
-    box-sizing: border-box;
-}
 
 select.profile {
     cursor: pointer;

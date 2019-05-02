@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Apr 25, 2019 at 09:45 PM
+-- Generation Time: May 02, 2019 at 05:19 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 5.6.40
 
@@ -113,7 +113,11 @@ INSERT INTO `profile` (`user_id`, `fname`, `lname`, `country_id`, `currency_code
 (67, 'rakan', 'rookan', 1, 'CAD'),
 (68, 'dododo', 'dododo', 0, 'CAD'),
 (69, 'stuff', 'stuff', 0, 'CAD'),
-(70, 'momo', 'momo', 0, 'CAD');
+(70, 'momo', 'momo', 0, 'CAD'),
+(71, 'Jonnie ', 'Quezada', 1, 'CAD'),
+(72, 'Michel', 'Pacquette', 1, 'CAD'),
+(73, 'I am Groot', 'I am Groot', 6, 'CAD'),
+(74, 'Dawson', 'Vanier', 1, 'CAD');
 
 -- --------------------------------------------------------
 
@@ -172,7 +176,25 @@ INSERT INTO `transaction` (`transaction_id`, `user_id`, `pay_wallet_id`, `buy_wa
 (32, 67, 24, 28, '300.00', '8544.574195', '15.00', '315.00', '2019-04-20 22:15:26', 'buy'),
 (33, 67, 24, 22, '300.00', '9.407338', '15.00', '315.00', '2019-04-23 08:44:09', 'buy'),
 (35, 70, 51, 50, '100.00', '0.013349', '5.00', '105.00', '2019-04-25 13:53:29', 'buy'),
-(36, 70, 51, 50, '99.99', '0.013349', '5.00', '94.99', '2019-04-25 13:54:24', 'sell');
+(36, 70, 51, 50, '99.99', '0.013349', '5.00', '94.99', '2019-04-25 13:54:24', 'sell'),
+(37, 67, 24, 23, '95.00', '0.013707', '4.75', '99.75', '2019-04-29 15:53:55', 'buy'),
+(38, 67, 23, 24, '69.31', '0.010000', '3.47', '65.84', '2019-04-29 15:54:21', 'sell'),
+(39, 67, 23, 24, '456124.50', '65.000000', '22806.23', '433318.27', '2019-04-30 12:52:28', 'sell'),
+(40, 67, 23, 24, '999999.99', '433000.000000', '999999.99', '999999.99', '2019-04-30 14:06:00', 'sell'),
+(41, 67, 23, 24, '999999.99', '350.000000', '122829.00', '999999.99', '2019-04-30 14:06:26', 'sell'),
+(42, 67, 23, 24, '231620.40', '33.000000', '11581.02', '220039.38', '2019-04-30 14:07:34', 'sell'),
+(44, 71, 61, 60, '50.00', '0.006954', '2.50', '52.50', '2019-05-02 08:46:53', 'buy'),
+(45, 71, 61, 63, '75.00', '9.803922', '3.75', '78.75', '2019-05-02 08:47:54', 'buy'),
+(46, 71, 61, 60, '100.00', '0.013908', '5.00', '105.00', '2019-05-02 08:48:00', 'buy'),
+(48, 71, 61, 60, '98.00', '0.013611', '4.90', '102.90', '2019-05-02 08:52:22', 'buy'),
+(49, 71, 61, 60, '0.08', '0.000011', '0.00', '0.08', '2019-05-02 08:52:55', 'buy'),
+(51, 73, 81, 80, '400.00', '0.055348', '20.00', '420.00', '2019-05-02 10:43:13', 'buy'),
+(52, 73, 81, 79, '76.00', '2.413465', '3.80', '79.80', '2019-05-02 10:44:00', 'buy'),
+(53, 73, 80, 81, '0.05', '361.350000', '18.07', '343.28', '2019-05-02 10:44:32', 'sell'),
+(55, 74, 91, 90, '400.00', '0.055317', '20.00', '420.00', '2019-05-02 11:03:00', 'buy'),
+(56, 74, 91, 87, '76.00', '840.150343', '3.80', '79.80', '2019-05-02 11:03:34', 'buy'),
+(57, 74, 87, 91, '700.00', '63.273000', '3.16', '60.11', '2019-05-02 11:03:53', 'sell'),
+(58, 74, 90, 91, '0.05', '390.474000', '19.52', '370.95', '2019-05-02 11:04:07', 'sell');
 
 -- --------------------------------------------------------
 
@@ -216,9 +238,13 @@ INSERT INTO `user` (`user_id`, `email`, `password`, `two_fa`, `role`, `status`) 
 (65, 'ijeoawlkln', '$2y$10$A/B2k.bMjvzbEL7sF/bT9OcYTZZmgwFcdits/gNmBC9DLv/k3odBS', '0', '', ''),
 (66, 'eifjoqur', '$2y$10$3GW3qLwxJD2RH8NxqZKAzOeB6HinVS2kN/ZPL5/SZA5vH3ojCOg9a', '0', '', ''),
 (67, 'rakan', '$2y$10$czFg1jF3kMnIj.F.DzV8Q.L7HPjJPrasPmHPTA9xJT5Qm7unD2Q3a', '4FUFFD5BB7MHPXQG', 'admin', 'active'),
-(68, 'dododo', '$2y$10$m.Ml5VtplCD/Y.x3fulQB.k12o6.RfBy6aBCwITUR6veCOCnLFTSO', '', '', ''),
+(68, 'dododo', '$2y$10$m.Ml5VtplCD/Y.x3fulQB.k12o6.RfBy6aBCwITUR6veCOCnLFTSO', '', '', 'frozen'),
 (69, 'stuffystuff', '$2y$10$NQnp9OqaFEgA2wy0utb5e.E04W/jgVqSbvaWxVELaX70/7BGnR4aG', '0', '', ''),
-(70, 'momo', '$2y$10$uByrVlKQdE0rPBeff.54muTr1MmaSPoMe1ucqWZGGpsH3YnnJF216', '3E4R6PP53WF23D22', 'user', 'frozen');
+(70, 'momo', '$2y$10$uByrVlKQdE0rPBeff.54muTr1MmaSPoMe1ucqWZGGpsH3YnnJF216', '3E4R6PP53WF23D22', 'user', 'frozen'),
+(71, 'jkleinne', '$2y$10$h37HuQ5W6CjMRyGsPdmPX.MecyJOjOEc8ppt79WNsTC9fnf2ZaavC', '', 'user', 'frozen'),
+(72, 'michelpacquette@gmail.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(73, 'jonniequezada@gmail.com', '$2y$10$sjhoIYC7HW4rUldeP3JCYunTKKz22CcUQESHg20wgDLwh6yr1DHAW', '', 'user', 'active'),
+(74, 'vanier@college.ca', '$2y$10$E5usNIVEETk1dJZTa1gZ1eD3Hz7YHzWG/m.KdliqMhDcXtetT1C0e', '', 'user', 'active');
 
 -- --------------------------------------------------------
 
@@ -230,7 +256,7 @@ CREATE TABLE `wallet` (
   `wallet_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `ticker` char(3) NOT NULL,
-  `balance` decimal(14,6) NOT NULL
+  `balance` decimal(20,6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -259,8 +285,8 @@ INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
 (20, 67, 'ADA', '1406.577693'),
 (21, 67, 'BCH', '0.000000'),
 (22, 67, 'BNB', '9.407338'),
-(23, 67, 'BTC', '0.007809'),
-(24, 67, 'CAD', '100.004200'),
+(23, 67, 'BTC', '1.127516'),
+(24, 67, 'CAD', '100220039.380000'),
 (25, 67, 'EOS', '0.000000'),
 (26, 67, 'ETC', '0.000000'),
 (27, 67, 'LTC', '0.000000'),
@@ -292,7 +318,47 @@ INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
 (53, 70, 'ETC', '0.000000'),
 (54, 70, 'LTC', '0.000000'),
 (55, 70, 'TRX', '0.000000'),
-(56, 70, 'XLM', '0.000000');
+(56, 70, 'XLM', '0.000000'),
+(57, 71, 'ADA', '0.000000'),
+(58, 71, 'BCH', '0.000000'),
+(59, 71, 'BNB', '0.000000'),
+(60, 71, 'BTC', '0.034484'),
+(61, 71, 'CAD', '0.770000'),
+(62, 71, 'EOS', '0.000000'),
+(63, 71, 'ETC', '9.803922'),
+(64, 71, 'LTC', '0.000000'),
+(65, 71, 'TRX', '0.000000'),
+(66, 71, 'XLM', '0.000000'),
+(67, 72, 'ADA', '0.000000'),
+(68, 72, 'BCH', '0.000000'),
+(69, 72, 'BNB', '0.000000'),
+(70, 72, 'BTC', '0.000000'),
+(71, 72, 'CAD', '0.000000'),
+(72, 72, 'EOS', '0.000000'),
+(73, 72, 'ETC', '0.000000'),
+(74, 72, 'LTC', '0.000000'),
+(75, 72, 'TRX', '0.000000'),
+(76, 72, 'XLM', '0.000000'),
+(77, 73, 'ADA', '0.000000'),
+(78, 73, 'BCH', '0.000000'),
+(79, 73, 'BNB', '2.413465'),
+(80, 73, 'BTC', '0.005348'),
+(81, 73, 'CAD', '343.480000'),
+(82, 73, 'EOS', '0.000000'),
+(83, 73, 'ETC', '0.000000'),
+(84, 73, 'LTC', '0.000000'),
+(85, 73, 'TRX', '0.000000'),
+(86, 73, 'XLM', '0.000000'),
+(87, 74, 'ADA', '140.150343'),
+(88, 74, 'BCH', '0.000000'),
+(89, 74, 'BNB', '0.000000'),
+(90, 74, 'BTC', '0.001317'),
+(91, 74, 'CAD', '-18.733000'),
+(92, 74, 'EOS', '0.000000'),
+(93, 74, 'ETC', '0.000000'),
+(94, 74, 'LTC', '0.000000'),
+(95, 74, 'TRX', '0.000000'),
+(96, 74, 'XLM', '0.000000');
 
 --
 -- Indexes for dumped tables
@@ -350,19 +416,19 @@ ALTER TABLE `wallet`
 -- AUTO_INCREMENT for table `transaction`
 --
 ALTER TABLE `transaction`
-  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `transaction_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `wallet`
 --
 ALTER TABLE `wallet`
-  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- Constraints for dumped tables

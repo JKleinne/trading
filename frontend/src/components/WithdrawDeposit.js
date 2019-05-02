@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
 import Navigation from './Navigation';
-import { Field, reduxForm } from 'redux-form';
 import '../stylesheets/navigation.css';
 import axios from "axios";
 import Switch from 'react-ios-switch';

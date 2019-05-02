@@ -468,6 +468,7 @@ a {
     color: #111;
     transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.15s;
 }
+
 .btttn::after, .btttn::before {
     content: "";
     position: absolute;
@@ -477,12 +478,14 @@ a {
     z-index: -2;
     border-radius: 50%;
 }
+
 .btttn::before {
     background-color: slategrey;
     top: -0.75rem;
     left: 0.5rem;
     animation: top 2s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.25s infinite alternate;
 }
+
 .btttn::after {
     background-color: #c92918;
     top: 3rem;
@@ -499,9 +502,11 @@ a {
     border-radius: 0;
     animation: none;
 }
+
 .btttn:hover::after {
     left: 0rem;
 }
+
 .btttn:hover::before {
     top: 0.5rem;
     left: 0.35rem;
@@ -510,20 +515,6 @@ a {
 /*
  * SELECT STYLES
  */
-
-
-select.profile {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    font-size: 16px;
-    background: #ED2553;
-    color: white;
-    width: 220px;
-    height: 55px;
-    padding: 5px 10px;
-    float: right;
-}
 
 select.modal {
     cursor: pointer;

@@ -122,8 +122,14 @@ class LoginRegister extends Component {
                     else {
                         const status = await axios.get(`http://localhost:8000/users/getStatus/${sessionStorage.getItem('userId')}`);
 
-                        if (status.data === 'active')
+                        if (status.data === 'active') {
+                            const role = await axios.get(`http://localhost:8000/users/getRole/${sessionStorage.getItem('userId')}`);
+                            if(role.data === 'admin') {
+                                this.props.setCurrentUserRole('admin');
+                                this.props.getUserList();
+                            }
                             this.setState({redirectTo: '/dashboard'});
+                        }
                         else {
                             sessionStorage.removeItem('userId');
                             this.setState({redirectTo: '/frozen'})

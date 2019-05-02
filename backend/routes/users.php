@@ -208,7 +208,7 @@ $app->post('/users/setStatus', function (Request $request, Response $response, a
     return $response;
 });
 
-$app->post('/users/disable2fa/{userId}', function (Request $request, Response $response, array $args) {
+$app->get('/users/disable2FA/{userId}', function (Request $request, Response $response, array $args) {
     $userId = $args['userId'];
     $user = new User();
 

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 
-
 import '../../stylesheets/login-signup.css';
 
 import { Style } from 'radium';
@@ -250,7 +249,7 @@ class LoginRegister extends Component {
 
                       <div className="input" style={this.state.registerClicked ? visible : hidden}>
                           <label style={{color: 'white'}}>Country: </label>
-                          <select style={this.state.registerClicked ? {float: 'right'} : {}}
+                          <select className="modal" style={this.state.registerClicked ? {float: 'right', background: 'white', color: 'red'} : {}}
                                   name="country" id="country" onLoad={evt => {
                               this.setState({
                                   ...this.state,
@@ -278,7 +277,7 @@ class LoginRegister extends Component {
 
                       <div className="input" style={this.state.registerClicked ? visible : hidden}>
                           <label style={{color: 'white'}}>Currency: </label>
-                          <select style={this.state.registerClicked ? {float: 'right'} : {}}
+                          <select className="modal" style={this.state.registerClicked ? {float: 'right', background: 'white', color: 'red'} : {}}
                                   name="currency" id="currency" onLoad={evt => {
                               this.setState({
                                   ...this.state,

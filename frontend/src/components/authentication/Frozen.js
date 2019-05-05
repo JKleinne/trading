@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-
-import Navigation from '../Navigation';
-import {Redirect} from "react-router-dom";
-import Style from "radium/es/components/style";
+import { Redirect } from "react-router-dom";
 
 class Frozen extends Component {
     constructor(props) {

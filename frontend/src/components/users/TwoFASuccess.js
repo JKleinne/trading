@@ -1,24 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
-import Navigation from '../Navigation';
 import {Redirect} from "react-router-dom";
-import Style from "radium/es/components/style";
 
-let _this;
 class TwoFASuccess extends Component {
     constructor(props) {
         super(props);
 
-        _this = this;
-
         this.state = {};
 
-        this.handleClick.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     handleClick() {
-        _this.setState({ redirect: true });
+        this.setState({ redirect: true });
     }
 
     render() {

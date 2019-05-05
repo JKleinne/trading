@@ -8,7 +8,6 @@ import {
     GET_FIAT_CURRENCIES,
     GET_CRYPTO_CURRENCIES
 } from '../actions/constants';
-import {State} from "react-bootstrap/es/utils/StyleConfig";
 
 export default (state = {coins: [], coinToFetch: 'BTC', ohclvMode: 'monthly'}, action) => {
     switch(action.type) {

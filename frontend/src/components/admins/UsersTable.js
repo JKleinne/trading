@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import Navigation from "../Navigation";
-import axios from 'axios';
 import _ from 'lodash';
 import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import '../../stylesheets/table.css';
-import Transactions from '../users/Transactions';
 import {
     getUserList
 } from '../../actions/index';
 
 const mapStateToProps = state => {
     return {
-        users: state.users.userList
+        users: state.users.userList,
+        role: state.users.role
     }
 };
 
@@ -33,26 +32,27 @@ class UsersTable extends Component {
 
         else {
             return (
-                <div className="content">
-                    <Navigation />
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-md-12">
-                                <div className="card userTable">
-                                    <div className="header">
-                                        <h4 className="title">Users</h4>
-                                    </div>
-                                    <div className="content table-responsive table-full-width">
-                                        <table className="table table-hover table-striped">
-                                            <thead>
-                                            <tr>
-                                                <th>Email</th>
-                                                <th>Two-Factor Authentication</th>
-                                                <th>Role</th>
-                                                <th>Status</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
+                this.props.role === 'admin' ?
+                    <div className="content">
+                        <Navigation />
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-md-12">
+                                    <div className="card userTable">
+                                        <div className="header">
+                                            <h4 className="title">Users</h4>
+                                        </div>
+                                        <div className="content table-responsive table-full-width">
+                                            <table className="table table-hover table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Email</th>
+                                                    <th>Two-Factor Authentication</th>
+                                                    <th>Role</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
                                                 {this.props.users ?
                                                     _.map(this.props.users, user => {
                                                         return (
@@ -70,14 +70,18 @@ class UsersTable extends Component {
                                                         )
                                                     })
                                                     : ''}
-                                            </tbody>
-                                        </table>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                    :
+                    <div>
+                        <Navigation />
+                    </div>
             )
         }
     }

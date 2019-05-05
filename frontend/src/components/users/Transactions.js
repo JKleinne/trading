@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Navigation from "../Navigation";
-import axios from 'axios';
 import _ from 'lodash';
 import { Redirect } from "react-router-dom";
 import { connect } from 'react-redux';

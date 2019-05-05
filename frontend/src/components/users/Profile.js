@@ -6,7 +6,10 @@ import axios from 'axios';
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import _ from "lodash";
-import {getCountries, getFiatCurrencies} from "../../actions";
+
+import {
+    getCountries
+} from "../../actions";
 
 const mapStateToProps = state => {
     return {
@@ -53,7 +56,7 @@ class Profile extends Component {
                                        onChange={evt => {
                                            this.setState({
                                                user: {
-                                                   ...this.state.user,
+                                                    ...this.state.user,
                                                    fname: evt.target.value
                                                }
                                            })
@@ -76,7 +79,7 @@ class Profile extends Component {
 
                             <div className="input">
                                 <label className="label">Country: </label>
-                                <select className="profile"
+                                <select className="modal" style={{float: 'right'}}
                                         name="country" id="country"
                                         onChange={evt => {
                                             this.setState({

@@ -4,11 +4,9 @@ import Navigation from './Navigation';
 import '../stylesheets/navigation.css';
 import axios from "axios";
 import Switch from 'react-ios-switch';
-import { format } from '../utilities/CurrencyFormat';
 import { connect } from 'react-redux';
+
 import {
-    getCryptoCurrencies,
-    getAllCoinPrices,
     getUserWallets
 } from "../actions";
 
@@ -63,7 +61,7 @@ class BuyAndSell extends Component {
                                             const balance = this.props.wallet ?
                                                 _.find(this.props.wallet, wallet => wallet.ticker === 'CAD').balance : 0;
 
-                                            if(!this.state.checked && balance > this.state.amount)
+                                            if(!this.state.checked && balance < this.state.amount)
                                                 alert('You are trying to withdraw more funds than you have.');
                                             else {
                                                 await axios.post(

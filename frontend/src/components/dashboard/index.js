@@ -15,9 +15,7 @@ import HistoricCoinPrices from './HistoricCoinPrices';
 import Portfolio from './Portfolio';
 
 import '../../stylesheets/navigation.css';
-import Switch from "../BuyAndSell";
 import _ from "lodash";
-import axios from "axios";
 
 const mapStateToProps = state => {
   return {

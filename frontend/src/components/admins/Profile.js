@@ -5,7 +5,7 @@ import '../../stylesheets/profile-buttons.css';
 import axios from 'axios';
 import { Redirect } from "react-router-dom";
 import _ from "lodash";
-import {format} from "../../utilities/CurrencyFormat";
+import { format } from "../../utilities/CurrencyFormat";
 import { connect } from'react-redux';
 import Switch from 'react-ios-switch';
 

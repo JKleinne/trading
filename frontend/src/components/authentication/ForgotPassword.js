@@ -3,14 +3,13 @@ import { Redirect } from 'react-router-dom';
 
 import '../../stylesheets/profile-buttons.css';
 
-
 class ForgotPassword extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             email: ''
-        }
+        };
 
         this.handleClick = () => this.setState({ redirectTo: '/'})
     }

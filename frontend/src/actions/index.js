@@ -1,5 +1,7 @@
 import axios from 'axios';
 import _ from 'lodash';
+import { parseCoin } from '../utilities/ParseCoin';
+
 import {
     GET_ALL_MULTI_PRICE,
     GET_HISTORICAL_DAILY,
@@ -40,10 +42,7 @@ export const getAllCoinPrices = () => {
 
 export const getHistoricalDaily = (coin, dayLimit) => {
     return async dispatch => {
-        if(coin === 'Ƀ')
-            coin = 'BTC';
-        else if(coin === 'Ł')
-            coin = 'LTC';
+        coin = parseCoin(coin);
 
         let data = await axios.get(
             `${config.cc_call_url}/histoday?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cc_apikey}`);
@@ -53,10 +52,7 @@ export const getHistoricalDaily = (coin, dayLimit) => {
 
 export const getHistoricalHourly = (coin, dayLimit) => {
     return async dispatch => {
-        if(coin === 'Ƀ')
-            coin = 'BTC';
-        else if(coin === 'Ł')
-            coin = 'LTC';
+        coin = parseCoin(coin);
 
         let data = await axios.get(
             `${config.cc_call_url}/histohour?fsym=${coin}&tsym=CAD&limit=${dayLimit}&api_key=${config.cc_apikey}`);
@@ -66,10 +62,7 @@ export const getHistoricalHourly = (coin, dayLimit) => {
 
 export const setCoinToFetch = coin => {
     return dispatch => {
-        if(coin === 'Ƀ')
-            coin = 'BTC';
-        else if(coin === 'Ł')
-            coin = 'LTC';
+        coin = parseCoin(coin);
 
         dispatch({ type: SET_COIN_TO_FETCH, payload: coin });
     }

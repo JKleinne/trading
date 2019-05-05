@@ -51,7 +51,7 @@ class BuyAndSell extends Component {
                                 <label> Buy </label>
                                 <Switch
                                     checked={this.state.checked}
-                                    onChange={checked => this.setState({ checked })}
+                                    onChange={checked => {this.setState({ checked })}}
                                     offColor="grey"
                                     onColor="grey"
                                 />
@@ -113,8 +113,14 @@ class BuyAndSell extends Component {
 
                                 <div>
                                     <a className="bttn" onClick={async () => {
+                                        const ticker = this.state.checked ?
+                                            this.state.transaction.ticker
+                                            : 'CAD';
+
+                                        console.log(ticker);
+
                                         const balance = this.props.wallet ?
-                                            _.find(this.props.wallet, wallet => wallet.ticker === 'CAD').balance : 0;
+                                            _.find(this.props.wallet, wallet => wallet.ticker ==  ticker).balance : 0;
 
                                         const total = !this.state.checked ?
                                             parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
@@ -152,8 +158,10 @@ class BuyAndSell extends Component {
                                         <p className="text-muted">
                                             You are {this.state.checked ? 'selling' : 'buying'}
                                         </p>
+                                        {this.props.prices ?
+                                            console.log(`Prices: ${_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')}`) : ''}
                                         <div className="typo-line">
-                                            <h6>{this.state.checked ? this.state.transaction.pay_amount : this.state.transaction.buy_amount} {this.state.transaction.ticker}</h6>
+                                            <h6>{this.state.checked ? this.state.transaction.pay_amount : this.props.prices ? this.state.transaction.pay_amount / parseFloat(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1]) : 0} {this.state.transaction.ticker}</h6>
                                         </div>
 
                                         <div className="text-muted">
@@ -181,11 +189,11 @@ class BuyAndSell extends Component {
                                     {
                                         this.state.checked ?
                                             <p className="text-muted">
-                                                {this.state.transaction.pay_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.checked ? this.state.transaction.buy_amount : this.state.transaction.pay_amount)}
+                                                {this.state.transaction.pay_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.transaction.buy_amount)}
                                             </p>
                                             :
                                             <p className="text-muted">
-                                                {this.state.transaction.buy_amount || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.checked ? this.state.transaction.buy_amount : this.state.transaction.pay_amount)}
+                                                {this.props.prices ? _.round(this.state.transaction.pay_amount / parseFloat(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1]), 8) : 0 || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.transaction.pay_amount)}
                                             </p>
                                     }
                                     <p className="text-muted">

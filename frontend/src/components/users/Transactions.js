@@ -48,10 +48,10 @@ class Transactions extends Component {
                                                 <th>Transaction Id</th>
                                                 <th>From</th>
                                                 <th>To</th>
-                                                <th>Paid</th>
+                                                <th>Amount</th>
                                                 <th>Received</th>
                                                 <th>CryptoTrade.gg Fee</th>
-                                                <th>Total amount paid</th>
+                                                <th>Balance</th>
                                                 <th>Date</th>
                                                 <th>Type</th>
                                             </tr>

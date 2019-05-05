@@ -58,6 +58,8 @@ class User extends Model
             ->execute(['user_id' => $user_id]);
         $this->_connection->prepare("INSERT INTO wallet(user_id, ticker, balance) VALUES(:user_id, 'XLM', 0)")
             ->execute(['user_id' => $user_id]);
+        $this->_connection->prepare("INSERT INTO wallet(user_id, ticker, balance) VALUES(:user_id, 'XRP', 0)")
+            ->execute(['user_id' => $user_id]);
 
         return $this->getUser($email)["user_id"];
     }

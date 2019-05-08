@@ -83,7 +83,7 @@ class Charts extends React.Component {
                                 </h6>
 
                                 <p className="text-muted">
-                                    CAD ${_.round(getPortfolioValue(), 2)}
+                                    CAD {format('CAD', getPortfolioValue())}
                                 </p>
                             </div>
                             <div className="input" >

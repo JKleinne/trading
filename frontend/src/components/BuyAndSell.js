@@ -124,7 +124,7 @@ class BuyAndSell extends Component {
                                             parseFloat(this.state.transaction.pay_amount) + _.round(this.state.transaction.pay_amount * 0.05, 2)
                                             : 0;
 
-                                        if(balance < total)
+                                        if(balance < total || balance == 0)
                                             alert('You do not have enough balance');
                                         else {
                                             await this.setState({
@@ -156,8 +156,6 @@ class BuyAndSell extends Component {
                                         <p className="text-muted">
                                             You are {this.state.checked ? 'selling' : 'buying'}
                                         </p>
-                                        {
-                                            console.log(this.state.transaction)}
                                         <div className="typo-line">
                                             <h6>{this.state.checked ? this.state.transaction.pay_amount : this.props.prices ? this.state.transaction.buy_amount : ''} {this.state.transaction.ticker}</h6>
                                         </div>

@@ -88,6 +88,7 @@ class LoginRegister extends Component {
 
                 try {
                     response = await axios.post("http://localhost:8000/users/login", {...this.state.login});
+                    console.log(response);
                     sessionStorage.setItem('userId', response.data);
                 } catch(error) {
                     response = error.response;

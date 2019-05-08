@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 02, 2019 at 05:19 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 5.6.40
+-- Host: 127.0.0.1
+-- Generation Time: May 08, 2019 at 03:09 AM
+-- Server version: 10.1.38-MariaDB
+-- PHP Version: 7.3.3
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -101,23 +101,22 @@ CREATE TABLE `profile` (
 --
 
 INSERT INTO `profile` (`user_id`, `fname`, `lname`, `country_id`, `currency_code`) VALUES
-(59, 'uyt', 'uyt', 0, 'CAD'),
-(60, 'do', 'david', 6, 'USD'),
-(61, 'asdf', 'asdf', 0, 'CAD'),
-(62, 'jkl', 'jkl', 1, 'CAD'),
-(1, 'TEST', 'TEST', 0, 'CAD'),
-(63, 'yikes', 'yikes', 0, 'CAD'),
-(64, 'pep', 'pep', 0, 'CAD'),
-(65, 'gg', 'gg', 0, 'CAD'),
-(66, 'gg', 'gg', 0, 'CAD'),
 (67, 'rakan', 'rookan', 1, 'CAD'),
-(68, 'dododo', 'dododo', 0, 'CAD'),
-(69, 'stuff', 'stuff', 0, 'CAD'),
 (70, 'momo', 'momo', 0, 'CAD'),
 (71, 'Jonnie ', 'Quezada', 1, 'CAD'),
 (72, 'Michel', 'Pacquette', 1, 'CAD'),
 (73, 'I am Groot', 'I am Groot', 6, 'CAD'),
-(74, 'Dawson', 'Vanier', 1, 'CAD');
+(74, 'Dawson', 'Vanier', 1, 'CAD'),
+(76, 'Steve', 'Jobs', 9, 'CAD'),
+(77, 'Stephen', 'Hawking', 9, 'CAD'),
+(78, 'Warren', 'Buffet', 9, 'CAD'),
+(79, 'Mark', 'Zuckerberg', 9, 'CAD'),
+(80, 'FBI', 'America', 9, 'CAD'),
+(81, 'David', 'Do', 1, 'CAD'),
+(82, 'Jonnie', 'Quezada', 6, 'CAD'),
+(83, 'John', 'Joe', 9, 'CAD'),
+(84, 'Jane', 'Doe', 9, 'CAD'),
+(85, 'Bob', 'TheBuilder', 9, 'CAD');
 
 -- --------------------------------------------------------
 
@@ -143,7 +142,6 @@ CREATE TABLE `transaction` (
 --
 
 INSERT INTO `transaction` (`transaction_id`, `user_id`, `pay_wallet_id`, `buy_wallet_id`, `pay_amount`, `buy_amount`, `fee`, `total`, `date`, `type`) VALUES
-(1, 1, 5, 4, '999999.99', '1000.000000', '50.00', '0.00', '0000-00-00 00:00:00', 'buy'),
 (3, 67, 24, 20, '50.00', '483.560000', '2.50', '52.50', '2019-04-20 16:11:42', 'buy'),
 (4, 67, 24, 23, '500.00', '0.070000', '25.00', '525.00', '2019-04-20 16:17:00', 'buy'),
 (5, 67, 24, 23, '200.00', '0.030000', '10.00', '210.00', '2019-04-20 16:17:49', 'buy'),
@@ -216,35 +214,22 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `email`, `password`, `two_fa`, `role`, `status`) VALUES
-(1, 'TEST', 'TEST', '0', 'user', 'active'),
-(2, 'asd', 'asd', '0', '', ''),
-(3, 'wqe', 'wqe', '0', '', ''),
-(4, 'rty', 'rty', '0', '', ''),
-(5, 'tyu', 'tyu', '0', '', ''),
-(6, '666', '666', '0', '', ''),
-(7, 'daviddo', 'asdf', '0', '', ''),
-(9, 'bnm', 'bnm', '0', '', ''),
-(11, 'zxc', 'zxc', '0', '', ''),
-(51, 'vbn', 'vbn', '0', '', ''),
-(56, '88', '88', '0', '', ''),
-(57, '11', '11', '0', '', ''),
-(58, 'stuff', 'qwe', '0', '', ''),
-(59, 'uyt', 'uyt', '0', '', ''),
-(60, 'dodavid', 'ewq', '0', '', ''),
-(61, 'asdf', 'asdf', '0', '', ''),
-(62, 'gg', '$2y$10$Z78hvlDD7PpdBWUMok8paOBv3IqvnJY135xe/szI3K/hhLtLkSnLm', '0', '', ''),
-(63, 'yikes', '$2y$10$Qx3Li1cBzzC5DQvdUOBj/ue.kfa902dWl9R8bmIah4HO.xTzyb5HC', '0', '', ''),
-(64, 'pep', '$2y$10$R/CLN3m1gDqbbyCKkVU8U.BcxpRmTIpZEnXhQi.zGvWBjzvN3cxce', '0', '', ''),
-(65, 'ijeoawlkln', '$2y$10$A/B2k.bMjvzbEL7sF/bT9OcYTZZmgwFcdits/gNmBC9DLv/k3odBS', '0', '', ''),
-(66, 'eifjoqur', '$2y$10$3GW3qLwxJD2RH8NxqZKAzOeB6HinVS2kN/ZPL5/SZA5vH3ojCOg9a', '0', '', ''),
 (67, 'rakan', '$2y$10$czFg1jF3kMnIj.F.DzV8Q.L7HPjJPrasPmHPTA9xJT5Qm7unD2Q3a', '4FUFFD5BB7MHPXQG', 'admin', 'active'),
-(68, 'dododo', '$2y$10$m.Ml5VtplCD/Y.x3fulQB.k12o6.RfBy6aBCwITUR6veCOCnLFTSO', '', '', 'frozen'),
-(69, 'stuffystuff', '$2y$10$NQnp9OqaFEgA2wy0utb5e.E04W/jgVqSbvaWxVELaX70/7BGnR4aG', '0', '', ''),
 (70, 'momo', '$2y$10$uByrVlKQdE0rPBeff.54muTr1MmaSPoMe1ucqWZGGpsH3YnnJF216', '3E4R6PP53WF23D22', 'user', 'frozen'),
 (71, 'jkleinne', '$2y$10$h37HuQ5W6CjMRyGsPdmPX.MecyJOjOEc8ppt79WNsTC9fnf2ZaavC', '', 'user', 'frozen'),
 (72, 'michelpacquette@gmail.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
 (73, 'jonniequezada@gmail.com', '$2y$10$sjhoIYC7HW4rUldeP3JCYunTKKz22CcUQESHg20wgDLwh6yr1DHAW', '', 'user', 'active'),
-(74, 'vanier@college.ca', '$2y$10$E5usNIVEETk1dJZTa1gZ1eD3Hz7YHzWG/m.KdliqMhDcXtetT1C0e', '', 'user', 'active');
+(74, 'vanier@college.ca', '$2y$10$E5usNIVEETk1dJZTa1gZ1eD3Hz7YHzWG/m.KdliqMhDcXtetT1C0e', '', 'user', 'active'),
+(76, 'steve.jobs@freeze.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(77, 'stephen.hawking@freeze.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(78, 'warren.buffet@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(79, 'mark.zuckerberg@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(80, 'fbi.america@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(81, 'david.do@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(82, 'jonnie.quezada@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(83, 'john.doe@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(84, 'jane.doe@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active'),
+(85, 'bob.thebuilder@active.com', '$2y$10$4hrDn37wdYbOKg2Y/sdFguwPj9MtoUz0tVl3GXrWtoBW09hVhby/i', '', 'user', 'active');
 
 -- --------------------------------------------------------
 
@@ -264,24 +249,6 @@ CREATE TABLE `wallet` (
 --
 
 INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
-(1, 1, 'ADA', '500.000000'),
-(2, 1, 'BCH', '500.000000'),
-(3, 1, 'BNB', '500.000000'),
-(4, 1, 'BTC', '500.000000'),
-(5, 1, 'CAD', '1243.000000'),
-(6, 1, 'EOS', '1243.000000'),
-(7, 1, 'ETC', '564.000000'),
-(8, 1, 'LTC', '43.000000'),
-(9, 1, 'TRX', '3245.000000'),
-(11, 66, 'ADA', '0.000000'),
-(12, 66, 'BCH', '0.000000'),
-(13, 66, 'BNB', '0.000000'),
-(14, 66, 'BTC', '0.000000'),
-(15, 66, 'CAD', '0.000000'),
-(16, 66, 'EOS', '0.000000'),
-(17, 66, 'ETC', '0.000000'),
-(18, 66, 'LTC', '0.000000'),
-(19, 66, 'TRX', '0.000000'),
 (20, 67, 'ADA', '1406.577693'),
 (21, 67, 'BCH', '0.000000'),
 (22, 67, 'BNB', '9.407338'),
@@ -291,29 +258,11 @@ INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
 (26, 67, 'ETC', '0.000000'),
 (27, 67, 'LTC', '0.000000'),
 (28, 67, 'TRX', '8544.574195'),
-(29, 68, 'ADA', '0.000000'),
-(30, 68, 'BCH', '0.000000'),
-(31, 68, 'BNB', '0.000000'),
-(32, 68, 'BTC', '0.000000'),
-(33, 68, 'CAD', '0.000000'),
-(34, 68, 'EOS', '0.000000'),
-(35, 68, 'ETC', '0.000000'),
-(36, 68, 'LTC', '0.000000'),
-(37, 68, 'TRX', '0.000000'),
-(38, 69, 'ADA', '0.000000'),
-(39, 69, 'BCH', '0.000000'),
-(40, 69, 'BNB', '0.000000'),
-(41, 69, 'BTC', '0.000000'),
-(42, 69, 'CAD', '0.000000'),
-(43, 69, 'EOS', '0.000000'),
-(44, 69, 'ETC', '0.000000'),
-(45, 69, 'LTC', '0.000000'),
-(46, 69, 'TRX', '0.000000'),
 (47, 70, 'ADA', '0.000000'),
 (48, 70, 'BCH', '0.000000'),
 (49, 70, 'BNB', '0.000000'),
 (50, 70, 'BTC', '0.000000'),
-(51, 70, 'CAD', '89.985345'),
+(51, 70, 'CAD', '200000.000000'),
 (52, 70, 'EOS', '0.000000'),
 (53, 70, 'ETC', '0.000000'),
 (54, 70, 'LTC', '0.000000'),
@@ -322,10 +271,10 @@ INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
 (57, 71, 'ADA', '0.000000'),
 (58, 71, 'BCH', '0.000000'),
 (59, 71, 'BNB', '0.000000'),
-(60, 71, 'BTC', '0.034484'),
-(61, 71, 'CAD', '0.770000'),
+(60, 71, 'BTC', '0.000000'),
+(61, 71, 'CAD', '100.000000'),
 (62, 71, 'EOS', '0.000000'),
-(63, 71, 'ETC', '9.803922'),
+(63, 71, 'ETC', '0.000000'),
 (64, 71, 'LTC', '0.000000'),
 (65, 71, 'TRX', '0.000000'),
 (66, 71, 'XLM', '0.000000'),
@@ -333,32 +282,149 @@ INSERT INTO `wallet` (`wallet_id`, `user_id`, `ticker`, `balance`) VALUES
 (68, 72, 'BCH', '0.000000'),
 (69, 72, 'BNB', '0.000000'),
 (70, 72, 'BTC', '0.000000'),
-(71, 72, 'CAD', '0.000000'),
+(71, 72, 'CAD', '200000.000000'),
 (72, 72, 'EOS', '0.000000'),
 (73, 72, 'ETC', '0.000000'),
 (74, 72, 'LTC', '0.000000'),
 (75, 72, 'TRX', '0.000000'),
 (76, 72, 'XLM', '0.000000'),
-(77, 73, 'ADA', '0.000000'),
-(78, 73, 'BCH', '0.000000'),
-(79, 73, 'BNB', '2.413465'),
-(80, 73, 'BTC', '0.005348'),
-(81, 73, 'CAD', '343.480000'),
-(82, 73, 'EOS', '0.000000'),
-(83, 73, 'ETC', '0.000000'),
-(84, 73, 'LTC', '0.000000'),
-(85, 73, 'TRX', '0.000000'),
-(86, 73, 'XLM', '0.000000'),
-(87, 74, 'ADA', '140.150343'),
+(77, 73, 'ADA', '100.000000'),
+(78, 73, 'BCH', '100.000000'),
+(79, 73, 'BNB', '100.000000'),
+(80, 73, 'BTC', '100.000000'),
+(81, 73, 'CAD', '100.000000'),
+(82, 73, 'EOS', '100.000000'),
+(83, 73, 'ETC', '100.000000'),
+(84, 73, 'LTC', '100.000000'),
+(85, 73, 'TRX', '100.000000'),
+(86, 73, 'XLM', '100.000000'),
+(87, 74, 'ADA', '0.000000'),
 (88, 74, 'BCH', '0.000000'),
 (89, 74, 'BNB', '0.000000'),
-(90, 74, 'BTC', '0.001317'),
-(91, 74, 'CAD', '-18.733000'),
+(90, 74, 'BTC', '0.000000'),
+(91, 74, 'CAD', '600000.000000'),
 (92, 74, 'EOS', '0.000000'),
 (93, 74, 'ETC', '0.000000'),
 (94, 74, 'LTC', '0.000000'),
 (95, 74, 'TRX', '0.000000'),
-(96, 74, 'XLM', '0.000000');
+(96, 74, 'XLM', '0.000000'),
+(97, 76, 'ADA', '0.000000'),
+(98, 76, 'BCH', '0.000000'),
+(99, 76, 'BNB', '0.000000'),
+(100, 76, 'BTC', '0.000000'),
+(101, 76, 'CAD', '10200000000.000000'),
+(102, 76, 'EOS', '0.000000'),
+(103, 76, 'ETC', '0.000000'),
+(104, 76, 'LTC', '0.000000'),
+(105, 76, 'TRX', '0.000000'),
+(106, 76, 'XLM', '0.000000'),
+(107, 76, 'XRP', '0.000000'),
+(108, 77, 'ADA', '0.000000'),
+(109, 77, 'BCH', '0.000000'),
+(110, 77, 'BNB', '0.000000'),
+(111, 77, 'BTC', '0.000000'),
+(112, 77, 'CAD', '7000000.000000'),
+(113, 77, 'EOS', '0.000000'),
+(114, 77, 'ETC', '0.000000'),
+(115, 77, 'LTC', '0.000000'),
+(116, 77, 'TRX', '0.000000'),
+(117, 77, 'XLM', '0.000000'),
+(118, 77, 'XRP', '0.000000'),
+(119, 78, 'ADA', '0.000000'),
+(120, 78, 'BCH', '0.000000'),
+(121, 78, 'BNB', '0.000000'),
+(122, 78, 'BTC', '0.000000'),
+(123, 78, 'CAD', '89900000000.000000'),
+(124, 78, 'EOS', '0.000000'),
+(125, 78, 'ETC', '0.000000'),
+(126, 78, 'LTC', '0.000000'),
+(127, 78, 'TRX', '0.000000'),
+(128, 78, 'XLM', '0.000000'),
+(129, 78, 'XRP', '0.000000'),
+(130, 79, 'ADA', '0.000000'),
+(131, 79, 'BCH', '0.000000'),
+(132, 79, 'BNB', '0.000000'),
+(133, 79, 'BTC', '0.000000'),
+(134, 79, 'CAD', '72600000000.000000'),
+(135, 79, 'EOS', '0.000000'),
+(136, 79, 'ETC', '0.000000'),
+(137, 79, 'LTC', '0.000000'),
+(138, 79, 'TRX', '0.000000'),
+(139, 79, 'XLM', '0.000000'),
+(140, 79, 'XRP', '0.000000'),
+(141, 80, 'ADA', '0.000000'),
+(142, 80, 'BCH', '0.000000'),
+(143, 80, 'BNB', '0.000000'),
+(144, 80, 'BTC', '0.000000'),
+(145, 80, 'CAD', '3000000.000000'),
+(146, 80, 'EOS', '0.000000'),
+(147, 80, 'ETC', '0.000000'),
+(148, 80, 'LTC', '0.000000'),
+(149, 80, 'TRX', '0.000000'),
+(150, 80, 'XLM', '0.000000'),
+(151, 80, 'XRP', '0.000000'),
+(152, 81, 'ADA', '0.000000'),
+(153, 81, 'BCH', '0.000000'),
+(154, 81, 'BNB', '0.000000'),
+(155, 81, 'BTC', '0.000000'),
+(156, 81, 'CAD', '2500.000000'),
+(157, 81, 'EOS', '0.000000'),
+(158, 81, 'ETC', '0.000000'),
+(159, 81, 'LTC', '0.000000'),
+(160, 81, 'TRX', '0.000000'),
+(161, 81, 'XLM', '0.000000'),
+(162, 81, 'XRP', '0.000000'),
+(163, 82, 'ADA', '0.000000'),
+(164, 82, 'BCH', '0.000000'),
+(165, 82, 'BNB', '0.000000'),
+(166, 82, 'BTC', '0.000000'),
+(167, 82, 'CAD', '2500.000000'),
+(168, 82, 'EOS', '0.000000'),
+(169, 82, 'ETC', '0.000000'),
+(170, 82, 'LTC', '0.000000'),
+(171, 82, 'TRX', '0.000000'),
+(172, 82, 'XLM', '0.000000'),
+(173, 82, 'XRP', '0.000000'),
+(174, 83, 'ADA', '0.000000'),
+(175, 83, 'BCH', '0.000000'),
+(176, 83, 'BNB', '0.000000'),
+(177, 83, 'BTC', '0.000000'),
+(178, 83, 'CAD', '50.000000'),
+(179, 83, 'EOS', '0.000000'),
+(180, 83, 'ETC', '0.000000'),
+(181, 83, 'LTC', '0.000000'),
+(182, 83, 'TRX', '0.000000'),
+(183, 83, 'XLM', '0.000000'),
+(184, 83, 'XRP', '0.000000'),
+(185, 84, 'ADA', '0.000000'),
+(186, 84, 'BCH', '0.000000'),
+(187, 84, 'BNB', '0.000000'),
+(188, 84, 'BTC', '0.000000'),
+(189, 84, 'CAD', '50.000000'),
+(190, 84, 'EOS', '0.000000'),
+(191, 84, 'ETC', '0.000000'),
+(192, 84, 'LTC', '0.000000'),
+(193, 84, 'TRX', '0.000000'),
+(194, 84, 'XLM', '0.000000'),
+(195, 84, 'XRP', '0.000000'),
+(196, 85, 'ADA', '0.000000'),
+(197, 85, 'BCH', '0.000000'),
+(198, 85, 'BNB', '0.000000'),
+(199, 85, 'BTC', '0.000000'),
+(200, 85, 'CAD', '3000000.000000'),
+(201, 85, 'EOS', '0.000000'),
+(202, 85, 'ETC', '0.000000'),
+(203, 85, 'LTC', '0.000000'),
+(204, 85, 'TRX', '0.000000'),
+(205, 85, 'XLM', '0.000000'),
+(206, 85, 'XRP', '0.000000'),
+(207, 67, 'XLM', '0.000000'),
+(208, 67, 'XRP', '0.000000'),
+(209, 70, 'XRP', '0.000000'),
+(212, 72, 'XRP', '0.000000'),
+(213, 71, 'XRP', '0.000000'),
+(214, 73, 'XRP', '100.000000'),
+(215, 74, 'XRP', '0.000000');
 
 --
 -- Indexes for dumped tables
@@ -422,40 +488,13 @@ ALTER TABLE `transaction`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `wallet`
 --
 ALTER TABLE `wallet`
-  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `profile`
---
-ALTER TABLE `profile`
-  ADD CONSTRAINT `profile_country_id_fk` FOREIGN KEY (`country_id`) REFERENCES `country` (`country_id`),
-  ADD CONSTRAINT `profile_currency_code_fk` FOREIGN KEY (`currency_code`) REFERENCES `currency` (`ticker`),
-  ADD CONSTRAINT `profile_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `transaction`
---
-ALTER TABLE `transaction`
-  ADD CONSTRAINT `transaction_buy_wallet_id_fk` FOREIGN KEY (`buy_wallet_id`) REFERENCES `wallet` (`wallet_id`),
-  ADD CONSTRAINT `transaction_pay_wallet_id_fk` FOREIGN KEY (`pay_wallet_id`) REFERENCES `wallet` (`wallet_id`),
-  ADD CONSTRAINT `transaction_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
-
---
--- Constraints for table `wallet`
---
-ALTER TABLE `wallet`
-  ADD CONSTRAINT `wallet_currency_code_fk` FOREIGN KEY (`ticker`) REFERENCES `currency` (`ticker`),
-  ADD CONSTRAINT `wallet_user_id_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`);
+  MODIFY `wallet_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

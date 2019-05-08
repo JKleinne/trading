@@ -117,8 +117,6 @@ class BuyAndSell extends Component {
                                             this.state.transaction.ticker
                                             : 'CAD';
 
-                                        console.log(ticker);
-
                                         const balance = this.props.wallet ?
                                             _.find(this.props.wallet, wallet => wallet.ticker ==  ticker).balance : 0;
 
@@ -158,10 +156,10 @@ class BuyAndSell extends Component {
                                         <p className="text-muted">
                                             You are {this.state.checked ? 'selling' : 'buying'}
                                         </p>
-                                        {this.props.prices ?
-                                            console.log(`Prices: ${_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')}`) : ''}
+                                        {
+                                            console.log(this.state.transaction)}
                                         <div className="typo-line">
-                                            <h6>{this.state.checked ? this.state.transaction.pay_amount : this.props.prices ? this.state.transaction.pay_amount / parseFloat(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1]) : 0} {this.state.transaction.ticker}</h6>
+                                            <h6>{this.state.checked ? this.state.transaction.pay_amount : this.props.prices ? this.state.transaction.buy_amount : ''} {this.state.transaction.ticker}</h6>
                                         </div>
 
                                         <div className="text-muted">
@@ -193,7 +191,7 @@ class BuyAndSell extends Component {
                                             </p>
                                             :
                                             <p className="text-muted">
-                                                {this.props.prices ? _.round(this.state.transaction.pay_amount / parseFloat(_.split(this.props.prices[this.state.transaction.ticker].CAD.PRICE, 'CAD')[1]), 8) : 0 || "0.00000"} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.transaction.pay_amount)}
+                                                {this.props.prices ? this.state.transaction.buy_amount : ''} {this.state.transaction.ticker}............................... CAD {format('CAD', this.state.transaction.pay_amount)}
                                             </p>
                                     }
                                     <p className="text-muted">
